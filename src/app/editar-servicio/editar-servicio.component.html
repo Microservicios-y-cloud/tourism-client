@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="title">Editar servicio</div>
+</div>
+<div id="body">
+    <div class="container-wrapper">
+        <div class="container1">
+            <img src="https://cdn.pixabay.com/photo/2015/06/10/16/36/mark-804938_640.jpg" alt="Servicio">
+        </div>
+        <div class="container2">
+            <div class="form-group">
+                <label for="service-name">Nombre del servicio:</label>
+                <input type="text" id="service-name" class="input-field" placeholder="Escribe el nombre del servicio">
+            </div>
+            <div class="form-group">
+                <label for="service-location">Ubicación del servicio:</label>
+                <select id="service-location" class="input-field">
+                    <option value="" disabled selected>Selecciona una ubicación</option>
+                    <option value="ubicacion1">Ubicación 1</option>
+                    <option value="ubicacion2">Ubicación 2</option>
+                    <option value="ubicacion3">Ubicación 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="service-type">Tipo de servicio:</label>
+                <select id="service-type" class="input-field">
+                    <option value="" disabled selected>Selecciona un tipo de servicio</option>
+                    <option value="tipo1">Tipo 1</option>
+                    <option value="tipo2">Tipo 2</option>
+                    <option value="tipo3">Tipo 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="service-field-1">Campo de servicio #1:</label>
+                <input type="text" id="service-field-1" class="input-field" placeholder="Escribe aquí">
+            </div>
+            <div class="form-group">
+                <label for="service-field-2">Campo de servicio #2:</label>
+                <input type="text" id="service-field-2" class="input-field" placeholder="Escribe aquí">
+            </div>
+            <div class="form-group">
+                <label for="service-field-3">Campo de servicio #3:</label>
+                <input type="text" id="service-field-3" class="input-field" placeholder="Escribe aquí">
+            </div>
+            <div class="form-group">
+                <label for="service-price">Precio del servicio:</label>
+                <input type="number" id="service-price" class="input-field" min="0" value="0">
+            </div>
+            <label>Descripcion</label>
+            <br>
+            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."></textarea>
+            <div class="center">
+                <button>Centered Button</button>
+              </div>
+        </div>
+    </div>
+</div>

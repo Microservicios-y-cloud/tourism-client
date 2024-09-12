@@ -1,0 +1,120 @@
+#body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 32px;
+}
+
+.container1 {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height: 500px;
+    box-sizing: border-box;
+}
+
+.container1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor */
+    border-radius: 8px;
+}
+
+.container2 {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center; /* Alinea el texto y el campo en la misma línea */
+}
+
+.form-group label {
+    width: 200px; /* Ancho fijo para las etiquetas */
+    margin-right: 20px; /* Espacio entre la etiqueta y el campo */
+    color: #333;
+    font-weight: bold;
+}
+
+label {
+    color: #333;
+    font-weight: bold;
+}
+
+.input-field {
+    flex: 1; /* El campo ocupa el espacio restante */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves para el enfoque */
+}
+
+.input-field:focus {
+    border-color: #007bff; /* Color de borde cuando el input está enfocado */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.center {
+    display: flex;
+    justify-content: right;
+  }
+
+.center button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #0077ff;
+    cursor: pointer;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Oculta los botones de incremento/decremento en Firefox */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+}

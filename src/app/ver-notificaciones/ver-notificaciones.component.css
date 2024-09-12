@@ -1,0 +1,58 @@
+#body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 0 50px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 32px;
+}
+.title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.notification-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    position: relative;
+    margin: 5px;
+}
+.notification-card h3 {
+    margin-top: 0;
+}
+.notification-card p {
+    margin: 10px 0;
+    color: #555;
+}
+.notification-card .date {
+    font-size: 0.9em;
+    color: #888;
+}
+.notification-card .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+.notification-card .delete-btn:hover {
+    background-color: #cc0000;
+}
