@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';  // Importa FormsModule aquí
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from './log-in/log-in.component';
 import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
@@ -11,6 +12,7 @@ import { CrearServicioComponent } from './crear-servicio/crear-servicio.componen
 import { EditarServicioComponent } from './editar-servicio/editar-servicio.component';
 import { VerServicioComponent } from './ver-servicio/ver-servicio.component';
 import { VerMiCarritoComponent } from './ver-mi-carrito/ver-mi-carrito.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 const routes: Routes = [
   { path: 'ver-carrito', component: VerMiCarritoComponent },
@@ -22,11 +24,17 @@ const routes: Routes = [
   { path: 'menu-principal-proveedor', component: MenuPrincipalProveedorComponent },
   { path: 'menu-principal', component: MenuPrincipalClienteComponent },
   { path: 'registrarse', component: CrearUsuarioComponent },
-  { path: '**', component: LogInComponent }
+  { path: 'search', component: SearchBarComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [ 
+    FormsModule,
+    RouterModule.forRoot(routes,
+    {
+      bindToComponentInputs: true, // Para poder usar @Input en rutas https://angular.io/guide/router
+      onSameUrlNavigation: 'reload' // https://stackoverflow.com/a/52512361
+    })], 
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

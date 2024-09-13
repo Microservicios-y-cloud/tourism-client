@@ -20,6 +20,9 @@ import { VerMisServiciosComponent } from './ver-mis-servicios/ver-mis-servicios.
 import { VerMiCarritoComponent } from './ver-mi-carrito/ver-mi-carrito.component';
 import { MenuPrincipalClienteComponent } from './menu-principal-cliente/menu-principal-cliente.component';
 import { MenuPrincipalProveedorComponent } from './menu-principal-proveedor/menu-principal-proveedor.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {GraphQLModule } from './graphql.module'
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -39,14 +42,16 @@ export function kcFactory(kcService: KeycloakService){
     VerMisServiciosComponent,
     VerMiCarritoComponent,
     MenuPrincipalClienteComponent,
-    MenuPrincipalProveedorComponent
+    MenuPrincipalProveedorComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    
+    GraphQLModule,
+    FormsModule
   ],
   providers: [
     HttpClient,

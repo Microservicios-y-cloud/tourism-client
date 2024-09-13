@@ -1,25 +1,5 @@
 <app-navbar></app-navbar>
-<div id="black" [style.display]="showFilters ? 'block' : 'none'"></div>
-<div class="search-container">
-    <h2>Encuentra lo que buscas</h2>
-    <div class="search-bar">
-        <button class="filter-button" (click)="toggleFilters()">Filtros</button>
-        <input type="text" placeholder="Buscar...">
-        <button type="button">Buscar</button>
-    </div>
-    <div class="filters" id="filters" [style.display]="showFilters ? 'block' : 'none'">
-        <p class="close" (click)="toggleFilters()">X</p>
-        <label for="category">Categoría:
-            <select id="category">
-                <option value="">Seleccionar</option>
-                <option value="tech">Alimentacion</option>
-                <option value="fashion">Hospedaje</option>
-                <option value="books">Transporte</option>
-            </select>
-        </label>
-    </div>
-</div>
-
+<app-search-bar></app-search-bar>
 <div class="container">
     <div class="card">
         <div class="image"></div>
