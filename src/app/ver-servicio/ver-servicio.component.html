@@ -7,51 +7,99 @@
         <div class="container2">
             <div class="form-group">
                 <label for="service-name">Nombre del servicio:</label>
-                <p id="nombre">Nombre del servicio</p>
+                <p id="nombre">{{servicio.nombre}}</p>
             </div>
             <div class="form-group">
                 <label for="service-location">Ubicación del servicio:</label>
-                <p id="ubicacion">ubicacion</p>
+                <p id="ubicacion">{{servicio.ubicacion.direccion}}</p>
             </div>
-            <div class="form-group">
-                <label for="service-type">Tipo de servicio:</label>
-                <p id="tipo-servicio">tipo</p>
+            <div id="alimentacion" *ngIf="servicio.servicioAlimentacion">
+                <div class="form-group" >
+                    <label for="service-type">Servicio de alimentacion:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlimentacion?.tipoAlimentacion}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">  horario:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlimentacion?.horario}}</p>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="service-field-1">Campo de servicio:</label>
-                <p id="campo-opcional">se despliega dependiendo el servicio</p>
+            <div id="alojamiento" *ngIf="servicio.servicioAlojamiento">
+                <div class="form-group">
+                    <label for="service-type">Servicio de alojamiento:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.tipoAlojamiento}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Tipo de alojamiento:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.tipoAlojamiento}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Direccion:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.direccion}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">fecha llegada:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.fechaLlegada}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">fecha salida:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.fechaSalida}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Capacidad:</label>
+                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.capacidad}}</p>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="service-field-1">Campo de servicio:</label>
-                <p id="campo-opcional">se despliega dependiendo el servicio</p>
+
+            <div id="transporte" *ngIf="servicio.servicioTransporte">
+                <div class="form-group" >
+                    <label for="service-type">Servicio de transporte:</label>
+                    <p id="tipo-servicio">{{servicio.servicioTransporte?.tipoTransporte}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Empresa de transporte:</label>
+                    <p id="tipo-servicio">{{servicio.servicioTransporte?.empresaTransporte}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Direccion de origen:</label>
+                    <p id="tipo-servicio">{{servicio.servicioTransporte?.origen?.direccion}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Direccion de destino:</label>
+                    <p id="tipo-servicio">{{servicio.ubicacion.direccion}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Fecha llegada:</label>
+                    <p id="tipo-servicio">{{servicio.servicioTransporte?.fechaLlegada}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Fecha salida:</label>
+                    <p id="tipo-servicio">{{servicio.servicioTransporte?.fechaSalida}}</p>
+                </div>
             </div>
+
             <div class="form-group">
-                <label for="service-field-1">Campo de servicio:</label>
-                <p id="campo-opcional">se despliega dependiendo el servicio</p>
-            </div>
-            <div class="form-group">
-                <p id="precio">$ 99.9</p>
+                <p id="precio">${{servicio.precioUnitario}} por persona</p>
             </div>
             <label id="descripcion">Descripcion</label>
             <br>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident ullam consequatur animi adipisci laudantium nemo, pariatur corrupti culpa enim molestiae tenetur, asperiores quisquam laboriosam placeat, error aperiam cupiditate quaerat exercitationem.</p>
+            <p>{{servicio.descripcion}}</p>
             <br>
             <div id="contenedor-comprar">
                 <div class="product-container">
                     <div class="quantity-selector">
-                        <button class="quantity-btn1">-</button>
-                        <input type="number" value="1" min="1" class="quantity-input">
-                        <button class="quantity-btn2">+</button>
+                        <button class="quantity-btn1" (click)="restarCantidad()">-</button>
+                        <button class="quantity-input">{{cantidad}}</button>
+                        <button class="quantity-btn2" (click)="sumarCantidad()">+</button>
                     </div>
-                    <button class="buy-now-btn">Buy Now</button>
-                    <button class="add-to-cart-btn">Add To Cart</button>
+                    <button class="buy-now-btn" (click)="comprar()">Comprar</button>
+                    <button class="add-to-cart-btn" (click)="add_carrito()">Añadir al carrito</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="container-pregunta">
-        <textarea placeholder="Escribe aquí..."></textarea>
-        <button id="enviar-pregunta">Enviar</button>
+        <textarea placeholder="Escribe aquí..." id="campo_de_texto"></textarea>
+        <button id="enviar-pregunta" (click)="enviarPregunta()">Enviar</button>
     </div>
     <div id="retroalimentacion">
         <div class="contenedor-rt">
@@ -61,150 +109,28 @@
             </div>
             <div class="content">
                 <div class="column" id="preguntas-usuarios">
-                    <div class="message">
+                    <div class="message" *ngFor="let item of servicio.preguntas">
                         <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
                         <div class="message-content">
                             <div class="header-info">
-                                <div class="username">Usuario 1</div>
-                                <div class="time">10:00 AM</div>
+                                <div class="username">{{item.id}}</div>
+                                <div class="time">{{item.fecha}}</div>
                             </div>
-                            <div class="text">Hola, ¿cómo estás?</div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario 1</div>
-                                <div class="time">10:00 AM</div>
-                            </div>
-                            <div class="text">Hola, ¿cómo estás?</div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario 1</div>
-                                <div class="time">10:00 AM</div>
-                            </div>
-                            <div class="text">Hola, ¿cómo estás?</div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario 1</div>
-                                <div class="time">10:00 AM</div>
-                            </div>
-                            <div class="text">Hola, ¿cómo estás?</div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario 1</div>
-                                <div class="time">10:00 AM</div>
-                            </div>
-                            <div class="text">Hola, ¿cómo estás?</div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario 1</div>
-                                <div class="time">10:00 AM</div>
-                            </div>
-                            <div class="text">Hola, ¿cómo estás?</div>
+                            <div class="text">{{item.contenido}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="column" id="valoraciones-usuarios">
-                    <div class="message">
+                    <div class="message" *ngFor="let item of servicio.comentario">
                         <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
-                        <div class="message-content">
+                        <div class="message-content" >
                             <div class="header-info">
-                                <div class="username">Usuario x</div>
-                                <div class="time">09:45 AM</div>
+                                <div class="username">{{item.id}}</div>
+                                <div class="time">{{item.fecha}}</div>
                             </div>
-                            <div class="text">Valoracion de alguien</div>
+                            <div class="text">{{item.contenido}}</div>
                             <div class="stars">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star empty">&#9733;</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario x</div>
-                                <div class="time">09:45 AM</div>
-                            </div>
-                            <div class="text">Valoracion de alguien</div>
-                            <div class="stars">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star empty">&#9733;</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario x</div>
-                                <div class="time">09:45 AM</div>
-                            </div>
-                            <div class="text">Valoracion de alguien</div>
-                            <div class="stars">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star empty">&#9733;</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario x</div>
-                                <div class="time">09:45 AM</div>
-                            </div>
-                            <div class="text">Valoracion de alguien</div>
-                            <div class="stars">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star empty">&#9733;</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
-                        <div class="message-content">
-                            <div class="header-info">
-                                <div class="username">Usuario x</div>
-                                <div class="time">09:45 AM</div>
-                            </div>
-                            <div class="text">Valoracion de alguien</div>
-                            <div class="stars">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star empty">&#9733;</span>
+                                <span class="star">&#9733;</span><p>{{item.calificacion}}/5</p>
                             </div>
                         </div>
                     </div>

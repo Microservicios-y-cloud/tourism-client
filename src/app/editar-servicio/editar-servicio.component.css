@@ -118,3 +118,15 @@ textarea {
     width: 100%;
     min-height: 100px;
 }
+
+.off {
+    padding-left: 30px;
+}
+
+p {
+    margin: 0;
+}
+
+.a {
+    margin: -5px !important;
+}

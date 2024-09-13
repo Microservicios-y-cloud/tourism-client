@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <div class="title">Crear servicio</div>
+    <div class="title">Editar servicio</div>
 </div>
 <div id="body">
     <div class="container-wrapper">
@@ -10,47 +10,102 @@
         <div class="container2">
             <div class="form-group">
                 <label for="service-name">Nombre del servicio:</label>
-                <input type="text" id="service-name" class="input-field" placeholder="Escribe el nombre del servicio">
+                <input type="text" name="fname" id="campo-nombre" value="{{nombre}}">
             </div>
             <div class="form-group">
                 <label for="service-location">Ubicación del servicio:</label>
-                <select id="service-location" class="input-field">
-                    <option value="" disabled selected>Selecciona una ubicación</option>
-                    <option value="ubicacion1">Ubicación 1</option>
-                    <option value="ubicacion2">Ubicación 2</option>
-                    <option value="ubicacion3">Ubicación 3</option>
+                <select id="ubicacion-checkbox" (change)="actualizarUbicacion($event)">
+                    <option value="ubicacion 1">ubicacion 1</option>
+                    <option value="ubicacion 2">ubicacion 2</option>
+                    <option value="ubicacion 3">ubicacion 3</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="service-type">Tipo de servicio:</label>
-                <select id="service-type" class="input-field">
-                    <option value="" disabled selected>Selecciona un tipo de servicio</option>
-                    <option value="tipo1">Tipo 1</option>
-                    <option value="tipo2">Tipo 2</option>
-                    <option value="tipo3">Tipo 3</option>
-                </select>
+            <input type="checkbox" (click)="cambiarCheck('alimentacion')"><label> Alimentacion</label>
+            <div id="alimentacion" *ngIf="alimentacionSelected">
+                <div class="form-group" >
+                    <label for="service-type">Servicio de alimentacion:</label>
+                    <select id="alimentacion-checkbox">
+                        <option value="Desayuno">Desayuno</option>
+                        <option value="Almuerzo">Almuerzo</option>
+                        <option value="Cena">Cena</option>
+                    </select>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type" class="a">  horario:</label>
+                    <input type="text" name="fname"  id="campo-horario"   value="{{horarioAlimentacion}}">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="service-field-1">Campo de servicio #1:</label>
-                <input type="text" id="service-field-1" class="input-field" placeholder="Escribe aquí">
+            <br>
+            <hr>
+            <input type="checkbox" (click)="cambiarCheck('alojamiento')"><label> Alojamiento</label>
+            <div id="alojamiento" *ngIf="alojamientoSelected">
+                <div class="form-group">
+                    <label for="service-type">Servicio de alojamiento:</label>
+                    <select id="alojamiento-checkbox">
+                        <option value="Hotel">Hotel</option>
+                        <option value="Resort">Resort</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Direccion:</label>
+                    <input type="text" name="fname" id="campo-direccionAlojamiento"   value="{{direccionAlojamiento}}">
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">fecha llegada:</label>
+                    <input type="text" name="fname"  id="campo-llegadaAlojamiento"   value="{{llegadaAlojamiento}}">
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">fecha salida:</label>
+                    <input type="text" name="fname" id="campo-salidaAlojamiento"  value="{{salidaAlojamiento}}">
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Capacidad:</label>
+                    <input type="number" id="campo-capacidadAlojamiento" min="1"  value="{{capacidadAlojamiento}}">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="service-field-2">Campo de servicio #2:</label>
-                <input type="text" id="service-field-2" class="input-field" placeholder="Escribe aquí">
-            </div>
-            <div class="form-group">
-                <label for="service-field-3">Campo de servicio #3:</label>
-                <input type="text" id="service-field-3" class="input-field" placeholder="Escribe aquí">
+            <br>
+            <hr>
+            <input type="checkbox" (click)="cambiarCheck('transporte')"><label> Transporte</label>
+            <div id="transporte" *ngIf="transporteSelected">
+                <div class="form-group" >
+                    <label for="service-type">Servicio de transporte:</label>
+                    <select id="transporte-checkbox">
+                        <option value="Bus">Bus</option>
+                        <option value="Taxi">Taxi</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Empresa de transporte:</label>
+                    <input type="text" name="fname" id="campo-empresaTransporte"  value="{{empresaTransporte}}">
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Direccion de origen:</label>
+                    <input type="text" name="fname" id="campo-origenTransporte"  value="{{origenTransporte}}">
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Direccion de destino:</label>
+                    <p id="tipo-servicio">{{ubicacionDelServicio}}</p>
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Fecha llegada:</label>
+                    <input type="text" name="fname"  id="campo-llegadaTransporte"  value="{{llegadaTransporte}}">
+                </div>
+                <div class="form-group off">
+                    <label for="service-type">Fecha salida:</label>
+                    <input type="text" name="fname"  id="campo-salidaTransporte"  value="{{salidaTransporte}}">
+                </div>
             </div>
             <div class="form-group">
                 <label for="service-price">Precio del servicio:</label>
-                <input type="number" id="service-price" class="input-field" min="0" value="0">
+                <input type="number" id="service-price" class="input-field" min="0"  value="{{precio}}">
             </div>
             <label>Descripcion</label>
             <br>
-            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."></textarea>
+            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."   value="{{descripcion}}"></textarea>
             <div class="center">
-                <button>Centered Button</button>
+                <button (click)="crear()">Crear servicio</button>
               </div>
         </div>
     </div>

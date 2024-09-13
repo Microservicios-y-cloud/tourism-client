@@ -59,13 +59,15 @@ export function kcFactory(kcService: KeycloakService){
       provide: HTTP_INTERCEPTORS,
       useClass: HttpTokenInterceptor,
       multi: true
-    },
+    }
+    /*,
     {
     provide: APP_INITIALIZER,
     deps: [KeycloakService],
     useFactory: kcFactory,
     multi: true
   }
+    */
 ],
   bootstrap: [AppComponent]
 })

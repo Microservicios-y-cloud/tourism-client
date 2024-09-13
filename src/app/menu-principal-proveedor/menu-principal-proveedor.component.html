@@ -1,96 +1,20 @@
 <app-navbar></app-navbar>
 <div class="container">
     <div class="title">Mis servicios</div>
-    <button class="button">Añadir servicios</button>
+    <button class="button"  (click)="add()">Añadir servicios</button>
 </div>
 <div id="body">
-    <div class="card">
+    <div class="card" *ngFor="let item of listaServiciosDelProveedor">
         <div class="card-image"></div>
         <div class="card-details">
             <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b></p>
-            <p><b>Tipo de servicio:</b></p>
-            <p><b>Descripción:</b></p>
-            <p><b>COP 19,898:</b></p>
+            <p><b>Ubicación:</b>{{item.ubicacion.direccion}}</p>
+            <p><b>Descripción:</b>{{item.descripcion}}</p>
+            <p><b>COP 19,898:</b>{{item.precioUnitario}}</p>
         </div>
         <div class="card-footer">
-            <button class="button edit">Editar</button>
-            <button class="button delete">Borrar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-image"></div>
-        <div class="card-details">
-            <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b></p>
-            <p><b>Tipo de servicio:</b></p>
-            <p><b>Descripción:</b></p>
-            <p><b>COP 19,898:</b></p>
-        </div>
-        <div class="card-footer">
-            <button class="button edit">Editar</button>
-            <button class="button delete">Borrar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-image"></div>
-        <div class="card-details">
-            <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b></p>
-            <p><b>Tipo de servicio:</b></p>
-            <p><b>Descripción:</b></p>
-            <p><b>COP 19,898:</b></p>
-        </div>
-        <div class="card-footer">
-            <button class="button edit">Editar</button>
-            <button class="button delete">Borrar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-image"></div>
-        <div class="card-details">
-            <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b></p>
-            <p><b>Tipo de servicio:</b></p>
-            <p><b>Descripción:</b></p>
-            <p><b>COP 19,898:</b></p>
-        </div>
-        <div class="card-footer">
-            <button class="button edit">Editar</button>
-            <button class="button delete">Borrar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-image"></div>
-        <div class="card-details">
-            <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b></p>
-            <p><b>Tipo de servicio:</b></p>
-            <p><b>Descripción:</b></p>
-            <p><b>COP 19,898:</b></p>
-        </div>
-        <div class="card-footer">
-            <button class="button edit">Editar</button>
-            <button class="button delete">Borrar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-image"></div>
-        <div class="card-details">
-            <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b></p>
-            <p><b>Tipo de servicio:</b></p>
-            <p><b>Descripción:</b></p>
-            <p><b>COP 19,898:</b></p>
-        </div>
-        <div class="card-footer">
-            <button class="button edit">Editar</button>
-            <button class="button delete">Borrar</button>
+            <button class="button edit" (click)="editar()">Editar</button>
+            <button class="button delete" (click)="borrar()">Borrar</button>
         </div>
     </div>
 </div>

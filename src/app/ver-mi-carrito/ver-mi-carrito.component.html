@@ -13,32 +13,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><button>X</button></td>
-            <td>Servicio 1</td>
-            <td>$10.00</td>
-            <td>2</td>
-            <td>$20.00</td>
-        </tr>
-        <tr>
-            <td><button>X</button></td>
-            <td>Servicio 2</td>
-            <td>$15.00</td>
-            <td>1</td>
-            <td>$15.00</td>
-        </tr>
-        <tr>
-            <td><button>X</button></td>
-            <td>Servicio 3</td>
-            <td>$7.00</td>
-            <td>5</td>
-            <td>$35.00</td>
+        <tr *ngFor="let item of itemsCarrito">
+            <td><button (click)="eliminarItem(item)">X</button></td>
+            <td>{{item.servicio.nombre}}</td>
+            <td>{{item.servicio.precioUnitario}}</td>
+            <td>{{item.cantidad}}</td>
+            <td>${{item.subTotal}}</td>
         </tr>
     </tbody>
 </table>
 
 <div class="summary">
-    <p>Total: <span class="total">$70.00</span></p>
+    <p>Total: <span class="total">${{total}}</span></p>
 </div>
 
 <!-- Contenedor para el botón de compra alineado a la derecha -->

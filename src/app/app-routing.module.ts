@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'menu-principal', component: MenuPrincipalClienteComponent },
   { path: 'registrarse', component: CrearUsuarioComponent },
   { path: 'search', component: SearchBarComponent },
+  { path: '**', component: SearchBarComponent }
 ];
 
 @NgModule({
