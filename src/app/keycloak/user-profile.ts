@@ -1,7 +1,7 @@
 export interface UserAttributes {
   photoURL?: string;
   dob?: string;
-  webURL?: string;
+  webUrl?: string;
   description?: string;
   userType?: 'customer' | 'supplier';
   socialMedia: string[];

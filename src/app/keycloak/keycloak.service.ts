@@ -8,6 +8,9 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class KeycloakService {
+  accountManagement() {
+    this.keycloak.accountManagement();
+  }
 
   private _keycloak: Keycloak | undefined;
   private _profile: UserProfile | undefined;
@@ -52,7 +55,7 @@ export class KeycloakService {
         profile.attributes = {
           photoURL: keycloakTokenParsed.attributes.photoURL?.[0],
           dob: keycloakTokenParsed.attributes.dob?.[0],
-          webURL: keycloakTokenParsed.attributes.webURL?.[0],
+          webUrl: keycloakTokenParsed.attributes.webURL?.[0],
           description: keycloakTokenParsed.attributes.description?.[0],
           userType: keycloakTokenParsed.attributes.userType?.[0],
           socialMedia: keycloakTokenParsed.attributes.socialNetworks ?? []
@@ -74,7 +77,7 @@ export class KeycloakService {
           console.log('Date of Birth:', this._profile.attributes.dob);
           console.log('Description:', this._profile.attributes.description);
           console.log('User Type:', this._profile.attributes.userType);
-          console.log('Web URL (if supplier):', this._profile.attributes.webURL);
+          console.log('Web URL (if supplier):', this._profile.attributes.webUrl);
           console.log('Social media:', this._profile.attributes.socialMedia);
         }
 
