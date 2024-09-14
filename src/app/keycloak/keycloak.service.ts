@@ -53,7 +53,7 @@ export class KeycloakService {
       // Mapear los atributos del token al UserProfile
       if (keycloakTokenParsed && keycloakTokenParsed.attributes) {
         profile.attributes = {
-          photoURL: keycloakTokenParsed.attributes.photoURL?.[0],
+          picture: keycloakTokenParsed.attributes.picture?.[0],
           dob: keycloakTokenParsed.attributes.dob?.[0],
           webUrl: keycloakTokenParsed.attributes.webURL?.[0],
           description: keycloakTokenParsed.attributes.description?.[0],
@@ -73,7 +73,7 @@ export class KeycloakService {
         console.log('Last Name:', this._profile.lastName);
 
         if (this._profile.attributes) {
-          console.log('Photo URL:', this._profile.attributes.photoURL);
+          console.log('Photo URL:', this._profile.attributes.picture);
           console.log('Date of Birth:', this._profile.attributes.dob);
           console.log('Description:', this._profile.attributes.description);
           console.log('User Type:', this._profile.attributes.userType);

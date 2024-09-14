@@ -1,5 +1,5 @@
 export interface UserAttributes {
-  photoURL?: string;
+  picture?: string;
   dob?: string;
   webUrl?: string;
   description?: string;
