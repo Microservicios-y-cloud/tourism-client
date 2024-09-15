@@ -1,7 +1,4 @@
 <app-navbar></app-navbar>
-<div class="container">
-    <div class="title">Editar servicio</div>
-</div>
 <div id="body">
     <div class="container-wrapper">
         <div class="container1">
@@ -10,103 +7,122 @@
         <div class="container2">
             <div class="form-group">
                 <label for="service-name">Nombre del servicio:</label>
-                <input type="text" name="fname" id="campo-nombre" value="{{nombre}}">
+                <input type="text" name="fname" value="{{servicio?.name}}">
             </div>
             <div class="form-group">
-                <label for="service-location">Ubicación del servicio:</label>
-                <select id="ubicacion-checkbox" (change)="actualizarUbicacion($event)">
-                    <option value="ubicacion 1">ubicacion 1</option>
-                    <option value="ubicacion 2">ubicacion 2</option>
-                    <option value="ubicacion 3">ubicacion 3</option>
-                </select>
+                <label for="service-location">Ubicación del servicio (Ciudad):</label>
+                <input type="text" name="fname" value="{{servicio?.city}}" placeholder="Ciudad">
+            </div>
+            <div class="form-group">
+                <label for="service-location">Ubicación del servicio (Pais):</label>
+                <input type="text" name="fname" value="{{servicio?.country}}" placeholder="Pais">
+            </div>
+            <div class="form-group">
+                <label for="service-location">Inicio del servicio:</label>
+                <input type="date" name="fname" value="{{servicio?.startDate}}">
+            </div>
+            <div class="form-group">
+                <label for="service-location">Fin del servicio:</label>
+                <input type="date" name="fname" value="{{servicio?.endDate}}">
             </div>
             <input type="checkbox" (click)="cambiarCheck('alimentacion')"><label> Alimentacion</label>
             <div id="alimentacion" *ngIf="alimentacionSelected">
-                <div class="form-group" >
-                    <label for="service-type">Servicio de alimentacion:</label>
-                    <select id="alimentacion-checkbox">
-                        <option value="Desayuno">Desayuno</option>
-                        <option value="Almuerzo">Almuerzo</option>
-                        <option value="Cena">Cena</option>
-                    </select>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type" class="a">  horario:</label>
-                    <input type="text" name="fname"  id="campo-horario"   value="{{horarioAlimentacion}}">
+                <div id="alimentacion">
+                    <div class="form-group" >
+                        <label for="service-type">Servicio de alimentacion:</label>
+                        <p id="tipo-servicio">{{food?.foodType}}</p>
+                    </div>
                 </div>
             </div>
             <br>
             <hr>
             <input type="checkbox" (click)="cambiarCheck('alojamiento')"><label> Alojamiento</label>
             <div id="alojamiento" *ngIf="alojamientoSelected">
-                <div class="form-group">
-                    <label for="service-type">Servicio de alojamiento:</label>
-                    <select id="alojamiento-checkbox">
-                        <option value="Hotel">Hotel</option>
-                        <option value="Resort">Resort</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Direccion:</label>
-                    <input type="text" name="fname" id="campo-direccionAlojamiento"   value="{{direccionAlojamiento}}">
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">fecha llegada:</label>
-                    <input type="text" name="fname"  id="campo-llegadaAlojamiento"   value="{{llegadaAlojamiento}}">
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">fecha salida:</label>
-                    <input type="text" name="fname" id="campo-salidaAlojamiento"  value="{{salidaAlojamiento}}">
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Capacidad:</label>
-                    <input type="number" id="campo-capacidadAlojamiento" min="1"  value="{{capacidadAlojamiento}}">
+                <div id="alojamiento">
+                    <div class="form-group">
+                        <label for="service-type">Servicio de alojamiento:</label>
+                        <p id="tipo-servicio">{{accomodation?.accommodationType}}</p>
+                    </div>
+                    <div class="form-group off">
+                        <label for="service-type">Capacidad de alojamiento:</label>
+                        <input type="number" name="fname" value="{{accomodation?.capacity}}" placeholder="Capacidad máxima">
+                    </div>
                 </div>
             </div>
             <br>
             <hr>
             <input type="checkbox" (click)="cambiarCheck('transporte')"><label> Transporte</label>
-            <div id="transporte" *ngIf="transporteSelected">
-                <div class="form-group" >
-                    <label for="service-type">Servicio de transporte:</label>
-                    <select id="transporte-checkbox">
-                        <option value="Bus">Bus</option>
-                        <option value="Taxi">Taxi</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Empresa de transporte:</label>
-                    <input type="text" name="fname" id="campo-empresaTransporte"  value="{{empresaTransporte}}">
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Direccion de origen:</label>
-                    <input type="text" name="fname" id="campo-origenTransporte"  value="{{origenTransporte}}">
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Direccion de destino:</label>
-                    <p id="tipo-servicio">{{ubicacionDelServicio}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Fecha llegada:</label>
-                    <input type="text" name="fname"  id="campo-llegadaTransporte"  value="{{llegadaTransporte}}">
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Fecha salida:</label>
-                    <input type="text" name="fname"  id="campo-salidaTransporte"  value="{{salidaTransporte}}">
+            <div id="alojamiento" *ngIf="transporteSelected">
+                <div id="transporte">
+                    <div class="form-group" >
+                        <label for="service-type">Servicio de transporte:</label>
+                        <p id="tipo-servicio">{{transportation?.transportType}}</p>
+                    </div>
+                    <div class="form-group off">
+                        <label for="service-type">Compañia de transporte:</label>
+                        <input type="text" name="fname" value="{{transportation?.company}}" placeholder="Empresa de transporte">
+                        
+                    </div>
+                    <div class="form-group off">
+                        <label for="service-type">Ubicación de origen (ciudad):</label>
+                        <input type="text" name="fname" value="{{transportation?.originCity}}" placeholder="Ciudad">
+                    </div>
+                    <div class="form-group off">
+                    <label for="service-type">Ubicación de origen (Pais):</label>
+                        <input type="text" name="fname" value="{{transportation?.originCountry}}" placeholder="Pais">
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="service-price">Precio del servicio:</label>
-                <input type="number" id="service-price" class="input-field" min="0"  value="{{precio}}">
-            </div>
-            <label>Descripcion</label>
             <br>
-            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."   value="{{descripcion}}"></textarea>
+            <hr>
+            <div class="form-group">
+                <p>$ </p><input type="number" name="fname" value="$ {{servicio?.unitValue}}" placeholder="Precio del servicio">
+            </div>
+            <label id="descripcion">Descripcion</label>
+            <br>
+            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."   value="{{servicio?.description}}"></textarea>
             <div class="center">
                 <button (click)="actualizar()">Actualizar servicio</button>
-              </div>
+            </div>
         </div>
     </div>
+    <!--
+    <div id="retroalimentacion">
+        <div class="contenedor-rt">
+            <div class="header">
+                <div>Preguntas</div>
+                <div>Valoraciones</div>
+            </div>
+            <div class="content">
+                <div class="column" id="preguntas-usuarios">
+                    <div class="message" *ngFor="let item of servicio.preguntas">
+                        <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
+                        <div class="message-content">
+                            <div class="header-info">
+                                <div class="username">{{item.id}}</div>
+                                <div class="time">{{item.fecha}}</div>
+                            </div>
+                            <div class="text">{{item.contenido}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column" id="valoraciones-usuarios">
+                    <div class="message" *ngFor="let item of servicio.comentario">
+                        <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
+                        <div class="message-content" >
+                            <div class="header-info">
+                                <div class="username">{{item.id}}</div>
+                                <div class="time">{{item.fecha}}</div>
+                            </div>
+                            <div class="text">{{item.contenido}}</div>
+                            <div class="stars">
+                                <span class="star">&#9733;</span><p>{{item.calificacion}}/5</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
 </div>

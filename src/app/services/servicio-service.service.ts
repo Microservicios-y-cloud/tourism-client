@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServiceResponse } from '../models/service-response';
+import { ServiceResponse } from '../models/ServiceResponse';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -18,7 +18,15 @@ export class ServicioService {
     { "Content-Type": "application/json" }
   )
 
-  listarServicios(): Observable<ServiceResponse[]> {
+  getService(id:string): Observable<ServiceResponse> {
+    return this.http.get<ServiceResponse>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/${id}`)
+  }
+
+  findAll(): Observable<ServiceResponse[]> {
     return this.http.get<ServiceResponse[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services`)
+  }
+
+  findAllBySupplier(id:string): Observable<ServiceResponse> {
+    return this.http.get<ServiceResponse>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/${id}`)
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { GET_SERVICES_BY_KEYWORD } from '../../graphql/queries.graphql';
@@ -10,20 +10,16 @@ import { GET_SERVICES_BY_KEYWORD } from '../../graphql/queries.graphql';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
 
-  @Input()
-  keyword: string = '';
+  @Input() keyword: string = '';
+  @Output() resultsEmitter = new EventEmitter<any[]>();
   services: any[] = [];
   loading: boolean = false;
   error: any;
   private querySubscription: Subscription | undefined;
-searchTerm: any;
-
 
   constructor(private readonly apollo: Apollo) {}
 
-  ngOnInit() {
-    // Inicialmente, no hacemos ninguna consulta hasta que el usuario ingrese un término de búsqueda.
-  }
+  ngOnInit() {}
 
   onSearch(): void {
     if (this.keyword.trim()) {
@@ -40,6 +36,7 @@ searchTerm: any;
             this.loading = loading;
             this.services = data?.servicesByKeyword || [];
             this.error = null;
+            this.resultsEmitter.emit(this.services);  // Emitir los resultados
           },
           error: (err) => {
             this.error = err;
@@ -50,6 +47,7 @@ searchTerm: any;
         });
     } else {
       this.services = [];
+      this.resultsEmitter.emit(this.services);  // Emitir resultados vacíos
     }
   }
 
@@ -59,7 +57,7 @@ searchTerm: any;
     }
   }
 
-  showFilters: boolean = false;  
+  showFilters: boolean = false;
 
   toggleFilters(): void {
     this.showFilters = !this.showFilters;  

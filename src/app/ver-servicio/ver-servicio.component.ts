@@ -1,35 +1,61 @@
-import { Component } from '@angular/core';
-import { ubicacion } from '../models/ubicacion';
-import { servicioAlimentacion } from '../models/servicioAlimentacion';
-import { servicioAlojamiento } from '../models/servicioAlojamiento';
-import { servicioTransporte } from '../models/servicioTransporte';
-import { pregunta } from '../models/pregunta';
-import { comentario } from '../models/comentario';
-import { Service } from '../models/service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceResponse } from '../models/ServiceResponse';
+import { TransportationServiceResponse } from '../models/TransportationServiceResponse';
+import { ServicioService } from '../services/servicio-service.service';
+import { FoodService } from '../services/foodService';
+import { AccomodationService } from '../services/accomodationService';
+import { TransportationService } from '../services/transportationService';
+import { FoodServiceResponse } from '../models/FoodServiceResponse';
+import { AccommodationServiceResponse } from '../models/AccommodationServiceResponse';
 
 @Component({
   selector: 'app-ver-servicio',
   templateUrl: './ver-servicio.component.html',
-  styleUrl: './ver-servicio.component.css'
+  styleUrls: ['./ver-servicio.component.css']
 })
-export class VerServicioComponent {
-  //variables
-  public servicio: Service = new Service(
-    -1,
-    "",
-    "lorem ipsum basljdbsbadkjsabskadj",
-    100.050,
-    new ubicacion("sasa","sas","sdfsdf","fg","dfjh","y"),
-    [new pregunta(1,"Esto es una pregunta","1 septiembre"),new pregunta(2,"Esto es una pregunta","10 septiembre"),new pregunta(3,"Esto es una pregunta","11 septiembre")],
-    [new comentario(1,"Esto es una valoracion",2,"1 Agosto"), new comentario(2,"Esto es una valoracion",2,"1 Septiembre"), new comentario(3,"Esto es una valoracion",2,"3 Septiembre")],
-    new servicioAlimentacion("LUNCH","7:30 am"),
-    new servicioAlojamiento("Hotel de lujo","12 septiembre", "18 septiembre", "alguna no se jajaj", 2),
-    new servicioTransporte("Bus", "12 septiembre","18 septiembre","transcaribe",new ubicacion("ss","ss","ss","ss","ss","ss")))
+export class VerServicioComponent implements OnInit {
+  miParametro: string = "";
+  public servicio: ServiceResponse | null = null;
+  public food: FoodServiceResponse | null = null;
+  public accomodation: AccommodationServiceResponse | null = null;
+  public transportation: TransportationServiceResponse | null = null;
+  public cantidad = 1;
 
-  public cantidad = 1
+  constructor(
+    private servicioService: ServicioService,
+    private FoodService: FoodService,
+    private AccomodationService: AccomodationService,
+    private TransportService: TransportationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
-  ngOninit(): void {
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.miParametro = params['idServicio'];
+      console.log('Parámetro de URL:', this.miParametro);
 
+      this.servicioService.getService(this.miParametro).subscribe(servicios => this.servicio = servicios);
+      
+      this.FoodService.getService(this.miParametro).subscribe(
+        food => this.food = food,
+        error => console.error('No tiene el servicio de comida:', error)
+      );
+
+      this.AccomodationService.getService(this.miParametro).subscribe(
+        accommodation => this.accomodation = accommodation,
+        error => console.error('No tiene el servicio de alojamiento:', error)
+      );
+
+      this.TransportService.getService(this.miParametro).subscribe(
+        (transportation: TransportationServiceResponse) => {
+          console.log(transportation.company); // Ahora debería funcionar
+          this.transportation = transportation;
+        },
+        error => console.error('No tiene el servicio de transporte:', error)
+      );
+    });
   }
 
   sumarCantidad() {
@@ -37,25 +63,23 @@ export class VerServicioComponent {
   }
 
   restarCantidad() {
-    if(this.cantidad <= 1) {
-      this.cantidad = 1
-    }
-    else {
+    if (this.cantidad <= 1) {
+      this.cantidad = 1;
+    } else {
       this.cantidad -= 1;
     }
   }
 
   comprar() {
-
+    // Implementar la lógica para comprar
   }
 
   add_carrito() {
-
+    // Implementar la lógica para añadir al carrito
   }
 
   enviarPregunta() {
     const pregunta = document.getElementById('campo_de_texto') as HTMLInputElement;
     console.log(pregunta.value);
-    
   }
 }

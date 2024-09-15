@@ -61,3 +61,11 @@ p {
         font-size: 14px;
     }
 }
+
+.serv {
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+}

@@ -1,11 +1,12 @@
 <app-navbar></app-navbar>
 <app-search-bar></app-search-bar>
-<div class="container" *ngFor="let servicio of servicios">
-    <div class="card">
-        <div class="image"></div>
-        <h1>{{servicio.name}}</h1>
-        <p>{{servicio.description}}</p>
-        <p>{{servicio.unitValue}}</p>
+<div class="container">
+    <div class="card" *ngFor="let item of cartas">
+        <div class="serv" (click)="verServicio(item)">
+        <h1>{{item.name}}</h1>
+        <p>{{item.description}}</p>
+        <p class="price">$ {{item.unitValue}}</p>
+        <div>
         <button>Agregar</button>
     </div>
 </div>

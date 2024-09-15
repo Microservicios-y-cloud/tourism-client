@@ -16,8 +16,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 
 const routes: Routes = [
   { path: 'ver-carrito', component: VerMiCarritoComponent },
-  { path: 'ver-servicio', component: VerServicioComponent },
-  { path: 'editar-servicio', component: EditarServicioComponent },
+  { path: 'ver-servicio/:idServicio', component: VerServicioComponent },
+  { path: 'editar-servicio/:idServicio', component: EditarServicioComponent },
   { path: 'crear-servicio', component: CrearServicioComponent },
   { path: 'ver-notificaciones', component: VerNotificacionesComponent },
   { path: 'ver-servicios-comprados', component: VerServiciosCompradosComponent },

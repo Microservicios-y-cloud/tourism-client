@@ -7,82 +7,58 @@
         <div class="container2">
             <div class="form-group">
                 <label for="service-name">Nombre del servicio:</label>
-                <p id="nombre">{{servicio.nombre}}</p>
+                <p id="nombre">{{servicio?.name}}</p>
             </div>
             <div class="form-group">
                 <label for="service-location">Ubicación del servicio:</label>
-                <p id="ubicacion">{{servicio.ubicacion.direccion}}</p>
+                <p id="ubicacion">{{servicio?.city}}, {{servicio?.country}}</p>
             </div>
-            <div id="alimentacion" *ngIf="servicio.servicioAlimentacion">
+            <div class="form-group">
+                <label for="service-location">Inicio del servicio:</label>
+                <p id="ubicacion">{{servicio?.startDate}}</p>
+            </div>
+            <div class="form-group">
+                <label for="service-location">Fin del servicio:</label>
+                <p id="ubicacion">{{servicio?.endDate}}</p>
+            </div>
+            <div id="alimentacion" *ngIf="food">
                 <div class="form-group" >
                     <label for="service-type">Servicio de alimentacion:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlimentacion?.tipoAlimentacion}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">  horario:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlimentacion?.horario}}</p>
+                    <p id="tipo-servicio">{{food.foodType}}</p>
                 </div>
             </div>
-            <div id="alojamiento" *ngIf="servicio.servicioAlojamiento">
+            <div id="alojamiento" *ngIf="accomodation">
                 <div class="form-group">
                     <label for="service-type">Servicio de alojamiento:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.tipoAlojamiento}}</p>
+                    <p id="tipo-servicio">{{accomodation.accommodationType}}</p>
                 </div>
                 <div class="form-group off">
-                    <label for="service-type">Tipo de alojamiento:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.tipoAlojamiento}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Direccion:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.direccion}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">fecha llegada:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.fechaLlegada}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">fecha salida:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.fechaSalida}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Capacidad:</label>
-                    <p id="tipo-servicio">{{servicio.servicioAlojamiento?.capacidad}}</p>
+                    <label for="service-type">Capacidad de alojamiento:</label>
+                    <p id="tipo-servicio">{{accomodation.capacity}}</p>
                 </div>
             </div>
 
-            <div id="transporte" *ngIf="servicio.servicioTransporte">
+            <div id="transporte" *ngIf="transportation" >
                 <div class="form-group" >
                     <label for="service-type">Servicio de transporte:</label>
-                    <p id="tipo-servicio">{{servicio.servicioTransporte?.tipoTransporte}}</p>
+                    <p id="tipo-servicio">{{transportation?.transportType}}</p>
                 </div>
                 <div class="form-group off">
-                    <label for="service-type">Empresa de transporte:</label>
-                    <p id="tipo-servicio">{{servicio.servicioTransporte?.empresaTransporte}}</p>
+                    <label for="service-type">Compañia de transporte:</label>
+                    <p id="tipo-servicio">{{transportation?.company}}</p>
                 </div>
                 <div class="form-group off">
-                    <label for="service-type">Direccion de origen:</label>
-                    <p id="tipo-servicio">{{servicio.servicioTransporte?.origen?.direccion}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Direccion de destino:</label>
-                    <p id="tipo-servicio">{{servicio.ubicacion.direccion}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Fecha llegada:</label>
-                    <p id="tipo-servicio">{{servicio.servicioTransporte?.fechaLlegada}}</p>
-                </div>
-                <div class="form-group off">
-                    <label for="service-type">Fecha salida:</label>
-                    <p id="tipo-servicio">{{servicio.servicioTransporte?.fechaSalida}}</p>
+                    <label for="service-type">Lugar de origen:</label>
+                    <p id="tipo-servicio">{{transportation?.originCity}}, {{transportation?.originCountry}}</p>
                 </div>
             </div>
 
             <div class="form-group">
-                <p id="precio">${{servicio.precioUnitario}} por persona</p>
+                <p id="precio">${{servicio?.unitValue}} por persona</p>
             </div>
             <label id="descripcion">Descripcion</label>
             <br>
-            <p>{{servicio.descripcion}}</p>
+            <p>{{servicio?.description}}</p>
             <br>
             <div id="contenedor-comprar">
                 <div class="product-container">
@@ -101,6 +77,7 @@
         <textarea placeholder="Escribe aquí..." id="campo_de_texto"></textarea>
         <button id="enviar-pregunta" (click)="enviarPregunta()">Enviar</button>
     </div>
+    <!--
     <div id="retroalimentacion">
         <div class="contenedor-rt">
             <div class="header">
@@ -138,4 +115,5 @@
             </div>
         </div>
     </div>
+    -->
 </div>
