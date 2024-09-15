@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { servicio } from '../models/servicio';
+import { Service } from '../models/service';
 import { ubicacion } from '../models/ubicacion';
 import { pregunta } from '../models/pregunta';
 import { comentario } from '../models/comentario';
@@ -51,7 +51,7 @@ export class EditarServicioComponent {
   }
 
   cargarServicio() {
-    const servicioDePrueba = new servicio(
+    const servicioDePrueba = new Service(
       -1,
       "Ejemplo Servicio",
       "lorem ipsum basljdbsbadkjsabskadj",
@@ -129,7 +129,7 @@ export class EditarServicioComponent {
     console.log('Ubicación (General):', this.ubicacion);
     console.log('Precio (General):', this.precio);
     console.log('Descripción (General):', this.descripcion);
-    let servicioActualizado = new servicio(this.id,this.nombre,this.descripcion,this.precio,this.ubicacion,this.preguntas,this.comentarios,null,null,null)
+    let servicioActualizado = new Service(this.id,this.nombre,this.descripcion,this.precio,this.ubicacion,this.preguntas,this.comentarios,null,null,null)
 
     if (this.alimentacionSelected) {
       let alimentacion = new servicioAlimentacion("","")

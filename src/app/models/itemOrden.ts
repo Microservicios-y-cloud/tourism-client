@@ -1,4 +1,4 @@
-import { servicio } from "./servicio";
+import { servicio } from "./service";
 
 export class itemOrden {
     constructor(

@@ -1,5 +1,5 @@
 import { redSocial } from "./redSocial";
-import { servicio } from "./servicio";
+import { servicio } from "./service";
 
 export class proveedor {
     constructor(

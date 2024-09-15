@@ -1,5 +1,5 @@
 import { comentario } from "./comentario";
-import { servicio } from "./servicio";
+import { Service } from "./service";
 
 export class itemCarrito {
     constructor(
@@ -7,6 +7,6 @@ export class itemCarrito {
         public cantidad: number,
         public subTotal: number,
         public comentario: comentario | null,
-        public servicio: servicio
+        public servicio: Service
     ) {}
 }

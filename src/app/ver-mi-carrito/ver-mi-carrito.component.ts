@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { itemCarrito } from '../models/itemCarrito';
-import { servicio } from '../models/servicio';
+import { Service } from '../models/service';
 import { ubicacion } from '../models/ubicacion';
 import { servicioAlimentacion } from '../models/servicioAlimentacion';
 
@@ -22,7 +22,7 @@ export class VerMiCarritoComponent {
     //Prueba
     let ubicacionPrueba = new ubicacion("dd","dd","dd","dd","dd","dd")
     let alimentacionPrueba = new servicioAlimentacion("dd","dd")
-    let servicioPrueba = new servicio(1,"testService","desc",2,ubicacionPrueba,null,null,alimentacionPrueba,null,null)
+    let servicioPrueba = new Service(1,"testService","desc",2,ubicacionPrueba,null,null,alimentacionPrueba,null,null)
     let itemsDePrueba = new itemCarrito(1,5,4,null,servicioPrueba)
     let itemsDePrueba2 = new itemCarrito(1,5,30,null,servicioPrueba)
     let itemsDePrueba3 = new itemCarrito(1,5,40,null,servicioPrueba)

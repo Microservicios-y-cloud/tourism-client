@@ -1,41 +1,11 @@
 <app-navbar></app-navbar>
 <app-search-bar></app-search-bar>
-<div class="container">
+<div class="container" *ngFor="let servicio of servicios">
     <div class="card">
         <div class="image"></div>
-        <h1>Nombre del servicio</h1>
-        <p>Descripción Lorem ipsum bla bla bla blab alb sl b...</p>
-        <p class="price">COP 19,898</p>
+        <h1>{{servicio.name}}</h1>
+        <p>{{servicio.description}}</p>
+        <p>{{servicio.unitValue}}</p>
+        <button>Agregar</button>
     </div>
-    <div class="card">
-        <div class="image"></div>
-        <h1>Nombre del servicio</h1>
-        <p>Descripción Lorem ipsum bla bla bla blab alb sl b...</p>
-        <p class="price">COP 19,898</p>
-    </div>
-    <div class="card">
-        <div class="image"></div>
-        <h1>Nombre del servicio</h1>
-        <p>Descripción Lorem ipsum bla bla bla blab alb sl b...</p>
-        <p class="price">COP 19,898</p>
-    </div>
-    <div class="card">
-        <div class="image"></div>
-        <h1>Nombre del servicio</h1>
-        <p>Descripción Lorem ipsum bla bla bla blab alb sl b...</p>
-        <p class="price">COP 19,898</p>
-    </div>
-    <div class="card">
-        <div class="image"></div>
-        <h1>Nombre del servicio</h1>
-        <p>Descripción Lorem ipsum bla bla bla blab alb sl b...</p>
-        <p class="price">COP 19,898</p>
-    </div>
-    <div class="card">
-        <div class="image"></div>
-        <h1>Nombre del servicio</h1>
-        <p>Descripción Lorem ipsum bla bla bla blab alb sl b...</p>
-        <p class="price">COP 19,898</p>
-    </div>
-    <!-- Agrega más tarjetas según sea necesario -->
 </div>

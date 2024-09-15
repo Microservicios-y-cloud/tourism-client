@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { servicio } from '../models/servicio';
 import { ubicacion } from '../models/ubicacion';
 import { servicioAlimentacion } from '../models/servicioAlimentacion';
 import { servicioAlojamiento } from '../models/servicioAlojamiento';
 import { servicioTransporte } from '../models/servicioTransporte';
 import { pregunta } from '../models/pregunta';
 import { comentario } from '../models/comentario';
+import { Service } from '../models/service';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -14,7 +14,7 @@ import { comentario } from '../models/comentario';
 })
 export class VerServicioComponent {
   //variables
-  public servicio: servicio = new servicio(
+  public servicio: Service = new Service(
     -1,
     "",
     "lorem ipsum basljdbsbadkjsabskadj",

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { servicio } from '../models/servicio';
+import { Service } from '../models/service';
 import { pregunta } from '../models/pregunta';
 import { ubicacion } from '../models/ubicacion';
 import { servicioAlojamiento } from '../models/servicioAlojamiento';
@@ -16,14 +16,14 @@ import { itemCarrito } from '../models/itemCarrito';
 export class MenuPrincipalProveedorComponent {
   //variables
 
-  public listaServiciosDelProveedor: servicio[] = []
+  public listaServiciosDelProveedor: Service[] = []
   constructor(
 
   ) {}
 
 
   ngOnInit():void {
-    const servicioDePrueba1 = new servicio(
+    const servicioDePrueba1 = new Service(
       -1,
       "Ejemplo Servicio",
       "lorem ipsum basljdbsbadkjsabskadj",
@@ -43,7 +43,7 @@ export class MenuPrincipalProveedorComponent {
       new servicioAlojamiento("Hotel de lujo", "12 septiembre", "18 septiembre", "alguna no se jajaj", 2),
       new servicioTransporte("Bus", "12 septiembre", "18 septiembre", "transcaribe", new ubicacion("ss", "ss", "ss", "ss", "ss", "ss"))
     );
-    const servicioDePrueba2 = new servicio(
+    const servicioDePrueba2 = new Service(
       -1,
       "Ejemplo Servicio",
       "lorem ipsum basljdbsbadkjsabskadj",
@@ -63,7 +63,7 @@ export class MenuPrincipalProveedorComponent {
       new servicioAlojamiento("Hotel de lujo", "12 septiembre", "18 septiembre", "alguna no se jajaj", 2),
       new servicioTransporte("Bus", "12 septiembre", "18 septiembre", "transcaribe", new ubicacion("ss", "ss", "ss", "ss", "ss", "ss"))
     );
-    const servicioDePrueba3 = new servicio(
+    const servicioDePrueba3 = new Service(
       -1,
       "Ejemplo Servicio",
       "lorem ipsum basljdbsbadkjsabskadj",
