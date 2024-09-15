@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../services/foodService';
 import { AccomodationService } from '../services/accomodationService';
 import { TransportationService } from '../services/transportationService';
-import { FoodServiceResponse } from '../models/FoodServiceResponse';
-import { AccommodationServiceResponse } from '../models/AccommodationServiceResponse';
-import { TransportationServiceResponse } from '../models/TransportationServiceResponse';
-import { QuestionResponse } from '../models/QuestionResponse';
+import { FoodServiceResponse } from '../models/dto/FoodServiceResponse';
+import { AccommodationServiceResponse } from '../models/dto/AccommodationServiceResponse';
+import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
+import { QuestionResponse } from '../models/dto/QuestionResponse';
 
 
 @Component({

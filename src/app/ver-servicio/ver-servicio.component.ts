@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceResponse } from '../models/ServiceResponse';
-import { TransportationServiceResponse } from '../models/TransportationServiceResponse';
+import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
 import { ServicioService } from '../services/servicio-service.service';
 import { FoodService } from '../services/foodService';
 import { AccomodationService } from '../services/accomodationService';
 import { TransportationService } from '../services/transportationService';
-import { FoodServiceResponse } from '../models/FoodServiceResponse';
-import { AccommodationServiceResponse } from '../models/AccommodationServiceResponse';
+import { FoodServiceResponse } from '../models/dto/FoodServiceResponse';
+import { AccommodationServiceResponse } from '../models/dto/AccommodationServiceResponse';
 
 @Component({
   selector: 'app-ver-servicio',

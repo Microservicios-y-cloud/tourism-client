@@ -30,6 +30,11 @@
                 <div id="alimentacion">
                     <div class="form-group" >
                         <label for="service-type">Servicio de alimentacion:</label>
+                        <select id="foodTypeSelect" [(ngModel)]="foodTypes" name="foodType">
+                            <option *ngFor="let foodType of foodTypes" [value]="foodType.FoodTypeId">
+                              {{ foodType.name }}
+                            </option>
+                          </select>
                         <p id="tipo-servicio">{{food?.foodType}}</p>
                     </div>
                 </div>

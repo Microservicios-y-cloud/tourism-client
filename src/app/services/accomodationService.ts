@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ServiceResponse } from '../models/ServiceResponse';
 import { environment } from '../../environments/environment.development';
-import { TransportationServiceResponse } from '../models/TransportationServiceResponse';
-import { AccommodationServiceResponse } from '../models/AccommodationServiceResponse';
+import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
+import { AccommodationServiceResponse } from '../models/dto/AccommodationServiceResponse';
 
 @Injectable({
   providedIn: 'root'

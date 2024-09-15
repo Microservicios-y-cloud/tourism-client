@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Asegúrate de importar OnInit
+import { Router, ActivatedRoute } from '@angular/router';
+import { FoodTypeService } from '../services/foodTypeService'; // Corrige la ruta según tu estructura de carpetas
+import { FoodTypeResponse } from '../models/dto/FoodType';
 import { ServiceResponse } from '../models/ServiceResponse';
-import { FoodServiceResponse } from '../models/FoodServiceResponse';
-import { AccommodationServiceResponse } from '../models/AccommodationServiceResponse';
-import { TransportationServiceResponse } from '../models/TransportationServiceResponse';
-import { QuestionResponse } from '../models/QuestionResponse';
+import { FoodServiceResponse } from '../models/dto/FoodServiceResponse';
+import { AccommodationServiceResponse } from '../models/dto/AccommodationServiceResponse';
+import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
+import { QuestionResponse } from '../models/dto/QuestionResponse';
+
 @Component({
   selector: 'app-crear-servicio',
   templateUrl: './crear-servicio.component.html',
-  styleUrl: './crear-servicio.component.css'
+  styleUrls: ['./crear-servicio.component.css'] // Corrige la extensión del archivo de estilos
 })
-export class CrearServicioComponent {
+export class CrearServicioComponent implements OnInit {
   // Variables
+  public foodTypes: FoodTypeResponse[] = [];
+
   public alimentacionSelected = false;
   public alojamientoSelected = false;
   public transporteSelected = false;
@@ -18,20 +24,36 @@ export class CrearServicioComponent {
   public ubicacionDelServicio = "";
 
   // Propiedades para el formulario
-  public id = -1
-  public comentarios: QuestionResponse[] = []
-  public preguntas: QuestionResponse[] = []
+  public id = -1;
+  public comentarios: QuestionResponse[] = [];
+  public preguntas: QuestionResponse[] = [];
 
   public servicio: ServiceResponse | null = null;
   public food: FoodServiceResponse | null = null;
   public accomodation: AccommodationServiceResponse | null = null;
   public transportation: TransportationServiceResponse | null = null;
 
+  constructor(
+    private foodTypeService: FoodTypeService, // Cambiado a camelCase
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+
   ngOnInit(): void {
-   
+    this.loadFoodTypes();
   }
 
-  cambiarCheck(serviceType: string) {
+  loadFoodTypes(): void {
+    this.foodTypeService.findAll().subscribe(
+      (data: FoodTypeResponse[]) => {
+        this.foodTypes = data;
+      },
+      (error: any) => {
+      }
+    );
+  }
+
+  cambiarCheck(serviceType: string): void {
     switch (serviceType) {
       case 'alimentacion':
         this.alimentacionSelected = !this.alimentacionSelected;
@@ -45,6 +67,6 @@ export class CrearServicioComponent {
     }
   }
 
-  crear() {
+  crear(): void {
   }
 }
