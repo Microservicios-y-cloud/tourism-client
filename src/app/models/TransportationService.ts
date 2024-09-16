@@ -1,6 +1,6 @@
 import { TransportType } from './TransportType'; // Asegúrate de tener esta clase definida
 import { Location } from './Location'; // Asegúrate de tener esta clase definida
-import { Service } from './Service'; // Asegúrate de tener esta clase definida
+import { Service } from './service'; // Asegúrate de tener esta clase definida
 
 export class TransportationService extends Service {
   id?: number; // Opcional, ya que el ID puede ser generado automáticamente por la base de datos

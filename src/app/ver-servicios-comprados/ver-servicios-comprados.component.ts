@@ -11,17 +11,43 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class VerServiciosCompradosComponent {
   public mostrarComentario = false;
 
-  public listaServicios: ServiceResponse[] = []
+  public visible:boolean = false
+
+  public valoracion = 1;
+  public text = '';
+
+  public listaServicios: ServiceResponse[] = [new ServiceResponse(1,"sdsdsdsdsd","sssss",2,"sddd","ddd","sddf",1,undefined,undefined)]
   constructor(
     private servicioService: ServicioService,
     private router: Router,  private route: ActivatedRoute
   ) {}
 
   realizarComentario(id: number) {
-    this.mostrarComentario = true; // Mostrar el componente para redactar comentario
+    this.visible = true; // Mostrar el componente para redactar comentario
   }
 
   cerrarComentario() {
-    this.mostrarComentario = false; // Cerrar el componente
+    this.visible = false; // Cerrar el componente
+  }
+
+  
+
+  actualizarPuntaje(num: number) {
+    this.valoracion = num;
+  }
+
+  enviar() {
+    if (this.text.trim() === '') {
+      console.log('El comentario está vacío.');
+      return;
+    }
+    console.log('Valoración:', this.valoracion);
+    console.log('Comentario:', this.text);
+    // Aquí podrías realizar la acción para enviar el comentario
+    this.cerrar(); // Cerrar el popup después de enviar
+  }
+
+  cerrar() {
+    this.visible = false;
   }
 }

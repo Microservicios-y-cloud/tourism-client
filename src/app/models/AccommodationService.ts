@@ -1,4 +1,4 @@
-import { Service } from './Service'; // Asegúrate de tener esta clase definida
+import { Service } from './service'; // Asegúrate de tener esta clase definida
 import { AccommodationType } from './AccommodationType'; // Asegúrate de tener esta clase definida
 
 export class AccommodationService extends Service {

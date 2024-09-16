@@ -1,7 +1,31 @@
 <app-navbar></app-navbar>
 
 <!--<redactar-comentario [visible]="mostrarComentario" (close)="cerrarComentario()"></redactar-comentario>-->
+<div class="overlay" *ngIf="visible">
+    <div class="popup-container">
+        <button class="close-button" (click)="cerrar()">X</button>
+        <h1>Deja tu Comentario y Valoración</h1>
+        <div id="feedback-form">
+            <label for="comentario"><b>Comentario:</b></label>
+            <textarea id="comentario" name="comentario" rows="4" cols="50" placeholder="Escribe tu comentario aquí..." [(ngModel)]="text"></textarea>
 
+            <div class="form-group">
+                <span class="valoracion"><b>Valoración:</b></span>
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" (click)="actualizarPuntaje(5)"><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" (click)="actualizarPuntaje(4)"><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" (click)="actualizarPuntaje(3)"><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" (click)="actualizarPuntaje(2)"><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" (click)="actualizarPuntaje(1)"><label for="star1">★</label>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button (click)="enviar()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="title">Servicios comprados</div>
 </div>

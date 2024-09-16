@@ -1,4 +1,4 @@
-import { Service } from './Service'; // Asegúrate de tener esta clase definida
+import { Service } from './service'; // Asegúrate de tener esta clase definida
 import { FoodType } from './FoodType'; // Asegúrate de tener esta clase definida
 import { Location } from './Location'; // Asegúrate de tener esta clase definida
 
