@@ -25,7 +25,6 @@ export class VerServicioComponent implements OnInit {
   public accomodation: AccommodationServiceResponse | null = null;
   public transportation: TransportationServiceResponse | null = null;
   public cantidad = 1;
-
   constructor(
     private servicioService: ServicioService,
     private FoodService: FoodService,
@@ -62,7 +61,6 @@ export class VerServicioComponent implements OnInit {
         food => this.food = food,
         error => console.error('No tiene el servicio de comida:', error)
       );
-
       this.AccomodationService.getService(this.miParametro).subscribe(
         accommodation => this.accomodation = accommodation,
         error => console.error('No tiene el servicio de alojamiento:', error)
@@ -88,7 +86,6 @@ export class VerServicioComponent implements OnInit {
   sumarCantidad() {
     this.cantidad += 1;
   }
-
   restarCantidad() {
     if (this.cantidad <= 1) {
       this.cantidad = 1;
@@ -96,15 +93,12 @@ export class VerServicioComponent implements OnInit {
       this.cantidad -= 1;
     }
   }
-
   comprar() {
     // Implementar la lógica para comprar
   }
-
   add_carrito() {
     // Implementar la lógica para añadir al carrito
   }
-
   enviarPregunta() {
     const pregunta = document.getElementById('campo_de_texto') as HTMLInputElement;
     console.log(pregunta.value);

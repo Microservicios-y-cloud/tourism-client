@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<redactar-comentario [visible]="mostrarComentario" (close)="cerrarComentario()"></redactar-comentario>
+<!--<redactar-comentario [visible]="mostrarComentario" (close)="cerrarComentario()"></redactar-comentario>-->
 
 <div class="container">
     <div class="title">Servicios comprados</div>
@@ -11,7 +11,7 @@
         <p>Parece que no tienes servicios comprados aún</p>
         <button class="comprar">Ir al menú principal</button>
     </div>
-    
+
     <div class="card"  *ngFor="let item of listaServicios">
         <div class="card-image">
             <img src="https://cdn.pixabay.com/photo/2015/06/10/16/36/mark-804938_640.jpg" alt="Imagen del servicio">

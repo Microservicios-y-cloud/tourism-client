@@ -26,10 +26,7 @@ export class MenuPrincipalProveedorComponent {
   }
 
   editar() {
-
   }
-
   borrar() {
-
   }
 }

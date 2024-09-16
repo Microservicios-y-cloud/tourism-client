@@ -28,9 +28,7 @@ export class CrearServicioComponent implements OnInit {
   public alimentacionSelected = false;
   public alojamientoSelected = false;
   public transporteSelected = false;
-
   public ubicacionDelServicio = "";
-
   // Propiedades para el formulario
   public id = -1;
   public comentarios: QuestionResponse[] = [];
@@ -51,21 +49,21 @@ export class CrearServicioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     this.loadFoodTypes();
   }
 
   loadFoodTypes(): void {
     console.log(22);
-    
+
     this.foodTypeService.findAll().subscribe(
       (data: FoodTypeResponse[]) => {
         this.foodTypes = data;
-        
+
       },
       (error: any) => {
         console.log(error);
-        
+
       }
     );
 
@@ -75,7 +73,7 @@ export class CrearServicioComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
-        
+
       }
     );
 
@@ -85,11 +83,10 @@ export class CrearServicioComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
-        
+
       }
     );
   }
-
   cambiarCheck(serviceType: string): void {
     switch (serviceType) {
       case 'alimentacion':

@@ -1,4 +1,3 @@
-// food-type-response.ts
 export class AccommodationTypeResponse {
     public AccommodationTypeId: number;
     public name: string;

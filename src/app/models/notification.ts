@@ -6,4 +6,3 @@ export class notification {
       public date: Date
     ) {}
   }
-  

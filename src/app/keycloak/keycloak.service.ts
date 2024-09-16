@@ -80,11 +80,11 @@ export class KeycloakService {
           console.log('Web URL (if supplier):', this._profile.attributes.webUrl);
           console.log('Social media:', this._profile.attributes.socialMedia);
         }
-
+        
         if (this._profile.attributes?.userType == 'supplier') {
           this.router.navigate(['menu-principal-proveedor']);
         } else {
-          this.router.navigate(['ver-servicio/3']);
+          this.router.navigate(['menu-principal']);
         }
       }
 

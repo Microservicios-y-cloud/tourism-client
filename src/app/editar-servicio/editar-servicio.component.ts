@@ -60,7 +60,7 @@ export class EditarServicioComponent {
   ) { }
 
   ngOnInit(): void {
-    
+
     this.loadFoodTypes();
 
     this.route.params.subscribe(params => {
@@ -74,8 +74,8 @@ export class EditarServicioComponent {
         this.accomodation.serviceResponse = servicios
         this.transportation.serviceResponse = servicios
       });
-      
-      
+
+
       this.FoodService.getService(this.miParametro).subscribe(
         food => {
           this.food = food;
@@ -97,22 +97,22 @@ export class EditarServicioComponent {
         error => console.error('No tiene el servicio de transporte:', error)
       );
 
-      
-      
+
+
     });
   }
 
   loadFoodTypes(): void {
     console.log(22);
-    
+
     this.foodTypeService.findAll().subscribe(
       (data: FoodTypeResponse[]) => {
         this.foodTypes = data;
-        
+
       },
       (error: any) => {
         console.log(error);
-        
+
       }
     );
 
@@ -122,7 +122,7 @@ export class EditarServicioComponent {
       },
       (error: any) => {
         console.log(error);
-        
+
       }
     );
 
@@ -132,7 +132,7 @@ export class EditarServicioComponent {
       },
       (error: any) => {
         console.log(error);
-        
+
       }
     );
   }

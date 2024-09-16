@@ -11,7 +11,7 @@ export class VerNotificacionesComponent {
 
   public listaNotificaciones: notification[] = [new notification(1,"Hello World","Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid nulla consectetur harum dolorum esse maxime vitae. Laborum adipisci architecto ipsa suscipit magni excepturi obcaecati? Atque expedita id molestiae pariatur totam.", new Date())]
   constructor(
-    
+
   ) {}
 
   deleteNotification(notificationToDelete: notification) {

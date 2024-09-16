@@ -1,4 +1,3 @@
-// food-type-response.ts
 export class TransportTypeResponse {
     public TransportTypeId: number;
     public name: string;
