@@ -1,4 +1,4 @@
-import { ServiceResponse } from "../ServiceResponse";
+import { ServiceResponse } from "./ServiceResponse";
 
 export class FoodServiceResponse {
     public serviceResponse: ServiceResponse;

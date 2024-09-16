@@ -7,30 +7,34 @@
         <div class="container2">
             <div class="form-group">
                 <label for="service-name">Nombre del servicio:</label>
-                <input type="text" name="fname" value="{{servicio?.name}}">
+                <input type="text" name="fname" [(ngModel)]="servicio.name">
             </div>
             <div class="form-group">
                 <label for="service-location">Ubicación del servicio (Ciudad):</label>
-                <input type="text" name="fname" value="{{servicio?.city}}" placeholder="Ciudad">
+                <input type="text" name="fname" [(ngModel)]="servicio.city" placeholder="Ciudad">
             </div>
             <div class="form-group">
                 <label for="service-location">Ubicación del servicio (Pais):</label>
-                <input type="text" name="fname" value="{{servicio?.country}}" placeholder="Pais">
+                <input type="text" name="fname" [(ngModel)]="servicio.country" placeholder="Pais">
             </div>
             <div class="form-group">
                 <label for="service-location">Inicio del servicio:</label>
-                <input type="date" name="fname" value="{{servicio?.startDate}}">
+                <input type="date" name="fname" [(ngModel)]="servicio.startDate">
             </div>
             <div class="form-group">
                 <label for="service-location">Fin del servicio:</label>
-                <input type="date" name="fname" value="{{servicio?.endDate}}">
+                <input type="date" name="fname" [(ngModel)]="servicio.endDate">
             </div>
             <input type="checkbox" (click)="cambiarCheck('alimentacion')"><label> Alimentacion</label>
             <div id="alimentacion" *ngIf="alimentacionSelected">
                 <div id="alimentacion">
                     <div class="form-group" >
                         <label for="service-type">Servicio de alimentacion:</label>
-                        <p id="tipo-servicio">{{food?.foodType}}</p>
+                        <select id="foodTypeSelect" [(ngModel)]="food.foodType" name="foodType">
+                            <option *ngFor="let foodType of foodTypes" [value]="foodType.name">
+                                {{ foodType.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -41,11 +45,15 @@
                 <div id="alojamiento">
                     <div class="form-group">
                         <label for="service-type">Servicio de alojamiento:</label>
-                        <p id="tipo-servicio">{{accomodation?.accommodationType}}</p>
+                        <select id="accommodationTypeSelect" [(ngModel)]="accomodation.accommodationType" name="accommodationType">
+                            <option *ngFor="let accommodationType of accommodationTypes" [value]="accommodationType.name">
+                                {{ accommodationType.name }}
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group off">
                         <label for="service-type">Capacidad de alojamiento:</label>
-                        <input type="number" name="fname" value="{{accomodation?.capacity}}" placeholder="Capacidad máxima">
+                        <input type="number" name="fname" [(ngModel)]="accomodation.capacity" placeholder="Capacidad máxima">
                     </div>
                 </div>
             </div>
@@ -56,31 +64,35 @@
                 <div id="transporte">
                     <div class="form-group" >
                         <label for="service-type">Servicio de transporte:</label>
-                        <p id="tipo-servicio">{{transportation?.transportType}}</p>
+                        <select id="transportTypeSelect" [(ngModel)]="transportation.transportType" name="transportType">
+                            <option *ngFor="let transportType of transportTypes" [value]="transportType.name">
+                                {{ transportType.name }}
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group off">
                         <label for="service-type">Compañia de transporte:</label>
-                        <input type="text" name="fname" value="{{transportation?.company}}" placeholder="Empresa de transporte">
+                        <input type="text" name="fname" [(ngModel)]="transportation.company" placeholder="Empresa de transporte">
                         
                     </div>
                     <div class="form-group off">
                         <label for="service-type">Ubicación de origen (ciudad):</label>
-                        <input type="text" name="fname" value="{{transportation?.originCity}}" placeholder="Ciudad">
+                        <input type="text" name="fname" [(ngModel)]="transportation.originCity" placeholder="Ciudad">
                     </div>
                     <div class="form-group off">
                     <label for="service-type">Ubicación de origen (Pais):</label>
-                        <input type="text" name="fname" value="{{transportation?.originCountry}}" placeholder="Pais">
+                        <input type="text" name="fname" [(ngModel)]="transportation.originCountry" placeholder="Pais">
                     </div>
                 </div>
             </div>
             <br>
             <hr>
             <div class="form-group">
-                <p>$ </p><input type="number" name="fname" value="$ {{servicio?.unitValue}}" placeholder="Precio del servicio">
+                <p>$ </p><input type="number" name="fname" [(ngModel)]="servicio.unitValue" placeholder="Precio del servicio">
             </div>
             <label id="descripcion">Descripcion</label>
             <br>
-            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."   value="{{servicio?.description}}"></textarea>
+            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."   value="servicio.description"></textarea>
             <div class="center">
                 <button (click)="actualizar()">Actualizar servicio</button>
             </div>

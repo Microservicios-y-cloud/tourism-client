@@ -13,6 +13,7 @@ import { EditarServicioComponent } from './editar-servicio/editar-servicio.compo
 import { VerServicioComponent } from './ver-servicio/ver-servicio.component';
 import { VerMiCarritoComponent } from './ver-mi-carrito/ver-mi-carrito.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { RedactarComentarioComponent } from './components/redactar-comentario/redactar-comentario.component';
 
 const routes: Routes = [
   { path: 'ver-carrito', component: VerMiCarritoComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'menu-principal', component: MenuPrincipalClienteComponent },
   { path: 'registrarse', component: CrearUsuarioComponent },
   { path: 'search', component: SearchBarComponent },
-  { path: '**', component: SearchBarComponent }
+  { path: 'redactar-comentario/:idServicio', component: RedactarComentarioComponent },
+  { path: '**', component: LogInComponent }
 ];
 
 @NgModule({

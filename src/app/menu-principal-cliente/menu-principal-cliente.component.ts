@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ServicioService } from '../services/servicio-service.service';
-import { ServiceResponse } from '../models/ServiceResponse';
+import { ServiceResponse } from '../models/dto/ServiceResponse';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 

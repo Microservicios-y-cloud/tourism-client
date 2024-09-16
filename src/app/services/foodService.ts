@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServiceResponse } from '../models/ServiceResponse';
+import { ServiceResponse } from '../models/dto/ServiceResponse';
 import { environment } from '../../environments/environment.development';
 import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
 import { FoodServiceResponse } from '../models/dto/FoodServiceResponse';

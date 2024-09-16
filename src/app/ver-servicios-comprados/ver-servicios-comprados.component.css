@@ -43,6 +43,7 @@
 }
 .card-image {
     width: 200px;
+    height: 150px;
     background-color: rgb(176, 176, 176);
     margin: 15px;
 }
@@ -70,5 +71,20 @@
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+
+img {
+    height: 100%;
+}
+
+.comprar {
+    padding: 15px;
+    color: #FFF;
+    font-size: 16px;
+    background-color: #0077ff;
+    border: 1px solid #0077ff;
+    border-radius: 15px;
     cursor: pointer;
 }

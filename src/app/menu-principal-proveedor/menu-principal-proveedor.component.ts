@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ServicioService } from '../services/servicio-service.service';
-import { ServiceResponse } from '../models/ServiceResponse';
+import { ServiceResponse } from '../models/dto/ServiceResponse';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-principal-proveedor',
@@ -12,7 +13,8 @@ export class MenuPrincipalProveedorComponent {
 
   public listaServiciosDelProveedor: ServiceResponse[] = []
   constructor(
-    private servicioService: ServicioService
+    private servicioService: ServicioService,
+    private router: Router,  private route: ActivatedRoute
   ) {}
 
 
@@ -20,7 +22,7 @@ export class MenuPrincipalProveedorComponent {
   }
 
   add() {
-
+    this.router.navigate([`crear-servicio`]);
   }
 
   editar() {

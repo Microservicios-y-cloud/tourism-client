@@ -1,4 +1,4 @@
-import { ServiceResponse } from "../ServiceResponse";
+import { ServiceResponse } from "./ServiceResponse";
 
 export class AccommodationServiceResponse {
     public serviceResponse: ServiceResponse;

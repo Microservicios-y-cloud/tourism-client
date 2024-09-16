@@ -118,3 +118,7 @@ textarea {
     width: 100%;
     min-height: 100px;
 }
+
+.ob {
+    color: rgb(255, 0, 0);
+}

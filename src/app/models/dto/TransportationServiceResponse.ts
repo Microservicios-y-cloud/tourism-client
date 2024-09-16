@@ -1,7 +1,7 @@
 // Importación de tipos si es necesario
 // import { ServiceResponse } from './path/to/ServiceResponse';
 
-import { ServiceResponse } from "../ServiceResponse";
+import { ServiceResponse } from "./ServiceResponse";
 
 export class TransportationServiceResponse {
     public serviceResponse: ServiceResponse;
