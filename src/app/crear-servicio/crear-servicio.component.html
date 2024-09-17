@@ -11,7 +11,7 @@
             </div>
             <div class="form-group" >
                 <label for="service-type">Ubicacion:</label>
-                <select id="foodTypeSelect" [(ngModel)]="ubicacion" name="foodType">
+                <select id="foodTypeSelect" [(ngModel)]="ubicacion.id" name="foodType">
                     <option *ngFor="let location of locations" [value]="location.id">
                         {{ location.city }}, {{ location.city }}
                     </option>
@@ -25,13 +25,13 @@
                 <label for="service-location">Fin del servicio:</label>
                 <input type="date" name="fname" [(ngModel)]="servicio.endDate">
             </div>
-            <input type="checkbox" (click)="cambiarCheck('alimentacion')"><label> Alimentacion</label>
+            <input type="radio" (click)="cambiarCheck('alimentacion')" [checked]="alimentacionSelected"><label> Alimentacion</label>
             <div id="alimentacion" *ngIf="alimentacionSelected">
                 <div id="alimentacion">
                     <div class="form-group" >
                         <label for="service-type">Servicio de alimentacion:</label>
-                        <select id="foodTypeSelect" [(ngModel)]="food.foodType" name="foodType">
-                            <option *ngFor="let foodType of foodTypes" [value]="foodType.name">
+                        <select id="foodTypeSelect" [(ngModel)]="food.foodTypeId" name="foodType">
+                            <option *ngFor="let foodType of foodTypes" [value]="foodType.FoodTypeId">
                                 {{ foodType.name }}
                             </option>
                         </select>
@@ -40,7 +40,7 @@
             </div>
             <br>
             <hr>
-            <input type="checkbox" (click)="cambiarCheck('alojamiento')"><label> Alojamiento</label>
+            <input type="radio" (click)="cambiarCheck('alojamiento')" [checked]="alojamientoSelected"><label> Alojamiento</label>
             <div id="alojamiento" *ngIf="alojamientoSelected">
                 <div id="alojamiento">
                     <div class="form-group">
@@ -59,7 +59,7 @@
             </div>
             <br>
             <hr>
-            <input type="checkbox" (click)="cambiarCheck('transporte')"><label> Transporte</label>
+            <input type="radio" (click)="cambiarCheck('transporte')" [checked]="transporteSelected"><label> Transporte</label>
             <div id="alojamiento" *ngIf="transporteSelected">
                 <div id="transporte">
                     <div class="form-group" >

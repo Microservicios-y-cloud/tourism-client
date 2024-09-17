@@ -13,6 +13,10 @@ import { LocationService } from '../services/LocationService';
 import { Location } from '../models/dto/LocationResponse';
 import { Service } from '../models/dto/Service';
 import { FoodService } from '../models/dto/FoodService';
+import { FoodServices } from '../services/foodServices';
+import { FoodServiceRequest } from '../models/dto/request/FoodServiceRequest';
+import { AccomodationService } from '../services/accomodationService';
+import { AccomoationServiceRequest } from '../models/dto/request/AccommodationServiceRequest';
 
 @Component({
   selector: 'app-crear-servicio',
@@ -22,7 +26,7 @@ import { FoodService } from '../models/dto/FoodService';
 export class CrearServicioComponent implements OnInit {
   // Variables
   public a = ''
-  public ubicacion: Location = new Location(-1,'',0,0,'','','')
+  public ubicacion: Location = new Location(9,'',0,0,'','','')
   public locations: Location[] = []
   public foodTypes: FoodType[] = [];
   public accommodationTypes: AccommodationType[] = [];
@@ -37,7 +41,7 @@ export class CrearServicioComponent implements OnInit {
   public comentarios: Question[] = [];
   public preguntas: Question[] = [];
 
-  public servicio: Service = new Service('','',1,this.ubicacion.id,new Date(),new Date(),'')
+  public servicio: Service = new Service('','ggg',1,this.ubicacion.id,new Date(),new Date(),'')
 
   public food: FoodService = new FoodService(this.servicio,0,'');
   public accomodation: AccommodationService = new AccommodationService(this.servicio,0,'',0);
@@ -46,6 +50,8 @@ export class CrearServicioComponent implements OnInit {
 
   constructor(
     private locationService: LocationService,
+    private foodService: FoodServices,
+    private accomodationService: AccomodationService,
     private foodTypeService: FoodTypeService,
     private accommodationTypeService: AccommodationTypeService,
     private transportTypeService: TransportTypeService,
@@ -104,25 +110,51 @@ export class CrearServicioComponent implements OnInit {
     );
   }
   cambiarCheck(serviceType: string): void {
+    // Desmarcar todas las opciones
+    this.alimentacionSelected = false;
+    this.alojamientoSelected = false;
+    this.transporteSelected = false;
+  
+    // Marcar solo la opción seleccionada
     switch (serviceType) {
       case 'alimentacion':
-        this.alimentacionSelected = !this.alimentacionSelected;
+        this.alimentacionSelected = true;
         break;
       case 'alojamiento':
-        this.alojamientoSelected = !this.alojamientoSelected;
+        this.alojamientoSelected = true;
         break;
       case 'transporte':
-        this.transporteSelected = !this.transporteSelected;
+        this.transporteSelected = true;
         break;
     }
   }
+  
 
   crear(): void {
     console.log(this.ubicacion);
-    
     console.log(this.servicio);
-    console.log(this.food);
-    console.log(this.accomodation);
-    console.log(this.transportation);
+    
+    if (this.alimentacionSelected) {
+      console.log(this.food);
+
+      this.servicio.supplierId = "2"
+      let send = new FoodServiceRequest(this.servicio.name,this.servicio.description,this.servicio.unitValue,this.ubicacion.id,"2024-08-20T00:00:00Z","2024-09-20T00:00:00Z","1",this.food.foodTypeId);
+      this.foodService.create(send).subscribe(
+        (response: FoodServiceRequest) => {
+          console.log('Servicio creado con éxito:', response);
+        },
+        (error: any) => {
+          console.error('Error al crear el servicio:', error);
+        }
+      );
+    }
+    
+    if (this.alojamientoSelected) {
+    }
+    
+    if (this.transporteSelected) {
+      console.log(this.transportation);
+    }
   }
+  
 }
