@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServiceResponse } from '../models/dto/ServiceResponse';
-import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
+import { Service } from '../models/dto/Service';
+import { TransportationService } from '../models/dto/TransportationService';
 import { ServicioService } from '../services/servicio-service.service';
-import { FoodService } from '../services/foodService';
+import { FoodServices } from '../services/foodServices';
 import { AccomodationService } from '../services/accomodationService';
-import { TransportationService } from '../services/transportationService';
-import { FoodServiceResponse } from '../models/dto/FoodServiceResponse';
-import { AccommodationServiceResponse } from '../models/dto/AccommodationServiceResponse';
+import { TransportationServices } from '../services/transportationServices';
+import { FoodService } from '../models/dto/FoodService';
+import { AccommodationService } from '../models/dto/AccommodationService';
+import { Location } from '../models/dto/LocationResponse';
 
 import { KeycloakService } from '../keycloak/keycloak.service'; // Ajusta la ruta según tu estructura de archivos
+import { LocationService } from '../services/LocationService';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -18,18 +20,22 @@ import { KeycloakService } from '../keycloak/keycloak.service'; // Ajusta la rut
 })
 export class VerServicioComponent implements OnInit {
   public mostrarComprar = false
+  public ubicacion: Location = new Location(-1,'',0,0,'','','')
 
   miParametro: string = "";
-  public servicio: ServiceResponse | null = null;
-  public food: FoodServiceResponse | null = null;
-  public accomodation: AccommodationServiceResponse | null = null;
-  public transportation: TransportationServiceResponse | null = null;
+  public servicio: Service = new Service('','',-1,this.ubicacion.id,new Date(),new Date(),'')
+
+  public food: FoodService | null = null;
+  public accomodation: AccommodationService | null = null;
+  public transportation: TransportationService | null = null;
+
   public cantidad = 1;
   constructor(
+    private locationService: LocationService,
     private servicioService: ServicioService,
-    private FoodService: FoodService,
+    private FoodServices: FoodServices,
     private AccomodationService: AccomodationService,
-    private TransportService: TransportationService,
+    private TransportService: TransportationServices,
     private router: Router,
     private route: ActivatedRoute,
     private keycloakService: KeycloakService
@@ -50,24 +56,36 @@ export class VerServicioComponent implements OnInit {
         servicios => {
           this.servicio = servicios;
           this.isLoading = false;
+          this.locationService.getService(this.servicio.destinationId.toString()).subscribe(
+            food => {
+              this.ubicacion = food;
+              console.log('Servicio de comida recibido con éxito:', food); // Mensaje de éxito
+            },
+            error => console.error('No tiene el servicio de comida:', error)
+          );
+          
         },
         error => {
           this.errorMessage = 'Error al obtener el servicio';
           this.isLoading = false;
         }
       );
-
-      this.FoodService.getService(this.miParametro).subscribe(
-        food => this.food = food,
+      this.FoodServices.getService(this.miParametro).subscribe(
+        food => {
+          this.food = food;
+          console.log('Servicio de comida recibido con éxito:', food); // Mensaje de éxito
+        },
         error => console.error('No tiene el servicio de comida:', error)
       );
+      
+      
       this.AccomodationService.getService(this.miParametro).subscribe(
         accommodation => this.accomodation = accommodation,
         error => console.error('No tiene el servicio de alojamiento:', error)
       );
 
       this.TransportService.getService(this.miParametro).subscribe(
-        (transportation: TransportationServiceResponse) => {
+        (transportation: TransportationService) => {
           console.log(transportation.company);
           this.transportation = transportation;
         },

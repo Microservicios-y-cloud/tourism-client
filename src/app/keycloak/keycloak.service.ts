@@ -84,7 +84,7 @@ export class KeycloakService {
         if (this._profile.attributes?.userType == 'supplier') {
           this.router.navigate(['menu-principal-proveedor']);
         } else {
-          this.router.navigate(['menu-principal']);
+          this.router.navigate(['editar-servicio/1']);
         }
       }
 

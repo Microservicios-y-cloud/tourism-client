@@ -1,16 +1,16 @@
-import { ServiceResponse } from "./ServiceResponse";
+import { Service } from "./Service";
 
-export class FoodServiceResponse {
-    public serviceResponse: ServiceResponse;
+export class FoodService {
+    public service: Service;
     public foodTypeId: number;
     public foodType: string;
 
     constructor(
-        serviceResponse: ServiceResponse,
+        service: Service,
         foodTypeId: number,
         foodType: string
     ) {
-        this.serviceResponse = serviceResponse;
+        this.service = service;
         this.foodTypeId = foodTypeId;
         this.foodType = foodType;
     }

@@ -1,18 +1,18 @@
-import { ServiceResponse } from "./ServiceResponse";
+import { Service } from "./Service";
 
-export class AccommodationServiceResponse {
-    public serviceResponse: ServiceResponse;
+export class AccommodationService {
+    public service: Service;
     public accommodationTypeId: number;
     public accommodationType: string;
     public capacity: number;
 
     constructor(
-        serviceResponse: ServiceResponse,
+        service: Service,
         accommodationTypeId: number,
         accommodationType: string,
         capacity: number
     ) {
-        this.serviceResponse = serviceResponse;
+        this.service = service;
         this.accommodationTypeId = accommodationTypeId;
         this.accommodationType = accommodationType;
         this.capacity = capacity;

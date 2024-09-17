@@ -1,4 +1,4 @@
-export class QuestionResponse {
+export class Question {
     readonly id: number;
     readonly content: string;
     readonly date: Date;

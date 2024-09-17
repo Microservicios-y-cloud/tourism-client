@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { TransportTypeResponse } from '../models/dto/TransportTypeResponse';
+import { TransportType } from '../models/dto/TransportType';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class TransportTypeService {
 
   constructor(private http: HttpClient) { }
 
-  getService(id: string): Observable<TransportTypeResponse> {
-    return this.http.get<TransportTypeResponse>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/TransportType/${id}`);
+  getService(id: string): Observable<TransportType> {
+    return this.http.get<TransportType>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/TransportType/${id}`);
   }
 
-  findAll(): Observable<TransportTypeResponse[]> { // Asegúrate de que sea un arreglo de TransportTypeResponse
-    return this.http.get<TransportTypeResponse[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/TransportType`);
+  findAll(): Observable<TransportType[]> { // Asegúrate de que sea un arreglo de TransportType
+    return this.http.get<TransportType[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/TransportType`);
   }
 }

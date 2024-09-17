@@ -9,13 +9,13 @@
                 <label for="service-name">Nombre del servicio:</label>
                 <input type="text" name="fname" [(ngModel)]="servicio.name">
             </div>
-            <div class="form-group">
-                <label for="service-location">Ubicación del servicio (Ciudad):</label>
-                <input type="text" name="fname" [(ngModel)]="servicio.city" placeholder="Ciudad">
-            </div>
-            <div class="form-group">
-                <label for="service-location">Ubicación del servicio (Pais):</label>
-                <input type="text" name="fname" [(ngModel)]="servicio.country" placeholder="Pais">
+            <div class="form-group" >
+                <label for="service-type">Ubicacion:</label>
+                <select id="foodTypeSelect" [(ngModel)]="ubicacion" name="foodType">
+                    <option *ngFor="let location of locations" [value]="location.id">
+                        {{ location.city }}, {{ location.city }}
+                    </option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="service-location">Inicio del servicio:</label>

@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Service } from '../models/dto/Service';
 import { environment } from '../../environments/environment.development';
 import { TransportationService } from '../models/dto/TransportationService';
-import { AccommodationService } from '../models/dto/AccommodationService';
+import { FoodService } from '../models/dto/FoodService';
+import { Location } from '../models/dto/LocationResponse';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccomodationService {
+export class LocationService {
 
   constructor(
     private http: HttpClient
@@ -20,11 +21,11 @@ export class AccomodationService {
     { "Content-Type": "application/json" }
   )
 
-  getService(id:string): Observable<AccommodationService> {
-    return this.http.get<AccommodationService>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/accommodation/${id}`)
+  getService(id:string): Observable<Location> {
+    return this.http.get<Location>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/location/${id}`)
   }
 
-  findAll(): Observable<AccommodationService> {
-    return this.http.get<AccommodationService>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/accommodation`)
+  findAll(): Observable<Location[]> {
+    return this.http.get<Location[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/location`)
   }
 }

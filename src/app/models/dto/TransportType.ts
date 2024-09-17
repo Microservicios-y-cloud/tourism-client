@@ -1,4 +1,4 @@
-export class TransportTypeResponse {
+export class TransportType {
     public TransportTypeId: number;
     public name: string;
 

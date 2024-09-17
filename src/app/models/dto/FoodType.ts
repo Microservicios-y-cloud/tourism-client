@@ -1,5 +1,5 @@
 // food-type-response.ts
-export class FoodTypeResponse {
+export class FoodType {
     public FoodTypeId: number;
     public name: string;
 

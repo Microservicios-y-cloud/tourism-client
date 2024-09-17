@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { FoodTypeResponse } from '../models/dto/FoodTypeResponse';
+import { FoodType } from '../models/dto/FoodType';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class FoodTypeService {
 
   constructor(private http: HttpClient) { }
 
-  getService(id: string): Observable<FoodTypeResponse> {
-    return this.http.get<FoodTypeResponse>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/foodType/${id}`);
+  getService(id: string): Observable<FoodType> {
+    return this.http.get<FoodType>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/foodType/${id}`);
   }
 
-  findAll(): Observable<FoodTypeResponse[]> { // Asegúrate de que sea un arreglo de FoodTypeResponse
-    return this.http.get<FoodTypeResponse[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/foodType`);
+  findAll(): Observable<FoodType[]> { // Asegúrate de que sea un arreglo de FoodType
+    return this.http.get<FoodType[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/foodType`);
   }
 }

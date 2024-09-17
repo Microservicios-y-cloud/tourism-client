@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core'; // Asegúrate de importar OnInit
 import { Router, ActivatedRoute } from '@angular/router';
 import { FoodTypeService } from '../services/foodTypeService'; // Corrige la ruta según tu estructura de carpetas
-import { FoodTypeResponse } from '../models/dto/FoodTypeResponse';
-import { ServiceResponse } from '../models/dto/ServiceResponse';
-import { FoodServiceResponse } from '../models/dto/FoodServiceResponse';
-import { AccommodationServiceResponse } from '../models/dto/AccommodationServiceResponse';
-import { TransportationServiceResponse } from '../models/dto/TransportationServiceResponse';
-import { QuestionResponse } from '../models/dto/QuestionResponse';
-import { AccommodationTypeResponse } from '../models/dto/AccommodationTypeResponse';
+import { FoodType } from '../models/dto/FoodType';
+import { AccommodationService} from '../models/dto/AccommodationService';
+import { TransportationService } from '../models/dto/TransportationService';
+import { Question } from '../models/dto/Question';
+import { AccommodationType } from '../models/dto/AccommodationType';
 import { AccommodationTypeService } from '../services/AccommodationTypeService';
 import { TransportTypeService } from '../services/TransportTypeService';
-import { TransportTypeResponse } from '../models/dto/TransportTypeResponse';
+import { TransportType } from '../models/dto/TransportType';
+import { LocationService } from '../services/LocationService';
+import { Location } from '../models/dto/LocationResponse';
+import { Service } from '../models/dto/Service';
+import { FoodService } from '../models/dto/FoodService';
 
 @Component({
   selector: 'app-crear-servicio',
@@ -20,10 +22,11 @@ import { TransportTypeResponse } from '../models/dto/TransportTypeResponse';
 export class CrearServicioComponent implements OnInit {
   // Variables
   public a = ''
-
-  public foodTypes: FoodTypeResponse[] = [];
-  public accommodationTypes: AccommodationTypeResponse[] = [];
-  public transportTypes: TransportTypeResponse[] = [];
+  public ubicacion: Location = new Location(-1,'',0,0,'','','')
+  public locations: Location[] = []
+  public foodTypes: FoodType[] = [];
+  public accommodationTypes: AccommodationType[] = [];
+  public transportTypes: TransportType[] = [];
 
   public alimentacionSelected = false;
   public alojamientoSelected = false;
@@ -31,16 +34,18 @@ export class CrearServicioComponent implements OnInit {
   public ubicacionDelServicio = "";
   // Propiedades para el formulario
   public id = -1;
-  public comentarios: QuestionResponse[] = [];
-  public preguntas: QuestionResponse[] = [];
+  public comentarios: Question[] = [];
+  public preguntas: Question[] = [];
 
-  public servicio: ServiceResponse = new ServiceResponse(0, '', '', 0, '', '', '');
-  public food: FoodServiceResponse = new FoodServiceResponse(this.servicio,0,'');
-  public accomodation: AccommodationServiceResponse = new AccommodationServiceResponse(this.servicio,0,'',0);
-  public transportation: TransportationServiceResponse = new TransportationServiceResponse(this.servicio,0,'','',0,'','');
+  public servicio: Service = new Service('','',1,this.ubicacion.id,new Date(),new Date(),'')
+
+  public food: FoodService = new FoodService(this.servicio,0,'');
+  public accomodation: AccommodationService = new AccommodationService(this.servicio,0,'',0);
+  public transportation: TransportationService = new TransportationService(this.servicio,0,'','',0,'','');
 
 
   constructor(
+    private locationService: LocationService,
     private foodTypeService: FoodTypeService,
     private accommodationTypeService: AccommodationTypeService,
     private transportTypeService: TransportTypeService,
@@ -49,15 +54,26 @@ export class CrearServicioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.loadFoodTypes();
   }
 
   loadFoodTypes(): void {
     console.log(22);
 
+    this.locationService.findAll().subscribe(
+      (data: Location[]) => {
+        this.locations = data;
+        console.log(this.locations);
+        
+      },
+      (error: any) => {
+        console.log(error);
+
+      }
+    );
+
     this.foodTypeService.findAll().subscribe(
-      (data: FoodTypeResponse[]) => {
+      (data: FoodType[]) => {
         this.foodTypes = data;
 
       },
@@ -68,7 +84,7 @@ export class CrearServicioComponent implements OnInit {
     );
 
     this.accommodationTypeService.findAll().subscribe(
-      (data: AccommodationTypeResponse[]) => {
+      (data: AccommodationType[]) => {
         this.accommodationTypes = data;
       },
       (error: any) => {
@@ -78,7 +94,7 @@ export class CrearServicioComponent implements OnInit {
     );
 
     this.transportTypeService.findAll().subscribe(
-      (data: TransportTypeResponse[]) => {
+      (data: TransportType[]) => {
         this.transportTypes = data;
       },
       (error: any) => {
@@ -102,6 +118,8 @@ export class CrearServicioComponent implements OnInit {
   }
 
   crear(): void {
+    console.log(this.ubicacion);
+    
     console.log(this.servicio);
     console.log(this.food);
     console.log(this.accomodation);

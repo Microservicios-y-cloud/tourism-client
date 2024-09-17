@@ -1,10 +1,10 @@
 // Importación de tipos si es necesario
-// import { ServiceResponse } from './path/to/ServiceResponse';
+// import { Service } from './path/to/Service';
 
-import { ServiceResponse } from "./ServiceResponse";
+import { Service } from "./Service";
 
-export class TransportationServiceResponse {
-    public serviceResponse: ServiceResponse;
+export class TransportationService {
+    public service: Service;
     public originId: number;
     public originCountry: string;
     public originCity: string;
@@ -13,7 +13,7 @@ export class TransportationServiceResponse {
     public company: string;
 
     constructor(
-        serviceResponse: ServiceResponse,
+        service: Service,
         originId: number,
         originCountry: string,
         originCity: string,
@@ -21,7 +21,7 @@ export class TransportationServiceResponse {
         transportType: string,
         company: string
     ) {
-        this.serviceResponse = serviceResponse;
+        this.service = service;
         this.originId = originId;
         this.originCountry = originCountry;
         this.originCity = originCity;

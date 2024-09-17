@@ -1,4 +1,4 @@
-export class AccommodationTypeResponse {
+export class AccommodationType {
     public AccommodationTypeId: number;
     public name: string;
 

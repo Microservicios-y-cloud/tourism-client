@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { AccommodationTypeResponse } from '../models/dto/AccommodationTypeResponse';
+import { AccommodationType } from '../models/dto/AccommodationType';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class AccommodationTypeService {
 
   constructor(private http: HttpClient) { }
 
-  getService(id: string): Observable<AccommodationTypeResponse> {
-    return this.http.get<AccommodationTypeResponse>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/AccommodationType/${id}`);
+  getService(id: string): Observable<AccommodationType> {
+    return this.http.get<AccommodationType>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/AccommodationType/${id}`);
   }
 
-  findAll(): Observable<AccommodationTypeResponse[]> { // Asegúrate de que sea un arreglo de AccommodationTypeResponse
-    return this.http.get<AccommodationTypeResponse[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/AccommodationType`);
+  findAll(): Observable<AccommodationType[]> { // Asegúrate de que sea un arreglo de AccommodationTypeResponse
+    return this.http.get<AccommodationType[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/AccommodationType`);
   }
 }
