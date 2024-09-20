@@ -28,7 +28,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         .watchQuery<any>({
           query: GET_SERVICES_BY_KEYWORD,
           variables: {
-            keyword: "servicio" //TODO modificar para que sea la keyword que el usuario quiera
+            keyword: this.keyword,
           },
         })
         .valueChanges.subscribe({

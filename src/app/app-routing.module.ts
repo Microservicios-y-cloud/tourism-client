@@ -13,6 +13,7 @@ import { EditarServicioComponent } from './editar-servicio/editar-servicio.compo
 import { VerServicioComponent } from './ver-servicio/ver-servicio.component';
 import { VerMiCarritoComponent } from './ver-mi-carrito/ver-mi-carrito.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { PaginaErrorComponent } from './pagina-error/pagina-error.component';
 
 const routes: Routes = [
   { path: 'ver-carrito', component: VerMiCarritoComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'menu-principal', component: MenuPrincipalClienteComponent },
   { path: 'registrarse', component: CrearUsuarioComponent },
   { path: 'search', component: SearchBarComponent },
+  { path: 'error', component: PaginaErrorComponent},
   { path: '**', component: SearchBarComponent }
 ];
 

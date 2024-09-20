@@ -28,4 +28,7 @@ export class NavbarComponent {
   verHistorial() {
     this.router.navigate(['/ver-servicios-comprados']);
   }
+  logout() {
+    this.keycloakService.logout();
+    }
 }
