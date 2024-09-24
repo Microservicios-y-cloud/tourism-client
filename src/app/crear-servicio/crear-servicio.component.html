@@ -11,7 +11,7 @@
             </div>
             <div class="form-group" >
                 <label for="service-type">Ubicacion:</label>
-                <select id="foodTypeSelect" [(ngModel)]="ubicacion.id" name="foodType">
+                <select id="ubicacionSelect" [(ngModel)]="ubicacion.id">
                     <option *ngFor="let location of locations" [value]="location.id">
                         {{ location.city }}, {{ location.city }}
                     </option>
@@ -30,8 +30,8 @@
                 <div id="alimentacion">
                     <div class="form-group" >
                         <label for="service-type">Servicio de alimentacion:</label>
-                        <select id="foodTypeSelect" [(ngModel)]="food.foodTypeId" name="foodType">
-                            <option *ngFor="let foodType of foodTypes" [value]="foodType.FoodTypeId">
+                        <select #alimentaciones (change)="onSelectedFood(alimentaciones.value)">
+                            <option *ngFor="let foodType of foodTypes">
                                 {{ foodType.name }}
                             </option>
                         </select>
@@ -45,7 +45,7 @@
                 <div id="alojamiento">
                     <div class="form-group">
                         <label for="service-type">Servicio de alojamiento:</label>
-                        <select id="accommodationTypeSelect" [(ngModel)]="accomodation.accommodationType" name="accommodationType">
+                        <select id="accommodationTypeSelect" [(ngModel)]="accomodation.accommodationType" (change)="onSelectedAccomodation(accomodation.accommodationType)">
                             <option *ngFor="let accommodationType of accommodationTypes" [value]="accommodationType.name">
                                 {{ accommodationType.name }}
                             </option>
@@ -64,7 +64,7 @@
                 <div id="transporte">
                     <div class="form-group" >
                         <label for="service-type">Servicio de transporte:</label>
-                        <select id="transportTypeSelect" [(ngModel)]="transportation.transportType" name="transportType">
+                        <select id="transportTypeSelect" [(ngModel)]="transportation.transportType"  (change)="onSelectedTranportation(transportation.transportType)">
                             <option *ngFor="let transportType of transportTypes" [value]="transportType.name">
                                 {{ transportType.name }}
                             </option>
@@ -76,12 +76,12 @@
 
                     </div>
                     <div class="form-group off">
-                        <label for="service-type">Ubicación de origen (ciudad):</label>
-                        <input type="text" name="fname" [(ngModel)]="transportation.originCity" placeholder="Ciudad">
-                    </div>
-                    <div class="form-group off">
-                    <label for="service-type">Ubicación de origen (Pais):</label>
-                        <input type="text" name="fname" [(ngModel)]="transportation.originCountry" placeholder="Pais">
+                        <label for="service-type">Ubicacion de origen:</label>
+                        <select id="ubicacionSelect" [(ngModel)]="ubicacionOrigin.id">
+                            <option *ngFor="let location of locations" [value]="location.id">
+                                {{ location.city }}, {{ location.city }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
             </div>
             <label id="descripcion">Descripcion</label>
             <br>
-            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..."   value="servicio.description"></textarea>
+            <textarea id="descripcion" class="textarea" placeholder="Escribe la descripcion del servicio aquí..." [(ngModel)]="servicio.description"></textarea>
             <div class="center">
                 <button (click)="crear()">Crear servicio</button>
             </div>

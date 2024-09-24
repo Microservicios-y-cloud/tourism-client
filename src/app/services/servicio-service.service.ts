@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Service } from '../models/dto/Service';
+import { ServiceResponse } from '../models/dto/ServiceResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class ServicioService {
     return this.http.get<Service[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services`)
   }
 
-  findAllBySupplier(id:string): Observable<Service> {
-    return this.http.get<Service>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/${id}`)
+  findAllBySupplier(id:string): Observable<ServiceResponse[]> {
+    return this.http.get<ServiceResponse[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/supplier/${id}`)
   }
 }

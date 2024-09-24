@@ -8,10 +8,14 @@ import { AccomodationService } from '../services/accomodationService';
 import { TransportationServices } from '../services/transportationServices';
 import { FoodService } from '../models/dto/FoodService';
 import { AccommodationService } from '../models/dto/AccommodationService';
-import { Location } from '../models/dto/LocationResponse';
+import { Location } from '../models/dto/Location';
 
 import { KeycloakService } from '../keycloak/keycloak.service'; // Ajusta la ruta según tu estructura de archivos
 import { LocationService } from '../services/LocationService';
+import { UserProfile } from '../keycloak/user-profile';
+import { QuestionRequest } from '../models/dto/request/questionRequest';
+import { Question } from '../models/dto/Question';
+import { questionService } from '../services/questionService';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -19,6 +23,8 @@ import { LocationService } from '../services/LocationService';
   styleUrls: ['./ver-servicio.component.css']
 })
 export class VerServicioComponent implements OnInit {
+  userProfile: UserProfile | undefined;
+  
   public mostrarComprar = false
   public ubicacion: Location = new Location(-1,'',0,0,'','','')
 
@@ -31,6 +37,7 @@ export class VerServicioComponent implements OnInit {
 
   public cantidad = 1;
   constructor(
+    private questionService: questionService,
     private locationService: LocationService,
     private servicioService: ServicioService,
     private FoodServices: FoodServices,
@@ -45,6 +52,18 @@ export class VerServicioComponent implements OnInit {
   public isLoading = true;
 
   ngOnInit(): void {
+    this.questionService.findAll().subscribe(
+      (data: Question[]) => {
+        console.log(data);
+        
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+
+
+
     this.isLoading = true;
     this.errorMessage = null;
 
@@ -59,7 +78,6 @@ export class VerServicioComponent implements OnInit {
           this.locationService.getService(this.servicio.destinationId.toString()).subscribe(
             food => {
               this.ubicacion = food;
-              console.log('Servicio de comida recibido con éxito:', food); // Mensaje de éxito
             },
             error => console.error('No tiene el servicio de comida:', error)
           );
@@ -73,23 +91,18 @@ export class VerServicioComponent implements OnInit {
       this.FoodServices.getService(this.miParametro).subscribe(
         food => {
           this.food = food;
-          console.log('Servicio de comida recibido con éxito:', food); // Mensaje de éxito
-        },
-        error => console.error('No tiene el servicio de comida:', error)
+        }
       );
       
       
       this.AccomodationService.getService(this.miParametro).subscribe(
-        accommodation => this.accomodation = accommodation,
-        error => console.error('No tiene el servicio de alojamiento:', error)
+        accommodation => this.accomodation = accommodation
       );
 
       this.TransportService.getService(this.miParametro).subscribe(
         (transportation: TransportationService) => {
-          console.log(transportation.company);
           this.transportation = transportation;
-        },
-        error => console.error('No tiene el servicio de transporte:', error)
+        }
       );
 
       const userProfile = this.keycloakService.profile;
@@ -118,7 +131,14 @@ export class VerServicioComponent implements OnInit {
     // Implementar la lógica para añadir al carrito
   }
   enviarPregunta() {
+    
+    this.userProfile?.id
+    this.miParametro
     const pregunta = document.getElementById('campo_de_texto') as HTMLInputElement;
-    console.log(pregunta.value);
+    if (this.userProfile && this.userProfile.id !== undefined) {
+      let quest = new QuestionRequest(pregunta.value, new Date(),this.userProfile?.id,this.miParametro)
+
+      //window.location.reload();
+    }
   }
 }

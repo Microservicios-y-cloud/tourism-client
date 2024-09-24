@@ -6,11 +6,12 @@ import { environment } from '../../environments/environment.development';
 import { TransportationService } from '../models/dto/TransportationService';
 import { FoodService } from '../models/dto/FoodService';
 import { Location } from '../models/dto/Location';
+import { Question } from '../models/dto/Question';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LocationService {
+export class questionService {
 
   constructor(
     private http: HttpClient
@@ -21,11 +22,11 @@ export class LocationService {
     { "Content-Type": "application/json" }
   )
 
-  getService(id:string): Observable<Location> {
-    return this.http.get<Location>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/location/${id}`)
+  getService(id:string): Observable<Question> {
+    return this.http.get<Question>(`${environment.gatewayServiceUrl}/service-publication-microservice/questions${id}`)
   }
 
-  findAll(): Observable<Location[]> {
-    return this.http.get<Location[]>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/location`)
+  findAll(): Observable<Question[]> {
+    return this.http.get<Question[]>(`${environment.gatewayServiceUrl}/service-rating-microservice/question`)
   }
 }

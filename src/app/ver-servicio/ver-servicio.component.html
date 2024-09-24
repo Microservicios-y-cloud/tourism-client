@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="container-pregunta">
+    <div class="container-pregunta" *ngIf="mostrarComprar">
         <textarea placeholder="Escribe aquí..." id="campo_de_texto"></textarea>
         <button id="enviar-pregunta" (click)="enviarPregunta()">Enviar</button>
     </div>

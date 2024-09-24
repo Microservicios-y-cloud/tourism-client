@@ -7,14 +7,13 @@
     <div class="card" *ngFor="let item of listaServiciosDelProveedor">
         <div class="card-image"></div>
         <div class="card-details">
-            <h3>Nombre del servicio</h3>
-            <p><b>Ubicación:</b>{{item.name}}</p>
-            <p><b>Ubicacion:</b>{{item.city}}, {{item.country}}</p>
-            <p><b>COP 19,898:</b>{{item.unitValue}}</p>
+            <h3><b>Nombre del servicio: </b> {{item.name}}</h3>
+            <p><b>Ubicación:</b>{{item.country}}, {{item.city}}</p>
+            <p><b>Precio unitario:</b> $ {{item.unitValue}}</p>
         </div>
         <div class="card-footer">
             <button class="button edit" (click)="editar()">Editar</button>
-            <button class="button delete" (click)="borrar()">Borrar</button>
+            <!--<button class="button delete" (click)="borrar()">Borrar</button>-->
         </div>
     </div>
 </div>

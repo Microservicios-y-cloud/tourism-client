@@ -1,13 +1,13 @@
 export class AccomoationServiceRequest {
     constructor(
-        name: string,
-        description: string,
-        unitValue: number,
-        destinationId: number,
-        startDate: string,
-        endDate: string,
-        supplierId: string,
-        accommodationTypeId: number,
-        capacity: number
+        public name: string,
+        public description: string,
+        public unitValue: number,
+        public destinationId: number,
+        public startDate: string,
+        public endDate: string,
+        public supplierId: string,
+        public accommodationTypeId: number,
+        public capacity: number
     ){}
 }

@@ -1,4 +1,4 @@
-export class FoodServiceRequest {
+export class TransportationServiceRequest {
     constructor(
         public name: string,
         public description: string,
@@ -7,7 +7,9 @@ export class FoodServiceRequest {
         public startDate: string,
         public endDate: string,
         public supplierId: string,
-        public foodTypeId: number
+        public transportTypeId: number,
+        public company: string,
+        public originId: number,
     ) {
     }
 }

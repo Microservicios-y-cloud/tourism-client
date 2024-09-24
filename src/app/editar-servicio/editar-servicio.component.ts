@@ -15,7 +15,7 @@ import { AccommodationType } from '../models/dto/AccommodationType';
 import { TransportType } from '../models/dto/TransportType';
 import { Service } from '../models/dto/Service';
 import { FoodServices } from '../services/foodServices';
-import { Location } from '../models/dto/LocationResponse';
+import { Location } from '../models/dto/Location';
 import { LocationService } from '../services/LocationService';
 
 
