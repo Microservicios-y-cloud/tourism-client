@@ -13,6 +13,8 @@ import { FoodTypeResponse } from '../model/FoodTypeResponse';
 import { AccommodationTypeResponse } from '../model/AccommodationTypeResponse';
 import { TransportTypeResponse } from '../model/TransportTypeResponse';
 import { ServiceFoodRequest } from '../model/ServiceFoodRequest';
+import { ServiceAccommodationRequest } from '../model/ServiceAccommodationRequest';
+import { ServiceTransportationRequest } from '../model/ServiceTransportationRequest';
 
 @Component({
   selector: 'app-crear-servicio',
@@ -171,9 +173,72 @@ export class CrearServicioComponent implements OnInit {
       alert(this.errorMessage);
       return;
     }
+
+    if (this.userProfile?.id && this.servicio.accommodationType && this.servicio.capacity) {
+      console.log(this.formatDateToISO(this.servicio.endDate));
+      
+      let send = new ServiceAccommodationRequest(null,
+        this.servicio.name,
+        this.servicio.description,
+        this.servicio.unitValue,
+        this.servicio.destination,
+        "2024-10-01T10:00:00Z",
+        "2024-10-01T10:00:00Z",
+        this.userProfile.id,
+        this.servicio.accommodationType,
+        this.servicio.capacity);
+    
+      this.servicioService.createAccommodationService(send).subscribe(
+        response => {
+          console.log('Servicio creado con éxito:', response);
+        },
+        error => {
+          console.error('Error al crear el servicio:', error);
+        }
+      );
+
+      console.log("Se simula envio de food");
+      
+    } else {
+      this.errorMessage = 'User profile is not available.';
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (this.userProfile?.id && this.servicio.transportationType && this.servicio.company && this.servicio.origin) {
+      console.log(this.formatDateToISO(this.servicio.endDate));
+      
+      let send = new ServiceTransportationRequest(null,
+        this.servicio.name,
+        this.servicio.description,
+        this.servicio.unitValue,
+        this.servicio.destination,
+        "2024-10-01T10:00:00Z",
+        "2024-10-01T10:00:00Z",
+        this.userProfile.id,
+        this.servicio.transportationType,
+        this.servicio.company,
+        this.servicio.origin);
+    
+      this.servicioService.createTransportationService(send).subscribe(
+        response => {
+          console.log('Servicio creado con éxito:', response);
+        },
+        error => {
+          console.error('Error al crear el servicio:', error);
+        }
+      );
+
+      console.log("Se simula envio de food");
+      
+    } else {
+      this.errorMessage = 'User profile is not available.';
+      alert(this.errorMessage);
+      return;
+    }
     
     console.log('Formulario válido, enviando datos:', this.servicio);
-    alert("Servicio creado")
+    //alert("Servicio creado")
     this.router.navigate(['/menu-principal-proveedor']);
 
   }

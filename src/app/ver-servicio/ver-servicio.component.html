@@ -91,6 +91,15 @@
                                 <div class="time">{{item.createdBy.email}}</div>
                             </div>
                             <div class="text">{{item.content}}</div>
+                            <div *ngFor="let i of item.answers" class="answer-item">
+                                <div class="answer-header">
+                                    <p class="answer-username">{{i.createdBy.username}}</p>
+                                    <p class="answer-date">{{i.date}}</p>
+                                </div>
+                                <p class="answer-content">{{i.content}}</p>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                 </div>

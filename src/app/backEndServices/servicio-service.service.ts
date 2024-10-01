@@ -40,6 +40,20 @@ export class ServicioService {
     return this.http.post<any>('http://localhost:8083/services/food', foodData, { headers });
   }
 
+  createAccommodationService(foodData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8083/services/accommodation', foodData, { headers });
+  }
+
+  createTransportationService(foodData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8083/services/transportation', foodData, { headers });
+  }
+
   /*
   getService(id:number): Observable<SuperService> {
     return this.http.get<SuperService>(`${environment.gatewayServiceUrl}/service_query_microservice/services/${id}`)

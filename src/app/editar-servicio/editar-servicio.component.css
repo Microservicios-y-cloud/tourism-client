@@ -100,7 +100,7 @@ label {
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: #0077ff;
+    background-color: #ff8400;
     cursor: pointer;
 }
 
@@ -119,14 +119,14 @@ textarea {
     min-height: 100px;
 }
 
-.off {
-    padding-left: 30px;
+.ob {
+    color: rgb(255, 0, 0);
 }
 
-p {
-    margin: 0;
+.check {
+    display: block;
 }
 
-.a {
-    margin: -5px !important;
+.contenidoServicio {
+    padding-left: 50px;
 }

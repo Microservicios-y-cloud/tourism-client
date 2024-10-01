@@ -8,9 +8,9 @@ import { SuperService } from '../model/SuperService';
 @Component({
   selector: 'app-menu-principal-proveedor',
   templateUrl: './menu-principal-proveedor.component.html',
-  styleUrls: ['./menu-principal-proveedor.component.css'] // Cambié styleUrl a styleUrls
+  styleUrls: ['./menu-principal-proveedor.component.css']
 })
-export class MenuPrincipalProveedorComponent implements OnInit { // Implementa OnInit
+export class MenuPrincipalProveedorComponent implements OnInit {
   userProfile: UserProfile | undefined;
   public listaServiciosDelProveedor: SuperService[] = [];
 
@@ -29,7 +29,7 @@ export class MenuPrincipalProveedorComponent implements OnInit { // Implementa O
       
       this.servicioService.findAllBySupplier(this.userProfile.id).subscribe(
         data => {
-          console.log(data); // Imprimir en consola
+          console.log(data); 
           this.listaServiciosDelProveedor = data
         },
         error => {
@@ -46,10 +46,10 @@ export class MenuPrincipalProveedorComponent implements OnInit { // Implementa O
   }
 
   editar() {
-    // Implementar la lógica para editar
+
   }
 
   borrar() {
-    // Implementar la lógica para borrar
+
   }
 }

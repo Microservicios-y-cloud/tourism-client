@@ -1,1 +1,93 @@
 <app-navbar></app-navbar>
+<div id="body">
+    <div class="container-wrapper">
+        <div class="container1">
+            <img src="https://cdn.pixabay.com/photo/2015/06/10/16/36/mark-804938_640.jpg" alt="Servicio">
+        </div>
+        <div class="container2">
+            <div class="form-group">
+                <label for="service-name">Nombre del servicio:</label>
+                <input type="text" id="service-name" [(ngModel)]="servicio.name">
+            </div>
+            <div class="form-group">
+                <label for="location-select">Ubicación:</label>
+                <select id="location-select" [(ngModel)]="servicio.destination" name="location">
+                    <option *ngFor="let location of locations" [ngValue]="location">
+                    {{ location.city }}, {{ location.country }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="service-start">Inicio del servicio:</label>
+                <input type="date" id="service-start" [(ngModel)]="servicio.startDate">
+            </div>
+            <div class="form-group">
+                <label for="service-end">Fin del servicio:</label>
+                <input type="date" id="service-end" [(ngModel)]="servicio.endDate">
+            </div>
+            <label  class="check">
+                <input type="checkbox" [(ngModel)]="tipoFood"> Servicio de comida
+            </label>
+            <div *ngIf="tipoFood" class="contenidoServicio">
+                <div class="form-group">
+                    <label for="food-select">Tipo de Alimento:</label>
+                    <select id="food-select" [(ngModel)]="servicio.foodType" name="foodType">
+                        <option *ngFor="let food of foods" [ngValue]="food">
+                        {{ food.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <label  class="check">
+                <input type="checkbox" [(ngModel)]="tipoAccommodation"> Servicio de alojamiento
+            </label>
+            <div *ngIf="tipoAccommodation" class="contenidoServicio">
+                <div class="form-group">
+                    <label for="accommodation-select">Tipo de Alojamiento:</label>
+                    <select id="accommodation-select" [(ngModel)]="servicio.accommodationType" name="accommodationType">
+                        <option *ngFor="let accommodation of accommodations" [ngValue]="accommodation">
+                        {{ accommodation.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="accommodation-select">Capacidad:</label>
+                    <input type="number" id="service-name" [(ngModel)]="servicio.capacity" value="1" min="1" max="99">
+                </div>
+            </div>
+            <label class="check">
+                <input type="checkbox" [(ngModel)]="tipoTransportation"> Servicio de transporte
+            </label>
+            <div *ngIf="tipoTransportation" class="contenidoServicio">
+                <div class="form-group">
+                    <label for="transport-select">Tipo de Transporte:</label>
+                    <select id="transport-select" [(ngModel)]="servicio.transportationType" name="transportationType">
+                        <option *ngFor="let transport of transports" [ngValue]="transport">
+                        {{ transport.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location-select">Origen:</label>
+                    <select id="location-select" [(ngModel)]="servicio.origin" name="location">
+                        <option *ngFor="let location of locations" [ngValue]="location">
+                        {{ location.city }}, {{ location.country }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="accommodation-select">Compañia:</label>
+                    <input type="text" id="service-name" [(ngModel)]="servicio.company">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price">Precio:</label>
+                <input type="number" id="price" [(ngModel)]="servicio.unitValue">
+            </div>
+            <label for="description">Descripción:</label>
+            <textarea id="description" [(ngModel)]="servicio.description"></textarea>
+        </div>
+        
+    </div>
+    <button (click)="enviar()">Crear</button>
+</div>
