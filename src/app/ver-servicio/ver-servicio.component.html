@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                 <label for="service-location">Ubicación del servicio:</label>
-                <p id="ubicacion">{{ubicacion.city}}, {{ubicacion.country}}</p>
+                <p id="ubicacion">{{servicio?.destination?.city}}, {{servicio?.destination?.country}}</p>
             </div>
             <div class="form-group">
                 <label for="service-location">Inicio del servicio:</label>
@@ -21,34 +21,34 @@
                 <label for="service-location">Fin del servicio:</label>
                 <p id="ubicacion">{{servicio?.endDate}}</p>
             </div>
-            <div id="alimentacion" *ngIf="food">
+            <div id="alimentacion" *ngIf="servicio?.foodType">
                 <div class="form-group" >
                     <label for="service-type">Servicio de alimentacion:</label>
-                    <p id="tipo-servicio">{{food.foodType}}</p>
+                    <p id="tipo-servicio">{{servicio?.foodType?.name}}</p>
                 </div>
             </div>
-            <div id="alojamiento" *ngIf="accomodation">
+            <div id="alojamiento" *ngIf="servicio?.accommodationType">
                 <div class="form-group">
                     <label for="service-type">Servicio de alojamiento:</label>
-                    <p id="tipo-servicio">{{accomodation.accommodationType}}</p>
+                    <p id="tipo-servicio">{{servicio?.accommodationType?.name}}</p>
                 </div>
                 <div class="form-group off">
                     <label for="service-type">Capacidad de alojamiento:</label>
-                    <p id="tipo-servicio">{{accomodation.capacity}}</p>
+                    <p id="tipo-servicio">{{servicio?.capacity}}</p>
                 </div>
             </div>
-            <div id="transporte" *ngIf="transportation" >
+            <div id="transporte" *ngIf="servicio?.transportationType" >
                 <div class="form-group" >
                     <label for="service-type">Servicio de transporte:</label>
-                    <p id="tipo-servicio">{{transportation?.transportType}}</p>
+                    <p id="tipo-servicio">{{servicio?.transportationType?.name}}</p>
                 </div>
                 <div class="form-group off">
                     <label for="service-type">Compañia de transporte:</label>
-                    <p id="tipo-servicio">{{transportation?.company}}</p>
+                    <p id="tipo-servicio">{{servicio?.company}}</p>
                 </div>
                 <div class="form-group off">
                     <label for="service-type">Lugar de origen:</label>
-                    <p id="tipo-servicio">{{transportation?.originCity}}, {{transportation?.originCountry}}</p>
+                    <p id="tipo-servicio">{{servicio?.origin?.city}}, {{servicio?.origin?.country}}</p>
                 </div>
             </div>
             <div class="form-group">

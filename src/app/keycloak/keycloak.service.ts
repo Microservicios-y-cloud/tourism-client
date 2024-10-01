@@ -3,7 +3,7 @@ import Keycloak from 'keycloak-js';
 import { UserProfile } from './user-profile';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.development';
-import { ErrorService } from '../services/error.service';
+import { ErrorService } from '../backEndServices/error.service';
 
 @Injectable({
   providedIn: 'root',

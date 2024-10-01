@@ -1,21 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Service } from '../models/dto/Service';
-import { TransportationService } from '../models/dto/TransportationService';
-import { ServicioService } from '../services/servicio-service.service';
-import { FoodServices } from '../services/foodServices';
-import { AccomodationService } from '../services/accomodationService';
-import { TransportationServices } from '../services/transportationServices';
-import { FoodService } from '../models/dto/FoodService';
-import { AccommodationService } from '../models/dto/AccommodationService';
-import { Location } from '../models/dto/Location';
-
+import { ServicioService } from '../backEndServices/servicio-service.service';
+import { FoodServices } from '../backEndServices/foodServices';
+import { AccomodationService } from '../backEndServices/accomodationService';
+import { TransportationServices } from '../backEndServices/transportationServices';
 import { KeycloakService } from '../keycloak/keycloak.service'; // Ajusta la ruta según tu estructura de archivos
-import { LocationService } from '../services/LocationService';
+import { LocationService } from '../backEndServices/LocationService';
 import { UserProfile } from '../keycloak/user-profile';
-import { QuestionRequest } from '../models/dto/request/questionRequest';
-import { Question } from '../models/dto/Question';
-import { questionService } from '../services/questionService';
+import { SuperService } from '../model/SuperService';
+import { QuestionRequest } from '../model/QuestionRequest';
+import { Person } from '../model/Person';
+import { questionService } from '../backEndServices/QuestionService';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -26,20 +21,16 @@ export class VerServicioComponent implements OnInit {
   userProfile: UserProfile | undefined;
   
   public mostrarComprar = false
-  public ubicacion: Location = new Location(-1,'',0,0,'','','')
+
+  public servicio: SuperService | undefined;
 
   miParametro: string = "";
-  public servicio: Service = new Service('','',-1,this.ubicacion.id,new Date(),new Date(),'')
-
-  public food: FoodService | null = null;
-  public accomodation: AccommodationService | null = null;
-  public transportation: TransportationService | null = null;
 
   public cantidad = 1;
   constructor(
-    private questionService: questionService,
     private locationService: LocationService,
     private servicioService: ServicioService,
+    private questionService: questionService,
     private FoodServices: FoodServices,
     private AccomodationService: AccomodationService,
     private TransportService: TransportationServices,
@@ -52,67 +43,32 @@ export class VerServicioComponent implements OnInit {
   public isLoading = true;
 
   ngOnInit(): void {
-    this.questionService.findAll().subscribe(
-      (data: Question[]) => {
-        console.log(data);
-        
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
-
-
-
-    this.isLoading = true;
-    this.errorMessage = null;
-
-    this.route.params.subscribe(params => {
-      this.miParametro = params['idServicio'];
-      console.log('Parámetro de URL:', this.miParametro);
-
-      this.servicioService.getService(this.miParametro).subscribe(
-        servicios => {
-          this.servicio = servicios;
-          this.isLoading = false;
-          this.locationService.getService(this.servicio.destinationId.toString()).subscribe(
-            food => {
-              this.ubicacion = food;
+    this.userProfile = this.keycloakService.profile;
+    if (this.userProfile?.attributes?.userType == 'customer') {
+      this.mostrarComprar = true
+    }
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('idServicio');
+      if (idParam) {
+        const id = Number(idParam);
+        if (!isNaN(id)) {
+          this.servicioService.getService(id).subscribe(
+            data => {
+              this.servicio = data;
             },
-            error => console.error('No tiene el servicio de comida:', error)
+            error => {
+              console.error('Error fetching services:', error);
+            }
           );
-          
-        },
-        error => {
-          this.errorMessage = 'Error al obtener el servicio';
-          this.isLoading = false;
+        } else {
+          console.error('Invalid ID:', idParam);
         }
-      );
-      this.FoodServices.getService(this.miParametro).subscribe(
-        food => {
-          this.food = food;
-        }
-      );
-      
-      
-      this.AccomodationService.getService(this.miParametro).subscribe(
-        accommodation => this.accomodation = accommodation
-      );
-
-      this.TransportService.getService(this.miParametro).subscribe(
-        (transportation: TransportationService) => {
-          this.transportation = transportation;
-        }
-      );
-
-      const userProfile = this.keycloakService.profile;
-      for (const item of userProfile?.attributes?.userType ?? []) {
-        if (item == 'customer') {
-          this.mostrarComprar = true
-        }
+      } else {
+        console.error('No ID parameter found in URL');
       }
     });
   }
+  
 
   sumarCantidad() {
     this.cantidad += 1;
@@ -124,21 +80,68 @@ export class VerServicioComponent implements OnInit {
       this.cantidad -= 1;
     }
   }
+  
   comprar() {
-    // Implementar la lógica para comprar
+
   }
+
   add_carrito() {
     // Implementar la lógica para añadir al carrito
   }
   enviarPregunta() {
-    
-    this.userProfile?.id
-    this.miParametro
-    const pregunta = document.getElementById('campo_de_texto') as HTMLInputElement;
-    if (this.userProfile && this.userProfile.id !== undefined) {
-      let quest = new QuestionRequest(pregunta.value, new Date(),this.userProfile?.id,this.miParametro)
+    if (this.userProfile?.id && this.userProfile?.attributes?.userType && this.userProfile?.username && this.userProfile?.firstName && this.userProfile?.lastName && this.userProfile?.email) {
+      let pregunta = new QuestionRequest(null,2,'22',new Person(this.userProfile?.id,this.userProfile?.attributes?.userType,this.userProfile?.username,this.userProfile?.firstName,this.userProfile?.lastName,this.userProfile?.email),null)
 
-      //window.location.reload();
+      //Mensaje de prueba
+      const questionRequest = {
+        id: 10,
+        serviceId: 1,
+        content: "Test",
+        createdBy: {
+            id: "50f60693-b5a9-4f9f-90fc-9c710cdcd1b0",
+            userType: "CUSTOMER",
+            username: "customer1",
+            firstName: "customer1",
+            lastName: "customer1",
+            email: "customer1@mail.com"
+        },
+        answers: [
+            {
+                content: "Recuerda que mi catálogo de servicios está 100% disponible para ti",
+                createdBy: {
+                    id: "524f9a80-156e-4ccb-b0ea-474dcb8664e7",
+                    userType: "SUPPLIER",
+                    username: "supplier1",
+                    firstName: "supplier1",
+                    lastName: "supplier1",
+                    email: "supplier1@mail.com"
+                },
+                date: "2024-09-25T22:01:08"
+            },
+            {
+                content: "Me podrías pasar el link? Es que no encuentro tu perfil",
+                createdBy: {
+                    id: "50f60693-b5a9-4f9f-90fc-9c710cdcd1b0",
+                    userType: "CUSTOMER",
+                    username: "customer1",
+                    firstName: "customer1",
+                    lastName: "customer1",
+                    email: "customer1@mail.com"
+                },
+                date: "2024-09-25T22:03:53.629"
+            }
+        ]
+    };
+    
+      this.questionService.sendQuestion(questionRequest).subscribe(
+        response => {
+          console.log('Pregunta creada con éxito:', response);
+        },
+        error => {
+          console.error('Error al crear pregunta:', error);
+        }
+      );
     }
+    
   }
 }

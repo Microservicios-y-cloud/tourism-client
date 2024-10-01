@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ErrorService } from '../services/error.service';
+import { ErrorService } from '../backEndServices/error.service';
 
 @Component({
   selector: 'app-pagina-error',

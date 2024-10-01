@@ -122,3 +122,11 @@ textarea {
 .ob {
     color: rgb(255, 0, 0);
 }
+
+.check {
+    display: block;
+}
+
+.contenidoServicio {
+    padding-left: 50px;
+}

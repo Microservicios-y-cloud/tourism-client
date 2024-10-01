@@ -5,10 +5,9 @@
 </div>
 <div id="body">
     <div class="card" *ngFor="let item of listaServiciosDelProveedor">
-        <div class="card-image"></div>
         <div class="card-details">
             <h3><b>Nombre del servicio: </b> {{item.name}}</h3>
-            <p><b>Ubicación:</b>{{item.country}}, {{item.city}}</p>
+            <p><b>Ubicación:</b>{{item.destination?.city}}, {{item.destination?.country}}</p>
             <p><b>Precio unitario:</b> $ {{item.unitValue}}</p>
         </div>
         <div class="card-footer">

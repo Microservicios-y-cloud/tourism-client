@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicioService } from '../services/servicio-service.service';
-import { ServiceResponse } from '../models/dto/ServiceResponse';
+import { ServicioService } from '../backEndServices/servicio-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfile } from '../keycloak/user-profile';
 import { KeycloakService } from '../keycloak/keycloak.service';
+import { SuperService } from '../model/SuperService';
 
 @Component({
   selector: 'app-menu-principal-proveedor',
@@ -12,7 +12,7 @@ import { KeycloakService } from '../keycloak/keycloak.service';
 })
 export class MenuPrincipalProveedorComponent implements OnInit { // Implementa OnInit
   userProfile: UserProfile | undefined;
-  public listaServiciosDelProveedor: ServiceResponse[] = [];
+  public listaServiciosDelProveedor: SuperService[] = [];
 
   constructor(
     private keycloakService: KeycloakService,
@@ -23,18 +23,17 @@ export class MenuPrincipalProveedorComponent implements OnInit { // Implementa O
 
   ngOnInit(): void {
     this.userProfile = this.keycloakService.profile;
-    console.log(this.userProfile?.attributes?.userType == 'supplier');
     
     if (this.userProfile && this.userProfile.id !== undefined && this.userProfile?.attributes?.userType == 'supplier') {
+      console.log(this.userProfile.id);
+      
       this.servicioService.findAllBySupplier(this.userProfile.id).subscribe(
-        lista => {
-          this.listaServiciosDelProveedor = lista; // Asigna la respuesta a la variable
-          console.log(22);
-          
-          console.log(this.listaServiciosDelProveedor); // Muestra la lista en la consola
+        data => {
+          console.log(data); // Imprimir en consola
+          this.listaServiciosDelProveedor = data
         },
         error => {
-          console.error("Error al obtener los servicios:", error); // Manejo de errores
+          console.error('Error fetching services:', error);
         }
       );
     } else {

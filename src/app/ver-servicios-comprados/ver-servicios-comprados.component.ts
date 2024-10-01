@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ServiceResponse } from '../models/dto/ServiceResponse';
-import { ServicioService } from '../services/servicio-service.service';
+import { ServicioService } from '../backEndServices/servicio-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SuperService } from '../model/SuperService';
 
 @Component({
   selector: 'app-ver-servicios-comprados',
@@ -16,7 +16,7 @@ export class VerServiciosCompradosComponent {
   public valoracion = 1;
   public text = '';
 
-  public listaServicios: ServiceResponse[] = [new ServiceResponse(1,"sdsdsdsdsd","sssss",2,"sddd","ddd","sddf",1,undefined,undefined)]
+  public listaServicios: SuperService[] = []
   constructor(
     private servicioService: ServicioService,
     private router: Router,  private route: ActivatedRoute

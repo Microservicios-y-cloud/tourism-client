@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ServicioService } from '../services/servicio-service.service';
-import { ServiceResponse } from '../models/dto/ServiceResponse';
+import { ServicioService } from '../backEndServices/servicio-service.service';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SuperService } from '../model/SuperService';
 
 interface Card {
   name: string;
@@ -17,36 +17,38 @@ interface Card {
 })
 export class MenuPrincipalClienteComponent implements OnInit, AfterViewInit {
 
-  public cartas: ServiceResponse[] = [];
+  public cartas: SuperService[] = [];
 
   @ViewChild(SearchBarComponent) searchBarComponent!: SearchBarComponent;
-  servicios: ServiceResponse[] = [];
+  servicios: SuperService[] = [];
 
   constructor(private servicioService: ServicioService,
     private router: Router,  private route: ActivatedRoute
   ) { }
 
+  public serviciosAll: SuperService[] = []
+
   ngOnInit(): void {
-    //this.servicioService.findAll().subscribe(servicios => this.servicios = servicios);
+    this.servicioService.findAll().subscribe(
+      data => {
+        this.serviciosAll = data;
+        console.log(this.serviciosAll); 
+      },
+      error => {
+        console.error('Error fetching services:', error);
+      }
+    );
   }
+  
 
   ngAfterViewInit(): void {
-    this.searchBarComponent.resultsEmitter.subscribe(results => {
-        console.log('Resultados recibidos en el menú principal:', results);
 
-        this.cartas = results.map(({
-            id,name, description, unitValue, country, city, createdBy, destinationId, startDate, endDate 
-        }) => new ServiceResponse(
-            id,name, description, unitValue, country, city, createdBy, destinationId, 
-            startDate,
-            endDate
-        ));
-        console.log(this.cartas);
-    });
-}
+  }
 
 
-  verServicio(item:ServiceResponse) {
+  verServicio(item: SuperService) {
+    console.log(item);
+    
     this.router.navigate([`ver-servicio/${item.id}`]);
   }
 }

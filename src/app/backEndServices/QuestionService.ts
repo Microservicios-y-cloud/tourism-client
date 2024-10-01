@@ -1,12 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Service } from '../models/dto/Service';
 import { environment } from '../../environments/environment.development';
-import { TransportationService } from '../models/dto/TransportationService';
-import { FoodService } from '../models/dto/FoodService';
-import { Location } from '../models/dto/Location';
-import { Question } from '../models/dto/Question';
+import { Question } from '../model/Question';
+import { QuestionRequest } from '../model/QuestionRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +25,12 @@ export class questionService {
 
   findAll(): Observable<Question[]> {
     return this.http.get<Question[]>(`${environment.gatewayServiceUrl}/service-rating-microservice/question`)
+  }
+
+  sendQuestion(question: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8082/questions', question, { headers });
   }
 }
