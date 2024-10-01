@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="container-pregunta" *ngIf="mostrarComprar">
-        <textarea placeholder="Escribe aquí..." id="campo_de_texto"></textarea>
+        <textarea placeholder="Escribe aquí..." id="campo_de_texto" [(ngModel)]="pregunta"></textarea>
         <button id="enviar-pregunta" (click)="enviarPregunta()">Enviar</button>
     </div>
     <div id="retroalimentacion">
@@ -83,18 +83,16 @@
             </div>
             <div class="content">
                 <div class="column" id="preguntas-usuarios">
-                    <!--
-                    <div class="message" *ngFor="let item of servicio.preguntas">
+                    <div class="message" *ngFor="let item of questions">
                         <img src="../../assets/user-default-icon.png" alt="Usuario 1" class="avatar">
                         <div class="message-content">
                             <div class="header-info">
-                                <div class="username">{{item.id}}</div>
-                                <div class="time">{{item.fecha}}</div>
+                                <div class="username">{{item.createdBy.username}}</div>
+                                <div class="time">{{item.createdBy.email}}</div>
                             </div>
-                            <div class="text">{{item.contenido}}</div>
+                            <div class="text">{{item.content}}</div>
                         </div>
                     </div>
-                    -->
                 </div>
                 <div class="column" id="valoraciones-usuarios">
                     <!--

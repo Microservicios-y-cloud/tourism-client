@@ -27,6 +27,10 @@ export class questionService {
     return this.http.get<Question[]>(`${environment.gatewayServiceUrl}/service-rating-microservice/question`)
   }
 
+  findAllQuestionsByService(id:number): Observable<Question[]> {
+    return this.http.get<Question[]>(`http://localhost:8082/questions/service/${id}`)
+  }
+
   sendQuestion(question: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

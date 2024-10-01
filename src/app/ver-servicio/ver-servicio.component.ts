@@ -11,6 +11,7 @@ import { SuperService } from '../model/SuperService';
 import { QuestionRequest } from '../model/QuestionRequest';
 import { Person } from '../model/Person';
 import { questionService } from '../backEndServices/QuestionService';
+import { QuestionResponse } from '../model/QuestionResponse';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -23,8 +24,11 @@ export class VerServicioComponent implements OnInit {
   public mostrarComprar = false
 
   public servicio: SuperService | undefined;
+  public questions: QuestionResponse[] |undefined
 
-  miParametro: string = "";
+  idParam: any
+
+  public pregunta: string = ""
 
   public cantidad = 1;
   constructor(
@@ -44,24 +48,37 @@ export class VerServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.userProfile = this.keycloakService.profile;
+    
+    
     if (this.userProfile?.attributes?.userType == 'customer') {
       this.mostrarComprar = true
     }
     this.route.paramMap.subscribe(params => {
-      const idParam = params.get('idServicio');
-      if (idParam) {
-        const id = Number(idParam);
+      this.idParam = params.get('idServicio');
+      
+      if (this.idParam) {
+        const id = Number(this.idParam);
         if (!isNaN(id)) {
           this.servicioService.getService(id).subscribe(
             data => {
+              
               this.servicio = data;
             },
             error => {
               console.error('Error fetching services:', error);
             }
           );
+          this.questionService.findAllQuestionsByService(id).subscribe(
+            data => {
+              this.questions = data
+            },
+            error => {
+              console.error('Error fetching services:', error);
+            }
+          );
+          
         } else {
-          console.error('Invalid ID:', idParam);
+          console.error('Invalid ID:', this.idParam);
         }
       } else {
         console.error('No ID parameter found in URL');
@@ -88,60 +105,35 @@ export class VerServicioComponent implements OnInit {
   add_carrito() {
     // Implementar la lógica para añadir al carrito
   }
-  enviarPregunta() {
-    if (this.userProfile?.id && this.userProfile?.attributes?.userType && this.userProfile?.username && this.userProfile?.firstName && this.userProfile?.lastName && this.userProfile?.email) {
-      let pregunta = new QuestionRequest(null,2,'22',new Person(this.userProfile?.id,this.userProfile?.attributes?.userType,this.userProfile?.username,this.userProfile?.firstName,this.userProfile?.lastName,this.userProfile?.email),null)
 
-      //Mensaje de prueba
-      const questionRequest = {
-        id: 10,
-        serviceId: 1,
-        content: "Test",
-        createdBy: {
-            id: "50f60693-b5a9-4f9f-90fc-9c710cdcd1b0",
-            userType: "CUSTOMER",
-            username: "customer1",
-            firstName: "customer1",
-            lastName: "customer1",
-            email: "customer1@mail.com"
-        },
-        answers: [
-            {
-                content: "Recuerda que mi catálogo de servicios está 100% disponible para ti",
-                createdBy: {
-                    id: "524f9a80-156e-4ccb-b0ea-474dcb8664e7",
-                    userType: "SUPPLIER",
-                    username: "supplier1",
-                    firstName: "supplier1",
-                    lastName: "supplier1",
-                    email: "supplier1@mail.com"
-                },
-                date: "2024-09-25T22:01:08"
-            },
-            {
-                content: "Me podrías pasar el link? Es que no encuentro tu perfil",
-                createdBy: {
-                    id: "50f60693-b5a9-4f9f-90fc-9c710cdcd1b0",
-                    userType: "CUSTOMER",
-                    username: "customer1",
-                    firstName: "customer1",
-                    lastName: "customer1",
-                    email: "customer1@mail.com"
-                },
-                date: "2024-09-25T22:03:53.629"
-            }
-        ]
-    };
-    
-      this.questionService.sendQuestion(questionRequest).subscribe(
+  enviarPregunta() {
+    if (this.userProfile?.id && this.userProfile?.attributes?.userType && this.userProfile?.username && this.userProfile?.firstName && this.userProfile?.lastName && this.userProfile?.email && this.servicio?.id) {
+      let idPregunta = this.convertirCadenaANumero(this.userProfile.id + this.servicio.id)
+      let pregunta = new QuestionRequest(idPregunta,this.servicio?.id,this.pregunta,new Person(this.userProfile?.id,this.userProfile?.attributes?.userType[0],this.userProfile?.username,this.userProfile?.firstName,this.userProfile?.lastName,this.userProfile?.email),[])
+
+      this.questionService.sendQuestion(pregunta).subscribe(
         response => {
           console.log('Pregunta creada con éxito:', response);
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['ver-servicio/'+this.idParam]);
+          });
         },
         error => {
           console.error('Error al crear pregunta:', error);
         }
       );
     }
-    
+  }
+
+  convertirCadenaANumero(cadena: string): string {
+    return Array.from(cadena).map(caracter => {
+        if (/\d/.test(caracter)) {
+            return caracter;
+        } else if (/[a-zA-Z]/.test(caracter)) {
+            return (caracter.toLowerCase().charCodeAt(0) - 96).toString();
+        } else {
+            return '';
+        }
+    }).join('');
   }
 }
