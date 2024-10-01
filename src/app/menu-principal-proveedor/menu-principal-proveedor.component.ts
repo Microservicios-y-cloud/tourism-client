@@ -45,11 +45,15 @@ export class MenuPrincipalProveedorComponent implements OnInit {
     this.router.navigate([`crear-servicio`]);
   }
 
-  editar() {
-
+  editar(item: SuperService) {
+    this.router.navigate(['editar-servicio/'+item.id])
   }
 
-  borrar() {
-
+  eliminar(item: SuperService) {
+    if (prompt("¿Seguro que quiere eliminar este servicio?")) {
+      if (item.id) {
+        this.servicioService.delete(item.id)
+      }
+    }
   }
 }

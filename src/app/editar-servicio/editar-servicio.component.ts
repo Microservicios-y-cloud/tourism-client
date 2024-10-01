@@ -193,7 +193,7 @@ export class EditarServicioComponent {
         this.servicio.foodType
       );
     
-      this.servicioService.createFoodService(send).subscribe(
+      this.servicioService.editFoodService(send).subscribe(
         response => {
           console.log('Servicio creado con éxito:', response);
         },
@@ -224,7 +224,7 @@ export class EditarServicioComponent {
         this.servicio.accommodationType,
         this.servicio.capacity);
     
-      this.servicioService.createAccommodationService(send).subscribe(
+      this.servicioService.editAccommodationService(send).subscribe(
         response => {
           console.log('Servicio creado con éxito:', response);
         },
@@ -256,7 +256,7 @@ export class EditarServicioComponent {
         this.servicio.company,
         this.servicio.origin);
     
-      this.servicioService.createTransportationService(send).subscribe(
+      this.servicioService.editTransportationService(send).subscribe(
         response => {
           console.log('Servicio creado con éxito:', response);
         },

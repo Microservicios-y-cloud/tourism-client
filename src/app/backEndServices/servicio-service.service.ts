@@ -54,6 +54,31 @@ export class ServicioService {
     return this.http.post<any>('http://localhost:8083/services/transportation', foodData, { headers });
   }
 
+  editFoodService(foodData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<any>('http://localhost:8083/services/food', foodData, { headers });
+  }
+
+  editAccommodationService(foodData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<any>('http://localhost:8083/services/accommodation', foodData, { headers });
+  }
+
+  editTransportationService(foodData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<any>('http://localhost:8083/services/transportation', foodData, { headers });
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8083/services/${id}`);
+  }
+
   /*
   getService(id:number): Observable<SuperService> {
     return this.http.get<SuperService>(`${environment.gatewayServiceUrl}/service_query_microservice/services/${id}`)
