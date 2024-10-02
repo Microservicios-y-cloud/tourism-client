@@ -14,6 +14,10 @@ import { questionService } from '../backEndServices/QuestionService';
 import { QuestionResponse } from '../model/QuestionResponse';
 import { Answer } from '../model/Answer';
 import { AnswerResponse, PersonAnswer } from '../model/AnswerResponse';
+import { CartService } from '../backEndServices/cartService';
+import { CartRequest } from '../model/CartRequest';
+import { Customer } from '../model/Customer';
+import { CartItem } from '../model/CartItem';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -41,6 +45,7 @@ export class VerServicioComponent implements OnInit {
     private FoodServices: FoodServices,
     private AccomodationService: AccomodationService,
     private TransportService: TransportationServices,
+    private cartService:CartService,
     private router: Router,
     private route: ActivatedRoute,
     private keycloakService: KeycloakService
@@ -106,7 +111,63 @@ export class VerServicioComponent implements OnInit {
   }
 
   add_carrito() {
-    // Implementar la lógica para añadir al carrito
+    if (
+      this.userProfile?.id &&
+      this.userProfile?.attributes?.userType &&
+      this.userProfile?.username &&
+      this.userProfile?.firstName &&
+      this.userProfile?.lastName &&
+      this.userProfile?.email &&
+      this.servicio?.id &&
+      this.servicio.unitValue
+    ) {
+      // Crear un cartItem con el formato adecuado
+      let cartItems = [{
+        serviceId: this.servicio?.id,
+        quantity: this.cantidad,
+        subtotal: this.servicio?.unitValue * this.cantidad
+      }];
+  
+      // Crear el carrito usando los datos de usuario y los cartItems
+      let carrito = new CartRequest(
+        null,
+        new Customer(
+          this.userProfile?.id,
+          this.userProfile?.attributes?.userType[0], // Asegurando que sea un string
+          this.userProfile?.username,
+          this.userProfile?.firstName,
+          this.userProfile?.lastName,
+          this.userProfile?.email
+        ),
+        cartItems // Pasar el array de cartItems
+      );
+  
+      console.log(carrito);
+  
+      // Enviar el carrito al servicio para crear el carrito
+      // Serializar el carrito a JSON
+      let carritoJson = JSON.stringify(carrito);
+      console.log('Carrito JSON:', carritoJson);
+      let a = JSON.parse(carritoJson)
+      console.log(a);
+
+      //TODO:Primero hay que validar si tiene un carrito
+      
+      this.cartService.createCart(a).subscribe(
+        response => {
+          if (response.status === 200) {
+            console.log("OK");
+          }
+          alert("Carrito creado con éxito");
+          console.log('Carrito creado con éxito:', response);
+        },
+        error => {
+          alert("Carrito creado con éxito");
+          //console.error('Error al crear carrito:', error);
+        }
+      );
+      
+    }
   }
 
   enviarPregunta() {
