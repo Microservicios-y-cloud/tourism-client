@@ -130,3 +130,27 @@ textarea {
 .contenidoServicio {
     padding-left: 50px;
 }
+
+.crearBtn {
+    background-color: #4CAF50; /* Verde */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    text-align: center; /* Centrado del texto */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Para que se comporte como un botón */
+    font-size: 16px; /* Tamaño de la fuente */
+    margin: 4px 2px; /* Margen */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+}
+
+.crearBtn:hover {
+    background-color: #45a049; /* Color al pasar el mouse */
+    transform: scale(1.05); /* Efecto de aumento */
+}
+
+.crearBtn:active {
+    transform: scale(0.95); /* Efecto de pulsación al hacer clic */
+}
