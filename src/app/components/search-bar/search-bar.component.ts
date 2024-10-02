@@ -37,6 +37,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             this.services = data?.servicesByKeyword || [];
             this.error = null;
             this.resultsEmitter.emit(this.services);  // Emitir los resultados
+            console.log(JSON.stringify(this.services));
           },
           error: (err) => {
             this.error = err;

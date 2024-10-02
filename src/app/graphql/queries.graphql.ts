@@ -4,15 +4,21 @@ const GET_SERVICES_BY_KEYWORD = gql`
   query ServicesByKeyword($keyword: String!) {
     servicesByKeyword(keyword: $keyword) {
       id
+      createdBy
+      destination {
+        id
+        address
+        latitude
+        longitude
+        country
+        city
+        municipality
+      }
       name
       description
       unitValue
-      destinationId
-      country
-      city
       startDate
       endDate
-      createdBy
     }
   }
 `;

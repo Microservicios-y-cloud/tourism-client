@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
-const uri = 'http://localhost:8080/service-publication-microservice/graphql'; // <-- add the URL of the GraphQL server here
+const uri = 'http://localhost:8080/service-query-microservice/graphql'; // <-- add the URL of the GraphQL server here
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: httpLink.create({ uri }),
