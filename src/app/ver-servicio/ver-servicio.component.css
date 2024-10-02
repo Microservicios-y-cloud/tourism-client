@@ -336,3 +336,25 @@ textarea {
     margin-top: 0.5rem; /* Espacio entre el encabezado y el contenido */
 }
 
+.container-sendRes {
+    display: flex;
+    align-items: center;
+}
+.input-text-sendRes {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+.button-sendRes {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.button-sendRes:hover {
+    background-color: #218838;
+}

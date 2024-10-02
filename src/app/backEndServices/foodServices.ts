@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class FoodServices {
 
-  private apiUrl = 'http://localhost:8083/services/food';
+  private apiUrl = `${environment.gatewayServiceUrl}/service-query-microservice/services/food`;
 
   constructor(
     private http: HttpClient

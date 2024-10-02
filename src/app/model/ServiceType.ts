@@ -7,11 +7,9 @@ export enum ServiceTypeEnum {
 export class ServiceType {
     id: number;
     name: string;
-    type: ServiceTypeEnum;
 
     constructor(id: number, name: string, type: ServiceTypeEnum) {
         this.id = id;
         this.name = name;
-        this.type = type;
     }
 }

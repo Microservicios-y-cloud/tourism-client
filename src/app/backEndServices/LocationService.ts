@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocationResponse } from '../model/LocationResponse';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,11 @@ export class LocationService {
   )
 
   getService(id:string): Observable<LocationResponse> {
-    return this.http.get<LocationResponse>(`http://localhost:8086/services/location/${id}`)
+    return this.http.get<LocationResponse>(`${environment.gatewayServiceUrl}/service-query-microservice/services/location/${id}`)
   }
 
   findAll(): Observable<LocationResponse[]> {
-    return this.http.get<LocationResponse[]>(`http://localhost:8086/services/location`)
+    return this.http.get<LocationResponse[]>(`${environment.gatewayServiceUrl}/service-query-microservice/services/location`)
   }
 
   /*

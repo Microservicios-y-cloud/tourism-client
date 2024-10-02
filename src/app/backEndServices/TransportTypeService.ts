@@ -14,11 +14,11 @@ export class TransportTypeService {
   constructor(private http: HttpClient) { }
 
   getService(id: string): Observable<TransportTypeResponse> {
-    return this.http.get<TransportTypeResponse>(`http://localhost:8086/types/transport/${id}`);
+    return this.http.get<TransportTypeResponse>(`${environment.gatewayServiceUrl}/service-query-microservice/types/transport/${id}`);
   }
 
   findAll(): Observable<TransportTypeResponse[]> {
-    return this.http.get<TransportTypeResponse[]>(`http://localhost:8086/types/transport`);
+    return this.http.get<TransportTypeResponse[]>(`${environment.gatewayServiceUrl}/service-query-microservice/types/transport`);
   }
   /*
   getService(id: string): Observable<TransportTypeResponse> {

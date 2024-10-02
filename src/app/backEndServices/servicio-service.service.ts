@@ -22,61 +22,66 @@ export class ServicioService {
   //Como estoy probando que funcione (accediendo directamente al microservicio), poniendo lo siguiente el los controladores del back @CrossOrigin(origins = "*")
 
   getService(id:number): Observable<SuperService> {
-    return this.http.get<SuperService>(`http://localhost:8086/services/${id}`)
+    return this.http.get<SuperService>(`${environment.gatewayServiceUrl}/service-query-microservice/services/${id}`)
   }
 
   findAll(): Observable<SuperService[]> {
-    return this.http.get<SuperService[]>(`http://localhost:8086/services`);
+    return this.http.get<SuperService[]>(`${environment.gatewayServiceUrl}/service-query-microservice/services`);
   }
 
   findAllBySupplier(id: string): Observable<SuperService[]> {
-    return this.http.get<SuperService[]>(`http://localhost:8086/services/supplier/${id}`);
+    return this.http.get<SuperService[]>(`${environment.gatewayServiceUrl}/service-query-microservice/services/supplier/${id}`);
   }
+
+  findAllByType(id: string): Observable<SuperService[]> {
+    return this.http.get<SuperService[]>(`${environment.gatewayServiceUrl}/service-query-microservice/services/type/${id}`);
+  }
+
 
   createFoodService(foodData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>('http://localhost:8083/services/food', foodData, { headers });
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/food`, foodData, { headers });
   }
 
   createAccommodationService(foodData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>('http://localhost:8083/services/accommodation', foodData, { headers });
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/accommodation`, foodData, { headers });
   }
 
   createTransportationService(foodData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>('http://localhost:8083/services/transportation', foodData, { headers });
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/transportation`, foodData, { headers });
   }
 
   editFoodService(foodData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.put<any>('http://localhost:8083/services/food', foodData, { headers });
+    return this.http.put<any>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/food`, foodData, { headers });
   }
 
   editAccommodationService(foodData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.put<any>('http://localhost:8083/services/accommodation', foodData, { headers });
+    return this.http.put<any>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/accommodation`, foodData, { headers });
   }
 
   editTransportationService(foodData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.put<any>('http://localhost:8083/services/transportation', foodData, { headers });
+    return this.http.put<any>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/transportation`, foodData, { headers });
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8083/services/${id}`);
+    return this.http.delete<void>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/${id}`);
   }
 
   /*

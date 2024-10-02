@@ -14,11 +14,11 @@ export class AccommodationTypeService {
   constructor(private http: HttpClient) { }
 
   getService(id: string): Observable<AccommodationTypeResponse> {
-    return this.http.get<AccommodationTypeResponse>(`http://localhost:8086/types/accommodation/${id}`);
+    return this.http.get<AccommodationTypeResponse>(`${environment.gatewayServiceUrl}/service-query-microservice/types/accommodation/${id}`);
   }
 
   findAll(): Observable<AccommodationTypeResponse[]> {
-    return this.http.get<AccommodationTypeResponse[]>(`http://localhost:8086/types/accommodation`);
+    return this.http.get<AccommodationTypeResponse[]>(`${environment.gatewayServiceUrl}/service-query-microservice/types/accommodation`);
   }
 
   /*

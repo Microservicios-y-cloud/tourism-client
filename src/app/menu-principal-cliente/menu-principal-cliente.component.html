@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <app-search-bar></app-search-bar>
 <div class="container">
-    <div class="card" *ngFor="let item of serviciosAll">
+    <div class="card" *ngFor="let item of cartas">
         <div class="serv" (click)="verServicio(item)">
         <h1>{{item.name}}</h1>
         <p>{{item.description}}</p>

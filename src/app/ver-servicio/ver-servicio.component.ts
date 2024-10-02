@@ -12,6 +12,8 @@ import { QuestionRequest } from '../model/QuestionRequest';
 import { Person } from '../model/Person';
 import { questionService } from '../backEndServices/QuestionService';
 import { QuestionResponse } from '../model/QuestionResponse';
+import { Answer } from '../model/Answer';
+import { AnswerResponse, PersonAnswer } from '../model/AnswerResponse';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -29,6 +31,7 @@ export class VerServicioComponent implements OnInit {
   idParam: any
 
   public pregunta: string = ""
+  public responseAnswer: string = ""
 
   public cantidad = 1;
   constructor(
@@ -135,5 +138,29 @@ export class VerServicioComponent implements OnInit {
             return '';
         }
     }).join('');
+  }
+
+  enviarRespuesta(i:QuestionResponse):void {
+    if (i.id && this.userProfile?.id && this.userProfile?.username && this.userProfile?.email) {
+      const inputElement = document.getElementById(i.id) as HTMLInputElement;
+      const inputValue = inputElement.value;
+      console.log(inputValue); // Muestra el valor del input
+      
+      let res = new AnswerResponse(inputValue,new PersonAnswer(this.userProfile?.id,this.userProfile?.username, this.userProfile?.email),new Date().toISOString())
+      
+      
+      this.questionService.sendAnswer(i.id,res).subscribe(
+        response => {
+          console.log('Pregunta creada con éxito:', response);
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['ver-servicio/'+this.idParam]);
+          });
+        },
+        error => {
+          console.error('Error al crear pregunta:', error);
+        }
+      );
+    }
+    
   }
 }

@@ -106,6 +106,9 @@ export class CrearServicioComponent implements OnInit {
   }
 
   enviar(): void {
+
+    console.log(this.userProfile);
+    
     // Resetear el mensaje de error
     this.errorMessage = null;
   
@@ -151,8 +154,8 @@ export class CrearServicioComponent implements OnInit {
         this.servicio.description,
         this.servicio.unitValue,
         this.servicio.destination,
-        "2024-10-01T10:00:00Z",
-        "2024-10-01T10:00:00Z",
+        this.formatDateToISO(this.servicio.startDate),
+        this.formatDateToISO(this.servicio.endDate),
         this.userProfile.id,
         this.servicio.foodType
       );
@@ -168,10 +171,6 @@ export class CrearServicioComponent implements OnInit {
 
       console.log("Se simula envio de food");
       
-    } else {
-      this.errorMessage = 'User profile is not available.';
-      alert(this.errorMessage);
-      return;
     }
 
     if (this.userProfile?.id && this.servicio.accommodationType && this.servicio.capacity) {
@@ -182,8 +181,8 @@ export class CrearServicioComponent implements OnInit {
         this.servicio.description,
         this.servicio.unitValue,
         this.servicio.destination,
-        "2024-10-01T10:00:00Z",
-        "2024-10-01T10:00:00Z",
+        this.formatDateToISO(this.servicio.startDate),
+        this.formatDateToISO(this.servicio.endDate),
         this.userProfile.id,
         this.servicio.accommodationType,
         this.servicio.capacity);
@@ -199,10 +198,6 @@ export class CrearServicioComponent implements OnInit {
 
       console.log("Se simula envio de food");
       
-    } else {
-      this.errorMessage = 'User profile is not available.';
-      alert(this.errorMessage);
-      return;
     }
 
     if (this.userProfile?.id && this.servicio.transportationType && this.servicio.company && this.servicio.origin) {
@@ -213,8 +208,8 @@ export class CrearServicioComponent implements OnInit {
         this.servicio.description,
         this.servicio.unitValue,
         this.servicio.destination,
-        "2024-10-01T10:00:00Z",
-        "2024-10-01T10:00:00Z",
+        this.formatDateToISO(this.servicio.startDate),
+        this.formatDateToISO(this.servicio.endDate),
         this.userProfile.id,
         this.servicio.transportationType,
         this.servicio.company,
@@ -231,10 +226,6 @@ export class CrearServicioComponent implements OnInit {
 
       console.log("Se simula envio de food");
       
-    } else {
-      this.errorMessage = 'User profile is not available.';
-      alert(this.errorMessage);
-      return;
     }
     
     console.log('Formulario válido, enviando datos:', this.servicio);

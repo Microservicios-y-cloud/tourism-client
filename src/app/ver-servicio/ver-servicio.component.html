@@ -93,13 +93,15 @@
                             <div class="text">{{item.content}}</div>
                             <div *ngFor="let i of item.answers" class="answer-item">
                                 <div class="answer-header">
-                                    <p class="answer-username">{{i.createdBy.username}}</p>
+                                    <p class="answer-username">{{i.createdBy.email}}</p>
                                     <p class="answer-date">{{i.date}}</p>
                                 </div>
                                 <p class="answer-content">{{i.content}}</p>
                             </div>
-                            
-                            
+                            <div class="container-sendRes" *ngIf="!mostrarComprar">
+                                <input type="text" class="input-text-sendRes" placeholder="Escribe tu mensaje..." value="{{responseAnswer}}" id="{{item.id}}">
+                                <button class="button-sendRes" (click)="enviarRespuesta(item)">Enviar</button>
+                            </div>
                         </div>
                     </div>
                 </div>

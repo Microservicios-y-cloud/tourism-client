@@ -14,11 +14,11 @@ export class FoodTypeService {
   constructor(private http: HttpClient) { }
 
   getService(id: string): Observable<FoodTypeResponse> {
-    return this.http.get<FoodTypeResponse>(`http://localhost:8086/types/food/${id}`);
+    return this.http.get<FoodTypeResponse>(`${environment.gatewayServiceUrl}/service-query-microservice/types/food/${id}`);
   }
 
   findAll(): Observable<FoodTypeResponse[]> {
-    return this.http.get<FoodTypeResponse[]>(`http://localhost:8086/types/food`);
+    return this.http.get<FoodTypeResponse[]>(`${environment.gatewayServiceUrl}/service-query-microservice/types/food`);
   }
 
   /*

@@ -20,12 +20,7 @@ export class NavbarComponent {
   }
 
   verCarrito() {
-    if (this.userProfile?.attributes?.userType == 'customer') {
-      this.router.navigate(['/ver-carrito']);
-    }
-    else {
-      alert("Como proveedor no tienes acceso a esta funcion")
-    }
+    this.router.navigate(['/ver-carrito']);
   }
 
   verNotificaciones() {

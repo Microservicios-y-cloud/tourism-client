@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Question } from '../model/Question';
 import { QuestionRequest } from '../model/QuestionRequest';
+import { Answer } from '../model/Answer';
+import { AnswerResponse } from '../model/AnswerResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +30,20 @@ export class questionService {
   }
 
   findAllQuestionsByService(id:number): Observable<Question[]> {
-    return this.http.get<Question[]>(`http://localhost:8082/questions/service/${id}`)
+    return this.http.get<Question[]>(`${environment.gatewayServiceUrl}/service-rating-microservice/questions/service/${id}`)
   }
 
   sendQuestion(question: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>('http://localhost:8082/questions', question, { headers });
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/service-rating-microservice/questions`, question, { headers });
+  }
+
+  sendAnswer(id:string, Answer: AnswerResponse): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/service-rating-microservice/questions/${id}/answers`, Answer, { headers });
   }
 }

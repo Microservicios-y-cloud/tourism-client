@@ -18,37 +18,25 @@ interface Card {
 export class MenuPrincipalClienteComponent implements OnInit, AfterViewInit {
 
   public cartas: SuperService[] = [];
+  public keyword: string = '';  // Define la propiedad keyword
 
   @ViewChild(SearchBarComponent) searchBarComponent!: SearchBarComponent;
-  servicios: SuperService[] = [];
 
   constructor(private servicioService: ServicioService,
-    private router: Router,  private route: ActivatedRoute
-  ) { }
+              private router: Router,  
+              private route: ActivatedRoute) { }
 
-  public serviciosAll: SuperService[] = []
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.servicioService.findAll().subscribe(
-      data => {
-        this.serviciosAll = data;
-        console.log(this.serviciosAll); 
-      },
-      error => {
-        console.error('Error fetching services:', error);
-      }
-    );
+  ngAfterViewInit(): void {}
+
+  onResultsReceived(results: SuperService[]): void {
+    this.cartas = results;  // Asigna los resultados recibidos a 'cartas'
+    console.log('Resultados recibidos:', this.cartas);
   }
-  
-
-  ngAfterViewInit(): void {
-
-  }
-
 
   verServicio(item: SuperService) {
     console.log(item);
-    
     this.router.navigate([`ver-servicio/${item.id}`]);
   }
 }

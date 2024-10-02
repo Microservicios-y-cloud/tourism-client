@@ -1,10 +1,39 @@
 <div class="search-container">
     <h2>Encuentra lo que buscas</h2>
     <div class="search-bar">
+        <button class="searchbutton" type="button" (click)="toggleFilters()">Filtrar</button>
         <input type="text" placeholder="Buscar..." [(ngModel)]="keyword">
-        <button type="button" (click)="onSearch()">Buscar</button>
+        <button class="searchbutton" type="button" (click)="onSearch()">Buscar</button>
     </div>
+
+    <!-- Menú desplegable para filtros -->
+    <div *ngIf="showFilters" class="filter-dropdown">
+        <label for="filter">Selecciona un filtro:</label>
+        <select id="filter" [(ngModel)]="selectedFilter" (change)="onFilterChange()">
+            <option value="">Seleccione una opción</option>
+            <option value="FOOD">Food</option>
+            <option value="ACCOMMODATION">Accommodation</option>
+            <option value="TRANSPORTATION">Transportation</option>
+        </select>
+    </div>
+
     <div *ngIf="loading" class="loading">Cargando...</div>
     <div *ngIf="error" class="error">Error :(</div>
     <p *ngIf="!loading && services.length === 0 && !error" class="no-results">No se encontraron resultados</p>
+</div>
+
+<div class="container">
+    <div  *ngFor="let item of services" >
+        <div class="card" (click)="verServicio(item)">
+            <div class="serv" >
+                <h1>{{item.name}}</h1>
+                <p>{{item.description}}</p>
+                <p class="price">$ {{item.unitValue}}</p>
+                <div>
+                    <button>Agregar</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </div>

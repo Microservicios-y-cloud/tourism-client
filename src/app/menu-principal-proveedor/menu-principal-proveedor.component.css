@@ -71,6 +71,11 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.ver {
+    background-color: #00ce82;
+}
+
 .edit {
     background-color: #04AA6D;
 }

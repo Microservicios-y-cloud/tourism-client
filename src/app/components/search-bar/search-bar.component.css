@@ -70,51 +70,111 @@ h2 {
 }
 
 /* Estilos de resultados */
-.results {
+.container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  padding: 20px;
 }
 
-/* Estilos existentes de las tarjetas */
 .card {
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  background-color: rgb(233, 255, 237);
+  border: 2px solid rgb(201, 253, 242);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
   overflow: hidden;
   text-align: left;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card p {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card .image {
+  height: 150px;
+  background-color: #ccc;
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+h1, p {
+  margin: 10px 0;
+}
+
+h1 {
+  font-size: 20px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+p {
+  font-size: 15px;
+  color: #7f8c8d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  font-size: 18px;
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.searchbutton {
+  width: 100px;
+}
+
+button:hover {
+  background-color: #2980b9;
 }
 
 /* Responsividad */
 @media (max-width: 600px) {
   h2 {
-      font-size: 20px;
+    font-size: 20px;
   }
 
   .search-bar {
-      flex-direction: column;
-      gap: 10px;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .search-bar input[type="text"] {
-      width: 100%;
-      max-width: 100%;
-  }
-
+  .search-bar input[type="text"],
   .search-bar button {
-      width: 100%;
+    width: 100%;
+  }
+
+  .card h1 {
+    font-size: 18px;
   }
 
   .card p {
-      font-size: 12px;
+    font-size: 14px;
+  }
+
+  .card .price {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 14px;
   }
 }
