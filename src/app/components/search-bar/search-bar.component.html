@@ -24,16 +24,19 @@
 
 <div class="container">
     <div  *ngFor="let item of services" >
-        <div class="card" (click)="verServicio(item)">
-            <div class="serv" >
+        <div class="card" >
+            <div class="serv" (click)="verServicio(item)">
                 <h1>{{item.name}}</h1>
                 <p>{{item.description}}</p>
                 <p class="price">$ {{item.unitValue}}</p>
-                <div>
-                    <button>Agregar</button>
-                </div>
+                
+            </div>
+            <div>
+                <button (click)="addToCart(item)">Agregar</button>
             </div>
         </div>
         
     </div>
 </div>
+
+<app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>

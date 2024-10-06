@@ -4,7 +4,7 @@ export class CartItem {
     subtotal: number;
 
     constructor(
-        serviceId: number | null,
+        serviceId: number,
         quantity: number,
         subtotal: number
     ) {

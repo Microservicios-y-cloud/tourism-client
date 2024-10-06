@@ -23,6 +23,7 @@ import { MenuPrincipalProveedorComponent } from './menu-principal-proveedor/menu
 import { ReactiveFormsModule } from '@angular/forms';
 import {GraphQLModule } from './graphql.module'
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { PopupComponent } from './popup/popup.component';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -43,7 +44,8 @@ export function kcFactory(kcService: KeycloakService){
     VerMiCarritoComponent,
     MenuPrincipalClienteComponent,
     MenuPrincipalProveedorComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

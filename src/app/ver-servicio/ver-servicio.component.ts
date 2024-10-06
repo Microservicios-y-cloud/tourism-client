@@ -130,7 +130,6 @@ export class VerServicioComponent implements OnInit {
   
       // Crear el carrito usando los datos de usuario y los cartItems
       let carrito = new CartRequest(
-        null,
         new Customer(
           this.userProfile?.id,
           this.userProfile?.attributes?.userType[0], // Asegurando que sea un string

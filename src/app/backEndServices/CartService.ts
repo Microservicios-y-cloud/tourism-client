@@ -5,6 +5,7 @@ import { LocationResponse } from '../model/LocationResponse';
 import { environment } from '../../environments/environment.development';
 import { CartRequest } from '../model/CartRequest';
 import { CartResponse } from '../model/CartResponse';
+import { CartItem } from '../model/CartItem';
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +25,14 @@ export class CartService {
     return this.http.get<CartResponse>(`${environment.gatewayServiceUrl}/order-management-microservice/cart/user/${id}`)
   }
 
-  createCart(cart: any): Observable<any> {
+  createCart(cart: CartRequest): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
     return this.http.post<any>(`${environment.gatewayServiceUrl}/order-management-microservice/cart`, cart, { headers });
   }
 
-  addCartItem(id: string,cart: any): Observable<any> {
+  addCartItem(id: string,cart: CartItem): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });

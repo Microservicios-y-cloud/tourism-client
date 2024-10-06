@@ -5,6 +5,12 @@ import { GET_SERVICES_BY_KEYWORD } from '../../graphql/queries.graphql';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicioService } from '../../backEndServices/servicio-service.service';
 import { SuperService } from '../../model/SuperService';
+import { CartService } from '../../backEndServices/CartService';
+import { KeycloakService } from '../../keycloak/keycloak.service';
+import { UserProfile } from '../../keycloak/user-profile';
+import { CartItem } from '../../model/CartItem';
+import { CartRequest } from '../../model/CartRequest';
+import { Customer } from '../../model/Customer';
 
 @Component({
   selector: 'app-search-bar',
@@ -12,6 +18,10 @@ import { SuperService } from '../../model/SuperService';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
+  isPopupOpen = false;
+  popupMessage = '';
+
+  userProfile: UserProfile | undefined;
   
   @Input() keyword: string = '';
   @Output() resultsEmitter = new EventEmitter<any[]>();
@@ -25,11 +35,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   constructor(private readonly apollo: Apollo,
               private servicioService: ServicioService,
+              private cartService: CartService,
               private router: Router,  
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private keycloakService: KeycloakService) {}
 
   ngOnInit(): void {
-    
+    this.userProfile = this.keycloakService.profile;
   }
 
   toggleFilters(): void {
@@ -93,5 +105,85 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     if (this.querySubscription) {
       this.querySubscription.unsubscribe();
     }
+  }
+
+  addToCart(servicio: SuperService):void {
+    //TODO: Es importante modificar la respuesta del front para que, si encuentra que el usuario no tiene carrito, no se devuelva un error ya que eso no estaría bien hecho
+    //Crear cart
+    if (servicio.id && servicio.unitValue) {
+      let cartIt = new CartItem(servicio.id,1,servicio.unitValue)
+
+      //Revisar primero si el cliente tiene un carrito
+      if (this.userProfile?.id) {
+        this.cartService.getCart(this.userProfile.id).subscribe(
+          response => {
+            console.log(response);
+            if (this.userProfile?.id) {
+              //TODO: Reviso esto luego para ponerlo despues!!!
+              this.cartService.addCartItem(this.userProfile?.id,cartIt).subscribe(
+                response => {
+                  this.popupMessage = "Se ha agregado el servicio al carrito"
+                  this.openPopup()
+                  console.log('Servicio creado con éxito:', response);
+                },
+                error => {
+                  this.popupMessage = "No se pudo agregar al carrito"
+                  this.openPopup()
+                  console.error('Error al crear el servicio:', error);
+                }
+              );
+            }
+            
+          },
+          error => {
+            if (error.status === 500) {
+              console.log("No existe el carrito, asi que se creara uno");
+              
+              //No existe, asi que se creara el carrito
+              if(this.userProfile?.id && this.userProfile.attributes?.userType && this.userProfile.username && this.userProfile.firstName && this.userProfile.lastName && this.userProfile.email) {
+                let newCart = new CartRequest(new Customer(this.userProfile?.id,this.userProfile?.attributes?.userType[0],this.userProfile?.username,this.userProfile?.firstName,this.userProfile?.lastName, this.userProfile?.email),[cartIt])
+                console.log(JSON.stringify(newCart));
+                this.cartService.createCart(newCart).subscribe(
+                  response => {
+                    console.log('Servicio creado con éxito:', response);
+                  },
+                  error => {
+                    if (this.userProfile?.id) {
+                      this.cartService.getCart(this.userProfile.id).subscribe(
+                        response => {
+                          this.popupMessage = "Se ha agregado el servicio al carrito"
+                          this.openPopup()
+
+                          console.log("Se obtiene el carrito");
+                        },
+                        error => {
+                          this.popupMessage = "No se pudo agregar al carrito"
+                          this.openPopup()
+                          console.log("No se creo el carrito");
+                        })
+                    }
+                    
+                  }
+                );
+              }
+              
+            } else {
+              console.error('Error al crear el servicio:', error);
+            }
+          }
+        );
+      }
+    }
+
+    
+    
+  }
+
+  openPopup(): void {
+    this.isPopupOpen = true;
+  }
+
+  closePopup(): void {
+    this.isPopupOpen = false;
   }
 }
