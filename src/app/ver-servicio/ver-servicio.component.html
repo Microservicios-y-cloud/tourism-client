@@ -65,7 +65,7 @@
                         <button class="quantity-input">{{cantidad}}</button>
                         <button class="quantity-btn2" (click)="sumarCantidad()">+</button>
                     </div>
-                    <button class="add-to-cart-btn" (click)="add_carrito()">Añadir al carrito</button>
+                    <button class="add-to-cart-btn" (click)="addToCart()">Añadir al carrito</button>
                 </div>
             </div>
         </div>
@@ -125,3 +125,5 @@
         </div>
     </div>
 </div>
+<!--<button (click)="openPopup()">test</button>-->
+<app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>

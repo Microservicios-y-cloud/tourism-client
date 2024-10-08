@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicioService } from '../backEndServices/servicio-service.service';
 import { FoodServices } from '../backEndServices/foodServices';
@@ -25,6 +25,11 @@ import { CartItem } from '../model/CartItem';
   styleUrls: ['./ver-servicio.component.css']
 })
 export class VerServicioComponent implements OnInit {
+  isPopupOpen = false;
+  popupMessage = '';
+
+  @Input() keyword: string = '';
+
   userProfile: UserProfile | undefined;
   
   public mostrarComprar = false
@@ -110,69 +115,126 @@ export class VerServicioComponent implements OnInit {
 
   }
 
-  add_carrito() {
-    if (
-      this.userProfile?.id &&
-      this.userProfile?.attributes?.userType &&
-      this.userProfile?.username &&
-      this.userProfile?.firstName &&
-      this.userProfile?.lastName &&
-      this.userProfile?.email &&
-      this.servicio?.id &&
-      this.servicio.unitValue
-    ) {
-      // Crear un cartItem con el formato adecuado
-      let cartItems = [{
-        serviceId: this.servicio?.id,
-        quantity: this.cantidad,
-        subtotal: this.servicio?.unitValue * this.cantidad
-      }];
+  addToCart():void {
+    //TODO: Es importante modificar la respuesta del front para que, si encuentra que el usuario no tiene carrito, no se devuelva un error ya que eso no estaría bien hecho
+    //Crear cart
+    if (this.servicio) {
+      if (this.servicio.id && this.servicio.unitValue) {
+        let cartIt = new CartItem(this.servicio.id,
+          this.cantidad,
+          this.servicio.unitValue)
   
-      // Crear el carrito usando los datos de usuario y los cartItems
-      let carrito = new CartRequest(
-        new Customer(
-          this.userProfile?.id,
-          this.userProfile?.attributes?.userType[0], // Asegurando que sea un string
-          this.userProfile?.username,
-          this.userProfile?.firstName,
-          this.userProfile?.lastName,
-          this.userProfile?.email
-        ),
-        cartItems // Pasar el array de cartItems
-      );
-  
-      console.log(carrito);
-  
-      // Enviar el carrito al servicio para crear el carrito
-      // Serializar el carrito a JSON
-      let carritoJson = JSON.stringify(carrito);
-      console.log('Carrito JSON:', carritoJson);
-      let a = JSON.parse(carritoJson)
-      console.log(a);
+        //Revisar primero si el cliente tiene un carrito
+        if (this.userProfile?.id) {
+          this.cartService.getCartByUser(this.userProfile.id).subscribe(
+            response => {
+              console.log(response);
+              if (this.userProfile?.id && response.id) {
+                //TODO: Hay algo extraño, no se si del front o del back, pero cuando añades un item a un carrito existente, se ejecuta error "No se pudo agregar al carrito", sin embargo si se está actualizando en la base de datos, asi que hay algo mal con el manejo de errores
+                this.cartService.addCartItem(response.id,cartIt).subscribe(
+                  response => {
+                    this.popupMessage = "Se ha agregado el servicio al carrito"
+                    this.openPopup()
+                    console.log('Servicio creado con éxito:', response);
+                  },
+                  error => {
+                    console.log(error.error.message == undefined);
+                    
+                    if (error.error.message == undefined) {
+                      this.popupMessage = "Se ha agregado el servicio al carrito"
+                      this.openPopup()
+                      console.log('Servicio creado con éxito:', response);
+                    }
+                    else {
+                      this.popupMessage = error.error.message
+                      this.openPopup()
+                      console.error('Error al crear el servicio:', error);
+                    }
+                    
+                  }
+                );
+              }
+            },
+            error => {
+              if (error.status === 500) {
+                console.log("No existe el carrito, asi que se creara uno");
+                
+                //No existe, asi que se creara el carrito
+                if(this.userProfile?.id && 
+                  this.userProfile.attributes?.userType && 
+                  this.userProfile.username && 
+                  this.userProfile.firstName && 
+                  this.userProfile.lastName && 
+                  this.userProfile.email) {
 
-      //TODO:Primero hay que validar si tiene un carrito
-      
-      this.cartService.createCart(a).subscribe(
-        response => {
-          if (response.status === 200) {
-            console.log("OK");
-          }
-          alert("Carrito creado con éxito");
-          console.log('Carrito creado con éxito:', response);
-        },
-        error => {
-          alert("Carrito creado con éxito");
-          //console.error('Error al crear carrito:', error);
+                  let newCart = new CartRequest(new Customer(
+                    this.userProfile?.id,
+                    this.userProfile?.attributes?.userType[0],
+                    this.userProfile?.username,
+                    this.userProfile?.firstName,
+                    this.userProfile?.lastName,
+                    this.userProfile?.email),
+                    [cartIt])
+                  console.log(JSON.stringify(newCart));
+                  this.cartService.createCart(newCart).subscribe(
+                    response => {
+                      console.log('Servicio creado con éxito:', response);
+                    },
+                    error => {
+                      if (this.userProfile?.id) {
+                        this.cartService.getCartByUser(this.userProfile.id).subscribe(
+                          response => {
+                            this.popupMessage = "Se ha agregado el servicio al carrito"
+                            this.openPopup()
+  
+                            console.log("Se obtiene el carrito");
+                          },
+                          error => {
+                            this.popupMessage = "No se pudo agregar al carrito"
+                            this.openPopup()
+                            console.log("No se creo el carrito");
+                          })
+                      }
+                      
+                    }
+                  );
+                }
+                
+              } else {
+                console.error('Error al crear el servicio:', error);
+              }
+            }
+          );
         }
-      );
-      
+      }
     }
   }
 
   enviarPregunta() {
-    if (this.userProfile?.id && this.userProfile?.attributes?.userType && this.userProfile?.username && this.userProfile?.firstName && this.userProfile?.lastName && this.userProfile?.email && this.servicio?.id) {
+    if (this.pregunta == "") {
+      this.popupMessage = "Debes poner un mensaje"
+      this.openPopup()
+      return
+    }
+    if (this.userProfile?.id && 
+      this.userProfile?.attributes?.userType && 
+      this.userProfile?.username && 
+      this.userProfile?.firstName && 
+      this.userProfile?.lastName && 
+      this.userProfile?.email && 
+      this.servicio?.id) {
+
       let idPregunta = this.convertirCadenaANumero(this.userProfile.id + this.servicio.id)
-      let pregunta = new QuestionRequest(idPregunta,this.servicio?.id,this.pregunta,new Person(this.userProfile?.id,this.userProfile?.attributes?.userType[0],this.userProfile?.username,this.userProfile?.firstName,this.userProfile?.lastName,this.userProfile?.email),[])
+      let pregunta = new QuestionRequest(idPregunta,
+        this.servicio?.id,
+        this.pregunta,
+        new Person(this.userProfile?.id,
+          this.userProfile?.attributes?.userType[0],
+          this.userProfile?.username,
+          this.userProfile?.firstName,
+          this.userProfile?.lastName,
+          this.userProfile?.email),
+          [])
 
       this.questionService.sendQuestion(pregunta).subscribe(
         response => {
@@ -205,6 +267,12 @@ export class VerServicioComponent implements OnInit {
       const inputElement = document.getElementById(i.id) as HTMLInputElement;
       const inputValue = inputElement.value;
       console.log(inputValue); // Muestra el valor del input
+
+      if (inputValue == "") {
+        this.popupMessage = "Debes poner un mensaje"
+        this.openPopup()
+        return
+      }
       
       let res = new AnswerResponse(inputValue,new PersonAnswer(this.userProfile?.id,this.userProfile?.username, this.userProfile?.email),new Date().toISOString())
       
@@ -222,5 +290,13 @@ export class VerServicioComponent implements OnInit {
       );
     }
     
+  }
+
+  openPopup(): void {
+    this.isPopupOpen = true;
+  }
+
+  closePopup(): void {
+    this.isPopupOpen = false;
   }
 }

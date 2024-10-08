@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; // Asegúrate de importar OnInit
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'; // Asegúrate de importar OnInit
 import { Router, ActivatedRoute } from '@angular/router';
 import { FoodTypeService } from '../backEndServices/foodTypeService'; // Corrige la ruta según tu estructura de carpetas
 import { AccommodationTypeService } from '../backEndServices/AccommodationTypeService';
@@ -22,6 +22,12 @@ import { ServiceTransportationRequest } from '../model/ServiceTransportationRequ
   styleUrls: ['./crear-servicio.component.css']
 })
 export class CrearServicioComponent implements OnInit {
+  isPopupOpen = false;
+  popupMessage = '';
+
+  @Input() keyword: string = '';
+  @Output() resultsEmitter = new EventEmitter<any[]>();
+
   userProfile: UserProfile | undefined;
   
   public mostrarComprar = false
@@ -114,33 +120,34 @@ export class CrearServicioComponent implements OnInit {
   
     // Validar campos obligatorios del servicio principal
     if (!this.servicio.name || !this.servicio.destination || !this.servicio.startDate || !this.servicio.endDate || !this.servicio.unitValue || !this.servicio.description) {
-      this.errorMessage = 'Por favor, complete todos los campos obligatorios del servicio.';
-      alert(this.errorMessage)
+      this.popupMessage = 'Por favor, complete todos los campos obligatorios del servicio.';
+      this.openPopup()
       return;
     }
     else if (this.tipoFood) {
       if (!this.servicio.foodType) {
-        this.errorMessage = 'Por favor, seleccione un tipo de comida.';
-        alert(this.errorMessage)
+        this.popupMessage = 'Por favor, seleccione un tipo de comida.';
+        this.openPopup()
         return;
       }
     }
     else if (this.tipoAccommodation) {
       if (!this.servicio.accommodationType || !this.servicio.capacity) {
-        this.errorMessage = 'Por favor, complete todos los campos de alojamiento.';
-        alert(this.errorMessage)
+        this.popupMessage = 'Por favor, complete todos los campos de alojamiento.';
+        this.openPopup()
         return;
       }
     }
     else if (this.tipoTransportation) {
       if (!this.servicio.transportationType || !this.servicio.origin || !this.servicio.company) {
-        this.errorMessage = 'Por favor, complete todos los campos de transporte.';
-        alert(this.errorMessage)
+        this.popupMessage = 'Por favor, complete todos los campos de transporte.';
+        this.openPopup()
         return;
       }
     }
     else {
-      alert("Seleccione al menos un tipo de servicio")
+      this.popupMessage = 'Seleccione al menos un tipo de servicio';
+      this.openPopup()
       return
     }
 
@@ -229,7 +236,6 @@ export class CrearServicioComponent implements OnInit {
     }
     
     console.log('Formulario válido, enviando datos:', this.servicio);
-    //alert("Servicio creado")
     this.router.navigate(['/menu-principal-proveedor']);
 
   }
@@ -254,5 +260,14 @@ export class CrearServicioComponent implements OnInit {
     
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
   }
+
+  openPopup(): void {
+    this.isPopupOpen = true;
+  }
+
+  closePopup(): void {
+    this.isPopupOpen = false;
+  }
+
   
 }

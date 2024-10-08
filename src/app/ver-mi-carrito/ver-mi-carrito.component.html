@@ -13,15 +13,13 @@
         </tr>
     </thead>
     <tbody>
-        <!--
-        <tr *ngFor="let item of itemsCarrito">
+        <tr *ngFor="let item of items">
             <td><button (click)="eliminarItem(item)">X</button></td>
-            <td>{{item.servicio.nombre}}</td>
-            <td>{{item.servicio.precioUnitario}}</td>
-            <td>{{item.cantidad}}</td>
-            <td>${{item.subTotal}}</td>
+            <td>{{item.serviceName}}</td>
+            <td>{{item.unitValue}}</td>
+            <td>{{item.quantity}}</td>
+            <td>${{item.subtotal}}</td>
         </tr>
-        -->
     </tbody>
 </table>
 
@@ -31,7 +29,9 @@
 
 <!-- Contenedor para el botón de compra alineado a la derecha -->
 <div class="button-container">
-    <button class="buy-button">Comprar</button>
+    <button class="buy-button" (click)="comprar()">Comprar</button>
 </div>
 
 <!-- Botón de Compra -->
+
+<app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>

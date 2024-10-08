@@ -154,3 +154,7 @@ textarea {
 .crearBtn:active {
     transform: scale(0.95); /* Efecto de pulsación al hacer clic */
 }
+
+.obligatorio {
+    color: red !important;
+}

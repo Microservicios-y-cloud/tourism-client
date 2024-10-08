@@ -115,33 +115,55 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
       //Revisar primero si el cliente tiene un carrito
       if (this.userProfile?.id) {
-        this.cartService.getCart(this.userProfile.id).subscribe(
+        this.cartService.getCartByUser(this.userProfile.id).subscribe(
           response => {
             console.log(response);
-            if (this.userProfile?.id) {
-              //TODO: Reviso esto luego para ponerlo despues!!!
-              this.cartService.addCartItem(this.userProfile?.id,cartIt).subscribe(
+            if (this.userProfile?.id && response.id) {
+              //TODO: Hay algo extraño, no se si del front o del back, pero cuando añades un item a un carrito existente, se ejecuta error, sin embargo si se está actualizando en la base de datos, asi que hay algo mal con el manejo de errores
+              //Se soluciona el problema de que añada el mismo item varias veces, pero sigue devolviendo error a pesar de que se añade
+              this.cartService.addCartItem(response.id,cartIt).subscribe(
                 response => {
                   this.popupMessage = "Se ha agregado el servicio al carrito"
                   this.openPopup()
                   console.log('Servicio creado con éxito:', response);
                 },
                 error => {
-                  this.popupMessage = "No se pudo agregar al carrito"
-                  this.openPopup()
-                  console.error('Error al crear el servicio:', error);
+                  console.log(error.error.message == undefined);
+                  
+                  if (error.error.message == undefined) {
+                    this.popupMessage = "Se ha agregado el servicio al carrito"
+                    this.openPopup()
+                    console.log('Servicio creado con éxito:', response);
+                  }
+                  else {
+                    this.popupMessage = error.error.message
+                    this.openPopup()
+                    console.error('Error al crear el servicio:', error);
+                  }
                 }
               );
             }
-            
           },
           error => {
             if (error.status === 500) {
               console.log("No existe el carrito, asi que se creara uno");
               
               //No existe, asi que se creara el carrito
-              if(this.userProfile?.id && this.userProfile.attributes?.userType && this.userProfile.username && this.userProfile.firstName && this.userProfile.lastName && this.userProfile.email) {
-                let newCart = new CartRequest(new Customer(this.userProfile?.id,this.userProfile?.attributes?.userType[0],this.userProfile?.username,this.userProfile?.firstName,this.userProfile?.lastName, this.userProfile?.email),[cartIt])
+              if(this.userProfile?.id && 
+                this.userProfile.attributes?.userType && 
+                this.userProfile.username && 
+                this.userProfile.firstName && 
+                this.userProfile.lastName && 
+                this.userProfile.email) {
+
+                let newCart = new CartRequest(new Customer(
+                  this.userProfile?.id,
+                  this.userProfile?.attributes?.userType[0],
+                  this.userProfile?.username,
+                  this.userProfile?.firstName,
+                  this.userProfile?.lastName, 
+                  this.userProfile?.email),
+                  [cartIt])
                 console.log(JSON.stringify(newCart));
                 this.cartService.createCart(newCart).subscribe(
                   response => {
@@ -149,24 +171,21 @@ export class SearchBarComponent implements OnInit, OnDestroy {
                   },
                   error => {
                     if (this.userProfile?.id) {
-                      this.cartService.getCart(this.userProfile.id).subscribe(
+                      this.cartService.getCartByUser(this.userProfile.id).subscribe(
                         response => {
                           this.popupMessage = "Se ha agregado el servicio al carrito"
                           this.openPopup()
-
                           console.log("Se obtiene el carrito");
                         },
                         error => {
-                          this.popupMessage = "No se pudo agregar al carrito"
+                          this.popupMessage = error
                           this.openPopup()
                           console.log("No se creo el carrito");
                         })
                     }
-                    
                   }
                 );
               }
-              
             } else {
               console.error('Error al crear el servicio:', error);
             }
@@ -174,9 +193,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         );
       }
     }
-
-    
-    
   }
 
   openPopup(): void {

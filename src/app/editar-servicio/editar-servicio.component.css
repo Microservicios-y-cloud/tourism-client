@@ -130,3 +130,7 @@ textarea {
 .contenidoServicio {
     padding-left: 50px;
 }
+
+.obligatorio {
+    color: red !important;
+}

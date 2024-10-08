@@ -6,11 +6,11 @@
         </div>
         <div class="container2">
             <div class="form-group">
-                <label for="service-name">Nombre del servicio:</label>
+                <label for="service-name">Nombre del servicio:<label class="obligatorio">*</label></label>
                 <input type="text" id="service-name" [(ngModel)]="servicio.name">
             </div>
             <div class="form-group">
-                <label for="location-select">Ubicación:</label>
+                <label for="location-select">Ubicación:<label class="obligatorio">*</label></label>
                 <select id="location-select" [(ngModel)]="servicio.destination" name="location">
                     <option *ngFor="let location of locations" [ngValue]="location">
                     {{ location.city }}, {{ location.country }}
@@ -18,11 +18,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="service-start">Inicio del servicio:</label>
+                <label for="service-start">Inicio del servicio:<label class="obligatorio">*</label></label>
                 <input type="date" id="service-start" [(ngModel)]="servicio.startDate">
             </div>
             <div class="form-group">
-                <label for="service-end">Fin del servicio:</label>
+                <label for="service-end">Fin del servicio:<label class="obligatorio">*</label></label>
                 <input type="date" id="service-end" [(ngModel)]="servicio.endDate">
             </div>
             <label  class="check">
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="price">Precio:</label>
+                <label for="price">Precio:<label class="obligatorio">*</label></label>
                 <input type="number" id="price" [(ngModel)]="servicio.unitValue">
             </div>
             <label for="description">Descripción:</label>
