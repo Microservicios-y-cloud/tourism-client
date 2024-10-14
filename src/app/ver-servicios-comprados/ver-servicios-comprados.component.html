@@ -33,7 +33,7 @@
 <div id="body">
     <div *ngIf="listaServicios.length == 0">
         <p>Parece que no tienes servicios comprados aún</p>
-        <button class="comprar">Ir al menú principal</button>
+        <button class="comprar" (click)="menuPrincipal()">Ir al menú principal</button>
     </div>
 
     <div class="card"  *ngFor="let item of listaServicios">
@@ -41,10 +41,10 @@
             <img src="https://cdn.pixabay.com/photo/2015/06/10/16/36/mark-804938_640.jpg" alt="Imagen del servicio">
         </div>
         <div class="card-details">
-            <h3>Nombre del servicio {{item.name}}</h3>
-            <p><b>Ubicación:</b> {{item.destination?.city}}, {{item.destination?.country}}</p>
-            <p><b>Descripción:</b> {{item.description}}</p>
-            <p><b>Valor unitario:</b>$ {{item.unitValue}}</p>
+            <h3><b>Nombre del servicio</b> {{item.serviceName}}</h3>
+            <p><b>Valor unitario:</b> {{item.unitValue}}</p>
+            <p><b>Cantidad de personas:</b> {{item.quantity}}</p>
+            <p><b>Subtotal:</b> {{item.subtotal}}</p>
         </div>
         <div class="card-footer">
             <button class="button comentar" (click)="realizarComentario(1)">Hacer un comentario</button>

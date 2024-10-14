@@ -12,9 +12,9 @@
           <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
           <li class="nav-item"><a (click)="logout()" class="nav-link">Logout</a></li>
           <li class="nav-item"><img src="../../../assets/carrito-icon.png" alt="Logo" (click)="verCarrito()"></li>
-          <li class="nav-item"><img src="../../../assets/notification-icon.png" alt="Logo" (click)="verNotificaciones()"></li>
+          <!--<li class="nav-item"><img src="../../../assets/notification-icon.png" alt="Logo" (click)="verNotificaciones()"></li>-->
           <li class="nav-item"><img src="../../../assets/book-icon.png" alt="Logo" (click)="verHistorial()"></li>
-          <li class="nav-item"><img src="../../../assets/user-default-icon.png" alt="Logo" (click)="goToAccountManagement()"></li>
+          <li class="nav-item"><img src="{{imagen}}" alt="Perfil" (click)="goToAccountManagement()"></li>
           <i class="fas fa-search" id="search-icon"></i>
           <input class="search-input" type="text" placeholder="Search..">
         </ul>

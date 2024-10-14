@@ -9,11 +9,19 @@ import { UserProfile } from '../../keycloak/user-profile';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  public imagen: string = "../../../assets/user-default-icon.png" //Direccion de imagen por defecto
   userProfile: UserProfile | undefined;
 
   constructor(private keycloakService: KeycloakService,
     private router: Router
   ) { }
+
+  ngOnInit(): void {
+    this.userProfile = this.keycloakService.profile;
+    if (this.userProfile?.attributes?.picture) {
+      this.imagen = this.userProfile?.attributes?.picture[0]
+    }
+  }
 
   goToAccountManagement(): void {
     this.keycloakService.accountManagement();
