@@ -7,6 +7,7 @@ import { CartItem } from '../model/CartItem';
 import { ServicioService } from '../backEndServices/servicio-service.service';
 import { errorCodes } from '@apollo/client/invariantErrorCodes';
 import { itemService } from '../model/adicional/itemService';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-ver-mi-carrito',
   templateUrl: './ver-mi-carrito.component.html',
@@ -29,7 +30,9 @@ export class VerMiCarritoComponent {
   constructor(
     private cartService: CartService,
     private servicioService: ServicioService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -77,8 +80,17 @@ export class VerMiCarritoComponent {
   }
 
   eliminarItem(item: itemService) {
-    this.popupMessage = "Todavia no esta hecha la funcion de eliminar item"
-    this.openPopup()
+    if (item.serviceId && this.cart) {
+      this.cartService.deleteCartItem(item.serviceId?.toString(),this.cart).subscribe(
+        response => {
+          alert("Item eliminado")
+          this.router.navigate(['/ver-carrito']);
+        },
+        error => {
+          alert("Error al eliminar item")
+        }
+      )
+    }
   }
 
   comprar():void {
@@ -86,7 +98,7 @@ export class VerMiCarritoComponent {
       this.cartService.purchase(this.cart?.id).subscribe(
         respose =>{
           console.log(respose);
-          
+          this.router.navigate(['/ver-servicios-comprados']);
         },
         error => {
           console.log(error);

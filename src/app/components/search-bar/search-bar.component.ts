@@ -42,6 +42,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userProfile = this.keycloakService.profile;
+    this.onSearch();
   }
 
   toggleFilters(): void {
@@ -67,6 +68,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
+    console.log("Buscando...");
+    
     if (this.keyword.trim()) {
       this.loading = true;
       this.querySubscription = this.apollo

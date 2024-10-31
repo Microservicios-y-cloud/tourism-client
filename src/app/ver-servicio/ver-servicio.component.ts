@@ -42,6 +42,8 @@ export class VerServicioComponent implements OnInit {
   public pregunta: string = ""
   public responseAnswer: string = ""
 
+  public comprado = false;
+
   public cantidad = 1;
   constructor(
     private locationService: LocationService,
@@ -134,8 +136,9 @@ export class VerServicioComponent implements OnInit {
                 this.cartService.addCartItem(response.id,cartIt).subscribe(
                   response => {
                     this.popupMessage = "Se ha agregado el servicio al carrito"
+                    this.comprado = true;
                     this.openPopup()
-                    console.log('Servicio creado con éxito:', response);
+                    //console.log('Servicio creado con éxito:', response);###
                   },
                   error => {
                     console.log(error.error.message == undefined);
@@ -298,5 +301,8 @@ export class VerServicioComponent implements OnInit {
 
   closePopup(): void {
     this.isPopupOpen = false;
+    if (this.comprado) {
+      this.router.navigate(['/ver-carrito']);
+    }
   }
 }
