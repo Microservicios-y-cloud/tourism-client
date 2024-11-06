@@ -42,7 +42,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userProfile = this.keycloakService.profile;
+    this.keyword = '.'; //Esto es para que busque de una vez todo
     this.onSearch();
+    this.keyword = '';
+    
   }
 
   toggleFilters(): void {
@@ -68,8 +71,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    console.log("Buscando...");
-    
     if (this.keyword.trim()) {
       this.loading = true;
       this.querySubscription = this.apollo
@@ -85,12 +86,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             this.loading = loading;
             this.services = data?.servicesByKeyword || [];
             this.error = null;
-            this.resultsEmitter.emit(this.services); // Emitir los resultados
-            console.log(this.services);
-            this.services.forEach(element => {
-              console.log(element.serviceType);
-              
-            });
+            this.resultsEmitter.emit(this.services);
           },
           error: (err) => {
             this.error = err;

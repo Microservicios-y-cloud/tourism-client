@@ -191,6 +191,7 @@ export class VerServicioComponent implements OnInit {
                             this.openPopup()
   
                             console.log("Se obtiene el carrito");
+                            this.router.navigate(['/ver-carrito']);
                           },
                           error => {
                             this.popupMessage = "No se pudo agregar al carrito"
@@ -301,6 +302,8 @@ export class VerServicioComponent implements OnInit {
 
   closePopup(): void {
     this.isPopupOpen = false;
+    console.log("Closed");
+    
     if (this.comprado) {
       this.router.navigate(['/ver-carrito']);
     }
