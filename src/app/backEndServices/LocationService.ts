@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class LocationService {
 
+
   constructor(
     private http: HttpClient
   ) {
@@ -17,6 +18,10 @@ export class LocationService {
   private headers = new HttpHeaders(
     { "Content-Type": "application/json" }
   )
+
+  createLocation(location: LocationResponse) : Observable<LocationResponse> {
+    return this.http.post<LocationResponse>(`${environment.gatewayServiceUrl}/service-publication-microservice/services/location`, location, { headers: this.headers })
+  }
 
   getService(id:string): Observable<LocationResponse> {
     return this.http.get<LocationResponse>(`${environment.gatewayServiceUrl}/service-query-microservice/services/location/${id}`)

@@ -66,7 +66,7 @@ export class EditarServicioComponent {
     
     this.servicio = new SuperService();
 
-    this.getAllLocations()
+    this.getAllInfo()
 
     //Aqui se carga el serivicio para editar la informacion
     this.cargarServicio()
@@ -82,6 +82,15 @@ export class EditarServicioComponent {
           this.servicioService.getService(id).subscribe(
             response => {
               this.servicio = response
+              if(this.servicio.foodType != null && this.servicio.foodType != undefined){
+                this.tipoFood = true
+              }
+              else if(this.servicio.accommodationType != null && this.servicio.accommodationType != undefined){
+                this.tipoAccommodation = true
+              }
+              else if(this.servicio.transportationType != null && this.servicio.transportationType != undefined){
+                this.tipoTransportation = true
+              }
             },
             error => {
               console.error('Error al crear el servicio:', error);
@@ -99,17 +108,7 @@ export class EditarServicioComponent {
     
   }
 
-  getAllLocations(): void {
-    this.locationService.findAll().subscribe(
-      data => {
-        console.log(data);
-        this.locations = data
-      },
-      error => {
-        console.error('Error fetching locations:', error);
-      }
-    );
-
+  getAllInfo(): void {
     this.FoodServices.findAll().subscribe(
       data => {
         console.log(data);

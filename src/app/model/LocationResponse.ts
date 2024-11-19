@@ -7,6 +7,12 @@ export class LocationResponse {
     city?: string;
     municipality?: string;
 
-    constructor() {
+    constructor(address?: string, latitude?: number, longitude?: number, country?: string, city?: string, municipality?: string) {
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
+        this.city = city;
+        this.municipality = municipality;
     }
 }
