@@ -11,6 +11,8 @@ import { KeycloakService } from '../keycloak/keycloak.service';
 import { CommentRequest } from '../model/CommentRequest';
 import { Qualification } from '../model/Qualification';
 import { Customer } from '../model/Customer';
+import { GoogleMapsService } from '../maps/google-maps.service';
+import { WeatherService } from '../clima/weather.service';
 
 @Component({
   selector: 'app-ver-servicios-comprados',
@@ -30,20 +32,31 @@ export class VerServiciosCompradosComponent {
 
   isPopupOpen = false;
   popupMessage = '';
+  public mostrarClima = false;
+  public mostrarMapa = false;
 
   userProfile: UserProfile | undefined;
 
   public itemComentar: itemService = new itemService(
-    0, '', 0, 0, 0, '', new Date(), new Date(), '', '', '', '', '', '', '' 
+    0, '', 0, 0, 0, '', new Date(), new Date(), '', '', '', 0, 0, '', '', '', 0, 0, '' 
   );
 
+  public weatherData: any
+
   public listaServicios: itemService[] = []
+  public lat: number | undefined;
+  public lon: number | undefined;
+  public originLat: number = 0;
+  public originLon: number = 0;
+  titulo: string | undefined;
   constructor(
     private orderPurchaseService: OrderPurchaseService,
     private serviceService: ServicioService,
     private keycloakService: KeycloakService,
     private router: Router,  private route: ActivatedRoute,
-    private questionService: questionService
+    private questionService: questionService,
+    private weatherService: WeatherService,
+    private mapService: GoogleMapsService
   ) {}
 
 // Asegurarse de no sobrescribir serviceType globalmente y manejar por servicio
@@ -85,9 +98,13 @@ ngOnInit(): void {
                                       res.destination?.country || '',
                                       res.destination?.municipality || '',
                                       res.destination?.city || '',
+                                      res.destination?.latitude || 0,
+                                      res.destination?.longitude || 0,
                                       res.origin?.country || '',
                                       res.origin?.municipality || '',
                                       res.origin?.city || '',
+                                      res.origin?.latitude || 0,
+                                      res.origin?.longitude || 0,
                                       ordenes.creationDate
                                   );
 
@@ -170,11 +187,38 @@ ngOnInit(): void {
 
   
   verClima(item: itemService) {
-  throw new Error('Method not implemented.');
+    const city = item.destinationCity;
+    if (city) {
+      this.weatherService.getWeatherByLatLong(item.destinationLatitude, item.destinationLongitude).subscribe(
+        data => {
+          this.setWeatherData(data);
+          this.mostrarClima = true; // Mostrar el popup del clima
+        },
+        error => {
+          console.error('Error al cargar el clima:', error);
+          this.popupMessage = 'No se pudo cargar el clima. Por favor, intenta más tarde.';
+          this.openPopup();
+        }
+      );
+    } else {
+      this.popupMessage = 'La ciudad no está definida.';
+      this.openPopup();
+    }
   }
+
+
+
+
   verMapa(item: itemService) {
-  throw new Error('Method not implemented.');
+    this.mostrarMapa = true;
+    console.log('Mostrar mapa:', this.mostrarMapa);
+    this.lat = item.destinationLatitude ?? 0;
+    this.lon = item.destinationLongitude ?? 0;
+    this.originLat = item.originLatitude ?? 0;
+    this.originLon = item.originLongitude ?? 0;
+    this.titulo = item.destinationCity || "Ubicación";
   }
+  
 
   openPopup(): void {
     this.isPopupOpen = true;
@@ -183,4 +227,24 @@ ngOnInit(): void {
   closePopup(): void {
     this.isPopupOpen = false;
   }
+  setWeatherData(data: any) {
+    this.weatherData = data;
+    let sunsetTime = new Date(this.weatherData.sys.sunset * 1000);
+    this.weatherData.sunset_time = sunsetTime.toLocaleTimeString();
+    let currentDate = new Date();
+    this.weatherData.isDay = (currentDate.getTime() < sunsetTime.getTime());
+    this.weatherData.temp_celcius = (this.weatherData.main.temp - 273.15).toFixed(0);
+    this.weatherData.temp_min = (this.weatherData.main.temp_min - 273.15).toFixed(0);
+    this.weatherData.temp_max = (this.weatherData.main.temp_max - 273.15).toFixed(0);
+    this.weatherData.temp_feels_like = (this.weatherData.main.feels_like - 273.15).toFixed(0);
+  }
+
+  cerrarClima() {
+    this.mostrarClima = false; // Ocultar el popup del clima
+  }
+
+  cerrarMapa() {
+    this.mostrarMapa = false; // Ocultar el mapa
+  }
 }
+

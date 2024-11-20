@@ -41,7 +41,8 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
-    position: relative; /* Agregado para manejar el posicionamiento de los elementos dentro de la tarjeta */
+    position: relative;
+    /* Asegurado para que los elementos dentro de la tarjeta se posicionen correctamente */
 }
 
 .card-image {
@@ -59,20 +60,29 @@ body {
 
 .card-footer {
     display: flex;
-    flex-direction: column; /* Esto apila los botones verticalmente */
-    gap: 10px; /* Espacio entre los botones */
+    flex-direction: column;
+    /* Asegura que los botones estén apilados verticalmente */
+    gap: 10px;
+    /* Espacio entre los botones */
     position: absolute;
-    right: 10px; /* Alinea los botones a la derecha */
-    bottom: 10px; /* Alinea los botones en la parte inferior de la tarjeta */
-    text-align: center; /* Centra el texto de los botones */
+    right: 10px;
+    /* Alinea los botones a la derecha */
+    bottom: 10px;
+    /* Alinea los botones en la parte inferior de la tarjeta */
+    text-align: center;
+    /* Centra el texto de los botones */
+    z-index: 2001;
+    /* Asegura que los botones estén por encima del contenido de la tarjeta */
 }
 
 .card-footer .button {
-    width: 100%; /* Los botones ocuparán el 100% del contenedor .card-footer */
+    width: 100%;
+    z-index: 100;
 }
 
 .card-footer .button:hover {
-    opacity: 0.8; /* Efecto al pasar el ratón sobre los botones */
+    opacity: 0.8;
+    /* Efecto al pasar el ratón sobre los botones */
 }
 
 .card h3 {
@@ -84,17 +94,20 @@ body {
 }
 
 .comentar {
-    background-color: #4CAF50; /* Color verde */
+    background-color: #4CAF50;
+    /* Color verde */
     color: white;
 }
 
 .clima {
-    background-color: #2196F3; /* Color azul */
+    background-color: #2196F3;
+    /* Color azul */
     color: white;
 }
 
 .mapa {
-    background-color: #f44336; /* Color rojo */
+    background-color: #f44336;
+    /* Color rojo */
     color: white;
 }
 
@@ -108,7 +121,7 @@ body {
     cursor: pointer;
 }
 
-/* Fondo semi-transparente detrás del popup */
+/* Centramos la tarjeta en la pantalla */
 .overlay {
     position: fixed;
     top: 0;
@@ -119,19 +132,49 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    z-index: 1000;  /* Asegúrate de que el overlay tenga un z-index menor que el del mapa */
 }
 
-/* Estilo del contenedor del popup */
-.popup-container {
-    position: relative; /* Necesario para posicionar el botón de cierre */
+
+/* Aseguramos que los botones dentro de los popups tengan la misma apariencia que los botones fuera de ellos */
+.overlay .button {
+    opacity: 0.6;
+    /* Añadimos opacidad para que no resalten demasiado */
+}
+
+.overlay .button:hover {
+    opacity: 0.6;
+    z-index: 999;  /* Asegúrate de que no interfieran con el mapa */
+}
+
+
+/* Popup de comentarios */
+.comentario-popup {
+    position: relative;
+    /* Necesario para posicionar el botón de cierre */
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 600px;
-    z-index: 1001; /* Asegúrate de que esté por encima del overlay */
+    z-index: 1001;
+    /* Asegúrate de que esté por encima del overlay */
+}
+
+/* Popup de clima */
+.clima-popup {
+    width: 250px;
+    /* Ajustar al tamaño deseado */
+    height: 300px;
+    /* Ajustar al tamaño deseado */
+    background: rgb(0, 0, 0);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(8, 7, 42, 1) 75%, rgb(8, 10, 63) 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
 }
 
 /* Estilo del botón de cierre */
@@ -147,6 +190,21 @@ body {
     font-size: 16px;
     cursor: pointer;
     font-weight: bold;
+}
+
+.close-mapa-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(209, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 999999;
 }
 
 .close-button:hover {
@@ -195,16 +253,16 @@ textarea {
     transition: color 0.2s;
 }
 
-.rating input:checked ~ label {
+.rating input:checked~label {
     color: #f5c518;
 }
 
-.rating input:checked ~ input ~ label {
+.rating input:checked~input~label {
     color: #f5c518;
 }
 
 .rating label:hover,
-.rating label:hover ~ label {
+.rating label:hover~label {
     color: #f5c518;
 }
 
@@ -243,11 +301,97 @@ img {
 
 #notFound {
     display: flex;
-    flex-direction: column; /* Asegura que los elementos estén en columna */
-    justify-content: center; /* Centra verticalmente */
-    align-items: center; /* Centra horizontalmente */
-    text-align: center; /* Alinea el texto */
-    margin: 0 auto; /* Centra horizontalmente con respecto al contenedor */
+    flex-direction: column;
+    /* Asegura que los elementos estén en columna */
+    justify-content: center;
+    /* Centra verticalmente */
+    align-items: center;
+    /* Centra horizontalmente */
+    text-align: center;
+    /* Alinea el texto */
+    margin: 0 auto;
+    /* Centra horizontalmente con respecto al contenedor */
     font-size: 24px;
-    margin-top: 50px; /* Espaciado superior */
+    margin-top: 50px;
+    /* Espaciado superior */
 }
+
+#divWeatherMain {
+    display: block;
+    border-radius: 10px;
+    width: 100%;
+    /* Asegura que el widget ocupe todo el espacio disponible */
+    height: 100%;
+    /* Hace que el widget se ajuste al contenedor */
+    background: rgb(0, 0, 0);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(8, 7, 42, 1) 75%, rgb(8, 10, 63) 100%);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.weatherWidgetRow {
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.sun {
+    margin-top: 10px;
+    color: yellow;
+    filter: drop-shadow(1px 1px 10px yellow);
+}
+
+.moon {
+    margin-top: 10px;
+    color: white;
+    filter: drop-shadow(1px 1px 10px white);
+}
+
+.cloudDiv {
+    margin-top: -40px;
+}
+
+.cloud {
+    color: rgb(104, 175, 197);
+    filter: drop-shadow(1px 1px 5px rgb(104, 175, 197));
+    animation-name: cloudMovement;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
+
+@keyframes cloudMovement {
+    from {
+        margin-left: -55px;
+    }
+
+    to {
+        margin-left: 65px;
+    }
+}
+
+/* Contenedor del mapa */
+.map-container {
+    position: fixed;  /* Para que quede fijo y no se mueva con el scroll */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+    pointer-events: none; 
+    z-index: 99999;
+}
+
+/* Marco del mapa */
+.map-frame {
+    height: 100%;
+}
+
+/* Mapa */
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* Fondo oscuro detrás del mapa (overlay) */

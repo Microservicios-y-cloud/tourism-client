@@ -2,21 +2,27 @@
 
 <!--<redactar-comentario [visible]="mostrarComentario" (close)="cerrarComentario()"></redactar-comentario>-->
 <div class="overlay" *ngIf="visible">
-    <div class="popup-container">
+    <div class="popup-container comentario-popup">
         <button class="close-button" (click)="cerrar()">X</button>
         <h1>Deja tu Comentario y Valoración</h1>
         <div id="feedback-form">
             <label for="comentario"><b>Comentario:</b></label>
-            <textarea id="comentario" name="comentario" rows="4" cols="50" placeholder="Escribe tu comentario aquí..." [(ngModel)]="text"></textarea>
+            <textarea id="comentario" name="comentario" rows="4" cols="50" placeholder="Escribe tu comentario aquí..."
+                [(ngModel)]="text"></textarea>
 
             <div class="form-group">
                 <span class="valoracion"><b>Valoración:</b></span>
                 <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" (click)="actualizarPuntaje(5)"><label for="star5">★</label>
-                    <input type="radio" id="star4" name="rating" value="4" (click)="actualizarPuntaje(4)"><label for="star4">★</label>
-                    <input type="radio" id="star3" name="rating" value="3" (click)="actualizarPuntaje(3)"><label for="star3">★</label>
-                    <input type="radio" id="star2" name="rating" value="2" (click)="actualizarPuntaje(2)"><label for="star2">★</label>
-                    <input type="radio" id="star1" name="rating" value="1" (click)="actualizarPuntaje(1)"><label for="star1">★</label>
+                    <input type="radio" id="star5" name="rating" value="5" (click)="actualizarPuntaje(5)"><label
+                        for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" (click)="actualizarPuntaje(4)"><label
+                        for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" (click)="actualizarPuntaje(3)"><label
+                        for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" (click)="actualizarPuntaje(2)"><label
+                        for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" (click)="actualizarPuntaje(1)"><label
+                        for="star1">★</label>
                 </div>
             </div>
 
@@ -26,6 +32,42 @@
         </div>
     </div>
 </div>
+
+<div class="overlay" *ngIf="mostrarClima">
+    <div class="popup-container clima-popup">
+        <button class="close-button" (click)="cerrarClima()">X</button>
+        <!-- Contenido del clima -->
+        <div id="divWeatherMain">
+            <div *ngIf="weatherData.isDay" class="weatherWidgetRow">
+                <i class="fas fa-3x fa-sun sun"></i>
+            </div>
+            <div *ngIf="!weatherData.isDay" class="weatherWidgetRow">
+                <i class="fas fa-3x fa-moon moon"></i>
+            </div>
+            <div class="weatherWidgetRow cloudDiv">
+                <i class="fas fa-cloud fa-3x cloud"></i>
+            </div>
+            <div class="weatherWidgetRow" style="font-size: 32px; margin-top: 5px;">
+                {{ weatherData.temp_celcius }}°
+            </div>
+            <div class="weatherWidgetRow" style="font-size: 12px;">
+                {{ weatherData.temp_min }}° / {{ weatherData.temp_max }}°
+            </div>
+            <div class="weatherWidgetRow" style="font-size: 12px;">
+                Feels Like: {{ weatherData.temp_feels_like }}°
+            </div>
+            <div class="weatherWidgetRow" style="font-size: 25px; margin-top: 10px;">
+                {{ weatherData.name }}
+            </div>
+            <div class="weatherWidgetRow" style="font-size: 12px;">
+                Humidity: {{ weatherData.main.humidity }}%
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-map-popup *ngIf="mostrarMapa && lat !== undefined && lon !== undefined" [lat]="lat" [lon]="lon" [originLat]="originLat" [originLon]="originLon" [title]="titulo" (close)="cerrarMapa()"></app-map-popup>
+
 <div class="container">
     <div class="title">Servicios comprados</div>
 </div>
@@ -36,7 +78,7 @@
         <button id="notFound" class="comprar" (click)="menuPrincipal()">Ir al menú principal</button>
     </div>
 
-    <div class="card"  *ngFor="let item of listaServicios">
+    <div class="card" *ngFor="let item of listaServicios">
         <div class="card-image">
             <img src="https://cdn.pixabay.com/photo/2015/06/10/16/36/mark-804938_640.jpg" alt="Imagen del servicio">
         </div>
@@ -48,18 +90,23 @@
             <p><b>Subtotal:</b> {{item.subtotal}}</p>
             <p style="color: red;"><b>Fecha de inicio:</b> {{item.startDate}}</p>
             <p><b>Fecha de fin:</b> {{item.endDate}}</p>
-            
-            <p *ngIf="item.serviceType === 'Transporte'"><b>Ubicación destino:</b> {{item.destinationCity}}, {{item.destinationCountry}}</p>
-            <p *ngIf="item.serviceType === 'Transporte'"><b>Ubicación origen:</b> {{item.originCity}}, {{item.originCountry}}</p>
-            <p *ngIf="item.serviceType !== 'Transporte'"><b>Ubicación destino:</b> {{item.destinationCity}}, {{item.destinationCountry}}</p>
-    
+
+            <p *ngIf="item.serviceType === 'Transporte'"><b>Ubicación destino:</b> {{item.destinationCity}},
+                {{item.destinationCountry}}</p>
+            <p *ngIf="item.serviceType === 'Transporte'"><b>Ubicación origen:</b> {{item.originCity}},
+                {{item.originCountry}}</p>
+            <p *ngIf="item.serviceType !== 'Transporte'"><b>Ubicación destino:</b> {{item.destinationCity}},
+                {{item.destinationCountry}}</p>
+
             <div class="card-footer">
                 <button class="button comentar" (click)="realizarComentario(item)">Hacer un comentario</button>
                 <button class="button clima" (click)="verClima(item)">Ver clima</button>
-                <button class="button mapa" *ngIf="item.serviceType === 'Transporte' || item.serviceType === 'Alojamiento'"(click)="verMapa(item)">Ver mapa</button>
+                <button class="button mapa"
+                    *ngIf="item.serviceType === 'Transporte' || item.serviceType === 'Alojamiento'"
+                    (click)="verMapa(item)">Ver mapa</button>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
 <app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>

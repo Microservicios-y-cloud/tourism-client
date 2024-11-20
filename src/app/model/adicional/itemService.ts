@@ -11,9 +11,13 @@ export class itemService {
     public destinationCountry?: string,  // Agregar destination
     public destinationMunicipality?: string,  // Agregar destination
     public destinationCity?: string,  // Agregar destination
+    public destinationLatitude?: number, // Agregar destination
+    public destinationLongitude?: number, // Agregar destination
     public originCountry?: string,  // Agregar destination
     public originMunicipality?: string,  // Agregar destination
     public originCity?: string,  // Agregar destination
+    public originLatitude?: number, // Agregar destination
+    public originLongitude?: number, // Agregar destination
     public fechaCompra?: string,
     ){
 

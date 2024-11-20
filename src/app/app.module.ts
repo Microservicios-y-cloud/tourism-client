@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {GraphQLModule } from './graphql.module'
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { PopupComponent } from './popup/popup.component';
+import { MapPopupComponent } from './map-popup/map-popup.component';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -45,7 +46,8 @@ export function kcFactory(kcService: KeycloakService){
     MenuPrincipalClienteComponent,
     MenuPrincipalProveedorComponent,
     SearchBarComponent,
-    PopupComponent
+    PopupComponent,
+    MapPopupComponent
   ],
   imports: [
     BrowserModule,
