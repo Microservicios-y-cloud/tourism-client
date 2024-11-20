@@ -120,7 +120,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             if (this.userProfile?.id && response.id) {
               //TODO: Hay algo extraño, no se si del front o del back, pero cuando añades un item a un carrito existente, se ejecuta error, sin embargo si se está actualizando en la base de datos, asi que hay algo mal con el manejo de errores
               //Se soluciona el problema de que añada el mismo item varias veces, pero sigue devolviendo error a pesar de que se añade
-              this.cartService.addCartItem(response.id,cartIt).subscribe(
+              this.cartService.addCartItem(response.id, cartIt).subscribe(
                 response => {
                   this.popupMessage = "Se ha agregado el servicio al carrito"
                   this.openPopup()
@@ -135,7 +135,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
                     console.log('Servicio creado con éxito:', response);
                   }
                   else {
-                    this.popupMessage = error.error.message
+                    this.popupMessage = error.message
                     this.openPopup()
                     console.error('Error al crear el servicio:', error);
                   }
@@ -144,7 +144,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             }
           },
           error => {
-            if (error.status === 500) {
+            if (error.status === 404) {
               console.log("No existe el carrito, asi que se creara uno");
               
               //No existe, asi que se creara el carrito
@@ -163,25 +163,31 @@ export class SearchBarComponent implements OnInit, OnDestroy {
                   this.userProfile?.lastName, 
                   this.userProfile?.email),
                   [cartIt])
-                console.log(JSON.stringify(newCart));
                 this.cartService.createCart(newCart).subscribe(
                   response => {
                     console.log('Servicio creado con éxito:', response);
-                  },
-                  error => {
                     if (this.userProfile?.id) {
                       this.cartService.getCartByUser(this.userProfile.id).subscribe(
                         response => {
                           this.popupMessage = "Se ha agregado el servicio al carrito"
                           this.openPopup()
-                          console.log("Se obtiene el carrito");
+                          console.log(response);
                         },
                         error => {
-                          this.popupMessage = error
+                          if (error.status === 400) {
+                          this.popupMessage = "Error, el servicio actualmente no se encuentra disponible"
                           this.openPopup()
                           console.log("No se creo el carrito");
+                          }
                         })
                     }
+                  },
+                  error => {
+                    if (error.status === 400) {
+                      this.popupMessage = "Error, el servicio actualmente no se encuentra disponible"
+                      this.openPopup()
+                      console.log("No se creo el carrito");
+                      }
                   }
                 );
               }

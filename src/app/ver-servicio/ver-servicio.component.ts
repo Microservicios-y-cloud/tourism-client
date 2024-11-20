@@ -18,6 +18,8 @@ import { CartService } from '../backEndServices/CartService';
 import { CartRequest } from '../model/CartRequest';
 import { Customer } from '../model/Customer';
 import { CartItem } from '../model/CartItem';
+import { CommentResponse } from '../model/CommentResponse';
+import { Qualification } from '../model/Qualification';
 
 @Component({
   selector: 'app-ver-servicio',
@@ -25,6 +27,7 @@ import { CartItem } from '../model/CartItem';
   styleUrls: ['./ver-servicio.component.css']
 })
 export class VerServicioComponent implements OnInit {
+
   isPopupOpen = false;
   popupMessage = '';
 
@@ -35,7 +38,8 @@ export class VerServicioComponent implements OnInit {
   public mostrarComprar = false
 
   public servicio: SuperService | undefined;
-  public questions: QuestionResponse[] |undefined
+  public questions: QuestionResponse[] | undefined
+  public comments: CommentResponse[] | undefined
 
   idParam: any
 
@@ -86,6 +90,15 @@ export class VerServicioComponent implements OnInit {
           this.questionService.findAllQuestionsByService(id).subscribe(
             data => {
               this.questions = data
+            },
+            error => {
+              console.error('Error fetching services:', error);
+            }
+          );
+
+          this.questionService.getCommentsByService(id).subscribe(
+            data => {
+              this.comments = data
             },
             error => {
               console.error('Error fetching services:', error);
@@ -308,4 +321,15 @@ export class VerServicioComponent implements OnInit {
       this.router.navigate(['/ver-carrito']);
     }
   }
+
+  getQualificationNumberByText(qualificationText: string): number {
+    switch (qualificationText.toUpperCase()) {
+        case 'DEFICIENTE': return 1;
+        case 'REGULAR': return 2;
+        case 'SATISFACTORIO': return 3;
+        case 'BUENO': return 4;
+        case 'SOBRESALIENTE': return 5;
+        default: return 0; // Devuelve 0 si no coincide con ninguna calificación
+    }
+}
 }

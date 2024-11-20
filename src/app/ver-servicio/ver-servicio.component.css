@@ -276,15 +276,21 @@ textarea {
 
 .stars {
     display: flex;
-    justify-content: flex-end; /* Alinea las estrellas a la derecha */
-    margin-top: 5px;
+    flex-direction: row; /* Cambiado de column a row */
+    align-items: center; /* Alineación vertical en el centro */
+    justify-content: center; /* Opcional: centra las estrellas horizontalmente */
+    gap: 5px; /* Opcional: espacio entre las estrellas */
 }
 
 .star {
-    font-size: 1.2em;
-    color: gold;
-    margin-left: 2px;
+    color: #ddd; /* Estrellas vacías */
+    font-size: 20px;
 }
+
+.star.filled {
+    color: gold; /* Estrellas llenas */
+}
+
 
 .star.empty {
     color: #ddd;
@@ -307,6 +313,12 @@ textarea {
 
 .off {
     padding-left: 30px;
+}
+
+p {
+    margin: 2px 0 0 0;
+    font-size: 14px;
+    text-align: justify;
 }
 
 .answer-item {

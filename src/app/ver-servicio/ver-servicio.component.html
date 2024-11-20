@@ -105,22 +105,29 @@
                     </div>
                 </div>
                 <div class="column" id="valoraciones-usuarios">
-                    <!--
-                    <div class="message" *ngFor="let item of servicio.comentario">
-                        <img src="https://via.placeholder.com/50" alt="Usuario 3" class="avatar">
-                        <div class="message-content" >
+                    <div class="message" *ngFor="let comment of comments">
+                        <img src="../../assets/user-default-icon.png" alt="Usuario" class="avatar">
+                        <div class="message-content">
                             <div class="header-info">
-                                <div class="username">{{item.id}}</div>
-                                <div class="time">{{item.fecha}}</div>
+                                <div class="username">{{comment.createdBy?.username || 'Usuario Anónimo'}}</div>
+                                <div class="time">{{comment.date | date: 'short'}}</div>
                             </div>
-                            <div class="text">{{item.contenido}}</div>
+                            <div class="text">{{comment.content}}</div>
                             <div class="stars">
-                                <span class="star">&#9733;</span><p>{{item.calificacion}}/5</p>
+                                <!-- Renderiza las estrellas llenas y vacías correctamente -->
+                                <span 
+                                    *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" 
+                                    class="star" 
+                                    [class.filled]="star <= getQualificationNumberByText(comment.qualification.toString())">
+                                    &#9733;
+                                </span>
+                                <!-- Renderiza el número de la calificación -->
+                                <p>{{getQualificationNumberByText(comment.qualification.toString())}}/5</p>
+                                <p>{{comment.qualification}}</p>
                             </div>
                         </div>
                     </div>
-                    -->
-                </div>
+                </div>   
             </div>
         </div>
     </div>

@@ -41,13 +41,25 @@
             <img src="https://cdn.pixabay.com/photo/2015/06/10/16/36/mark-804938_640.jpg" alt="Imagen del servicio">
         </div>
         <div class="card-details">
+            <h2><b>Fecha de compra:</b> {{item.fechaCompra}}</h2>
             <h3><b>Nombre del servicio</b> {{item.serviceName}}</h3>
             <p><b>Valor unitario:</b> {{item.unitValue}}</p>
             <p><b>Cantidad de personas:</b> {{item.quantity}}</p>
             <p><b>Subtotal:</b> {{item.subtotal}}</p>
+            <p style="color: red;"><b>Fecha de inicio:</b> {{item.startDate}}</p>
+            <p><b>Fecha de fin:</b> {{item.endDate}}</p>
+            
+            <p *ngIf="item.serviceType === 'Transporte'"><b>Ubicación destino:</b> {{item.destinationCity}}, {{item.destinationCountry}}</p>
+            <p *ngIf="item.serviceType === 'Transporte'"><b>Ubicación origen:</b> {{item.originCity}}, {{item.originCountry}}</p>
+            <p *ngIf="item.serviceType !== 'Transporte'"><b>Ubicación destino:</b> {{item.destinationCity}}, {{item.destinationCountry}}</p>
+    
+            <div class="card-footer">
+                <button class="button comentar" (click)="realizarComentario(item)">Hacer un comentario</button>
+                <button class="button clima" (click)="verClima(item)">Ver clima</button>
+                <button class="button mapa" *ngIf="item.serviceType === 'Transporte' || item.serviceType === 'Alojamiento'"(click)="verMapa(item)">Ver mapa</button>
+            </div>
         </div>
-        <div class="card-footer">
-            <button class="button comentar" (click)="realizarComentario(1)">Hacer un comentario</button>
-        </div>
-    </div>
+    </div>    
 </div>
+
+<app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>

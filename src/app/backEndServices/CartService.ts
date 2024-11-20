@@ -8,6 +8,7 @@ import { CartResponse } from '../model/CartResponse';
 import { CartItem } from '../model/CartItem';
 import { OrderPurchaseResponse } from '../model/OrderPurchaseResponse';
 import { OrderPurchaseRequest } from '../model/OrderPurchaseRequest';
+import { UserBalanceRequest } from '../model/UserBalanceRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -59,12 +60,17 @@ export class CartService {
     return this.http.delete<void>(`${environment.gatewayServiceUrl}/order-management-microservice/cart/${id}`);
   }
 
-  deleteCartItem(id: string, cartRequest: CartRequest): Observable<string> {
+  deleteCartItem(id: number, cartId: string): Observable<void> {
+    //eliminamos
+    console.log(`${environment.gatewayServiceUrl}/order-management-microservice/cart/${cartId}/cartItem/${id}`)
+    return this.http.delete<void>(`${environment.gatewayServiceUrl}/order-management-microservice/cart/${cartId}/cartItem/${id}`);
+  }
+
+  createRandomBalance(userBalance: UserBalanceRequest): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
-    return this.http.delete<string>(`${environment.gatewayServiceUrl}/order-management-microservice/cart//${id}/cartItem`, { headers, body: cartRequest });
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/order-management-microservice/payments/random`, userBalance, { headers });
   }
 
   purchase(id:string): Observable<OrderPurchaseRequest> {

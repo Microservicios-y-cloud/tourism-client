@@ -1,8 +1,11 @@
 <app-navbar></app-navbar>
+
 <div class="container">
     <div class="title">Mi carrito</div>
 </div>
-<table>
+
+<!-- Tabla de elementos del carrito -->
+<table *ngIf="items.length > 0" class="table">
     <thead>
         <tr>
             <th>Eliminar</th>
@@ -14,24 +17,34 @@
     </thead>
     <tbody>
         <tr *ngFor="let item of items">
-            <td><button (click)="eliminarItem(item)">X</button></td>
-            <td>{{item.serviceName}}</td>
-            <td>{{item.unitValue}}</td>
-            <td>{{item.quantity}}</td>
-            <td>${{item.subtotal}}</td>
+            <td>
+                <button (click)="eliminarItem(item)">X</button>
+            </td>
+            <td>{{ item.serviceName }}</td>
+            <td>${{ item.unitValue }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.subtotal }}</td>
         </tr>
     </tbody>
 </table>
 
-<div class="summary">
-    <p>Total: <span class="total">${{total}}</span></p>
+<!-- Mensaje de carrito vacío -->
+<div *ngIf="items.length === 0" class="empty-cart">
+    <p>No hay servicios en el carrito.</p>
 </div>
 
-<!-- Contenedor para el botón de compra alineado a la derecha -->
-<div class="button-container">
-    <button class="buy-button" (click)="comprar()">Comprar</button>
+<!-- Resumen del carrito -->
+<div *ngIf="items.length > 0" class="summary">
+    <p>Total: <span class="total">${{ total }}</span></p>
 </div>
 
 <!-- Botón de Compra -->
+<div class="button-container" *ngIf="items.length > 0">
+    <button class="buy-button" (click)="comprar()">Comprar</button>
+</div>
 
-<app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>
+<app-popup 
+    *ngIf="isPopupOpen" 
+    [popupText]="popupMessage" 
+    (close)="closePopup()">
+</app-popup>

@@ -106,3 +106,5 @@
     </div>
     <button (click)="enviar()">Crear</button>
 </div>
+
+<app-popup *ngIf="isPopupOpen" [popupText]="popupMessage" (close)="closePopup()"></app-popup>

@@ -25,7 +25,7 @@ export class OrderPurchaseService {
   }
 
   getPurchased(id:string): Observable<OrderPurchaseResponse[]> {
-    return this.http.get<OrderPurchaseResponse[]>(`${environment.gatewayServiceUrl}/order-management-microservice/purchased/purchased/${id}`)
+    return this.http.get<OrderPurchaseResponse[]>(`${environment.gatewayServiceUrl}/order-management-microservice/orders/purchased/${id}`)
   }
 }
 

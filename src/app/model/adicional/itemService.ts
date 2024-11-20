@@ -1,21 +1,21 @@
 export class itemService {
-    serviceId: number | null;
-    serviceName: string;
-    unitValue: number;
-    quantity: number;
-    subtotal: number;
-
     constructor(
-        serviceId: number,
-        serviceName: string,
-        unitValue: number,
-        quantity: number,
-        subtotal: number
-    ) {
-        this.serviceId = serviceId;
-        this.serviceName = serviceName;
-        this.unitValue = unitValue;
-        this.quantity = quantity;
-        this.subtotal = subtotal;
+    public serviceId: number | null,
+    public serviceName: string,
+    public unitValue: number,
+    public quantity: number,
+    public subtotal: number,
+    public serviceType? : string,
+    public startDate?: Date,    // Agregar startDate
+    public endDate?: Date,     // Agregar endDate
+    public destinationCountry?: string,  // Agregar destination
+    public destinationMunicipality?: string,  // Agregar destination
+    public destinationCity?: string,  // Agregar destination
+    public originCountry?: string,  // Agregar destination
+    public originMunicipality?: string,  // Agregar destination
+    public originCity?: string,  // Agregar destination
+    public fechaCompra?: string,
+    ){
+
     }
 }
