@@ -142,6 +142,7 @@ ngOnInit(): void {
         this.userProfile?.lastName!,
         this.userProfile?.email!),
       this.text,
+      new Date().toISOString()
     )
     console.log(comment);
     this.questionService.createComment(comment).subscribe(

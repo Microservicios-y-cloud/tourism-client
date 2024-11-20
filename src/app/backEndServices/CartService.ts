@@ -29,10 +29,11 @@ export class CartService {
   }
 
   createCart(cart: CartRequest): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<any>(`${environment.gatewayServiceUrl}/order-management-microservice/cart`, cart, { headers });
+    const requestOptions: Object = {
+      responseType: 'text',
+      headers: this.headers
+    }
+    return this.http.post<any>(`${environment.gatewayServiceUrl}/order-management-microservice/cart`, cart, requestOptions);
   }
 
   addCartItem(id: string,cart: CartItem): Observable<any> {

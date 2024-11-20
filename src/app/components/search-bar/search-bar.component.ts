@@ -106,99 +106,80 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToCart(servicio: SuperService):void {
-    //TODO: Es importante modificar la respuesta del front para que, si encuentra que el usuario no tiene carrito, no se devuelva un error ya que eso no estaría bien hecho
-    //Crear cart
+  addToCart(servicio: SuperService): void {
     if (servicio.id && servicio.unitValue) {
-      let cartIt = new CartItem(servicio.id,1,servicio.unitValue)
+        const cartIt = new CartItem(servicio.id, 1, servicio.unitValue);
 
-      //Revisar primero si el cliente tiene un carrito
-      if (this.userProfile?.id) {
-        this.cartService.getCartByUser(this.userProfile.id).subscribe(
-          response => {
-            console.log(response);
-            if (this.userProfile?.id && response.id) {
-              //TODO: Hay algo extraño, no se si del front o del back, pero cuando añades un item a un carrito existente, se ejecuta error, sin embargo si se está actualizando en la base de datos, asi que hay algo mal con el manejo de errores
-              //Se soluciona el problema de que añada el mismo item varias veces, pero sigue devolviendo error a pesar de que se añade
-              this.cartService.addCartItem(response.id, cartIt).subscribe(
+        if (this.userProfile?.id) {
+            this.cartService.getCartByUser(this.userProfile.id).subscribe(
                 response => {
-                  this.popupMessage = "Se ha agregado el servicio al carrito"
-                  this.openPopup()
-                  console.log('Servicio creado con éxito:', response);
+                    console.log(response);
+                    if (response.id) {
+                        this.cartService.addCartItem(response.id, cartIt).subscribe(
+                            () => {
+                                this.popupMessage = "Se ha agregado el servicio al carrito";
+                                this.openPopup();
+                            },
+                            error => {
+                                if (!error.error.message) {
+                                    this.popupMessage = "Se ha agregado el servicio al carrito";
+                                    this.openPopup();
+                                } else {
+                                    this.popupMessage = error.error.message;
+                                    this.openPopup();
+                                    console.error("Error al agregar el servicio:", error);
+                                }
+                            }
+                        );
+                    }
                 },
                 error => {
-                  console.log(error.error.message == undefined);
-                  
-                  if (error.error.message == undefined) {
-                    this.popupMessage = "Se ha agregado el servicio al carrito"
-                    this.openPopup()
-                    console.log('Servicio creado con éxito:', response);
-                  }
-                  else {
-                    this.popupMessage = error.message
-                    this.openPopup()
-                    console.error('Error al crear el servicio:', error);
-                  }
-                }
-              );
-            }
-          },
-          error => {
-            if (error.status === 404) {
-              console.log("No existe el carrito, asi que se creara uno");
-              
-              //No existe, asi que se creara el carrito
-              if(this.userProfile?.id && 
-                this.userProfile.attributes?.userType && 
-                this.userProfile.username && 
-                this.userProfile.firstName && 
-                this.userProfile.lastName && 
-                this.userProfile.email) {
+                    if (error.status === 404) {
+                        console.log("No existe el carrito, así que se creará uno.");
 
-                let newCart = new CartRequest(new Customer(
-                  this.userProfile?.id,
-                  this.userProfile?.attributes?.userType[0],
-                  this.userProfile?.username,
-                  this.userProfile?.firstName,
-                  this.userProfile?.lastName, 
-                  this.userProfile?.email),
-                  [cartIt])
-                this.cartService.createCart(newCart).subscribe(
-                  response => {
-                    console.log('Servicio creado con éxito:', response);
-                    if (this.userProfile?.id) {
-                      this.cartService.getCartByUser(this.userProfile.id).subscribe(
-                        response => {
-                          this.popupMessage = "Se ha agregado el servicio al carrito"
-                          this.openPopup()
-                          console.log(response);
-                        },
-                        error => {
-                          if (error.status === 400) {
-                          this.popupMessage = "Error, el servicio actualmente no se encuentra disponible"
-                          this.openPopup()
-                          console.log("No se creo el carrito");
-                          }
-                        })
+                        if (
+                            this.userProfile?.id &&
+                            this.userProfile.attributes?.userType &&
+                            this.userProfile.username &&
+                            this.userProfile.firstName &&
+                            this.userProfile.lastName &&
+                            this.userProfile.email
+                        ) {
+                            const newCart = new CartRequest(
+                                new Customer(
+                                    this.userProfile.id,
+                                    this.userProfile.attributes.userType[0],
+                                    this.userProfile.username,
+                                    this.userProfile.firstName,
+                                    this.userProfile.lastName,
+                                    this.userProfile.email
+                                ),
+                                [cartIt]
+                            );
+
+                            this.cartService.createCart(newCart).subscribe(
+                                () => {
+                                    this.popupMessage = "Carrito creado y servicio agregado con éxito";
+                                    this.openPopup();
+                                },
+                                createCartError => {
+                                    if (createCartError.status === 400) {
+                                        this.popupMessage = "Error, el servicio actualmente no está disponible";
+                                        this.openPopup();
+                                    } else {
+                                        console.error("Error al crear el carrito:", createCartError);
+                                    }
+                                }
+                            );
+                        }
+                    } else {
+                        console.error("Error al obtener el carrito:", error);
                     }
-                  },
-                  error => {
-                    if (error.status === 400) {
-                      this.popupMessage = "Error, el servicio actualmente no se encuentra disponible"
-                      this.openPopup()
-                      console.log("No se creo el carrito");
-                      }
-                  }
-                );
-              }
-            } else {
-              console.error('Error al crear el servicio:', error);
-            }
-          }
-        );
-      }
+                }
+            );
+        }
     }
-  }
+}
 
   openPopup(): void {
     this.isPopupOpen = true;

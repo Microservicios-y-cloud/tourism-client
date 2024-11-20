@@ -118,11 +118,11 @@
                                 <span 
                                     *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" 
                                     class="star" 
-                                    [class.filled]="star <= getQualificationNumberByText(comment.qualification.toString())">
+                                    [class.filled]="star <= getQualificationNumberByText(comment.qualification.toString())+1">
                                     &#9733;
                                 </span>
                                 <!-- Renderiza el número de la calificación -->
-                                <p>{{getQualificationNumberByText(comment.qualification.toString())}}/5</p>
+                                <p>{{getQualificationNumberByText(comment.qualification.toString())+1}}/5</p>
                                 <p>{{comment.qualification}}</p>
                             </div>
                         </div>

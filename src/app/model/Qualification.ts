@@ -1,9 +1,9 @@
 export enum Qualification {
-  DEFICIENTE = 1,
-  REGULAR = 2,
-  SATISFACTORIO = 3,
-  BUENO = 4,
-  SOBRESALIENTE = 5,
+  DEFICIENTE = 0,
+  REGULAR = 1,
+  SATISFACTORIO = 2,
+  BUENO = 3,
+  SOBRESALIENTE = 4,
 }
 
 export namespace Qualification {

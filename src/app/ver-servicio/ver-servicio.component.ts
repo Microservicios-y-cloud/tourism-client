@@ -130,102 +130,85 @@ export class VerServicioComponent implements OnInit {
 
   }
 
-  addToCart():void {
-    //TODO: Es importante modificar la respuesta del front para que, si encuentra que el usuario no tiene carrito, no se devuelva un error ya que eso no estaría bien hecho
-    //Crear cart
-    if (this.servicio) {
-      if (this.servicio.id && this.servicio.unitValue) {
-        let cartIt = new CartItem(this.servicio.id,
-          this.cantidad,
-          this.servicio.unitValue)
+  addToCart(): void {
+    if (!this.servicio || !this.servicio.id || !this.servicio.unitValue) {
+      console.error("El servicio no es válido.");
+      return;
+    }
   
-        //Revisar primero si el cliente tiene un carrito
-        if (this.userProfile?.id) {
-          this.cartService.getCartByUser(this.userProfile.id).subscribe(
-            response => {
-              console.log(response);
-              if (this.userProfile?.id && response.id) {
-                //TODO: Hay algo extraño, no se si del front o del back, pero cuando añades un item a un carrito existente, se ejecuta error "No se pudo agregar al carrito", sin embargo si se está actualizando en la base de datos, asi que hay algo mal con el manejo de errores
-                this.cartService.addCartItem(response.id,cartIt).subscribe(
-                  response => {
-                    this.popupMessage = "Se ha agregado el servicio al carrito"
-                    this.comprado = true;
-                    this.openPopup()
-                    //console.log('Servicio creado con éxito:', response);###
-                  },
-                  error => {
-                    console.log(error.error.message == undefined);
-                    
-                    if (error.error.message == undefined) {
-                      this.popupMessage = "Se ha agregado el servicio al carrito"
-                      this.openPopup()
-                      console.log('Servicio creado con éxito:', response);
-                    }
-                    else {
-                      this.popupMessage = error.error.message
-                      this.openPopup()
-                      console.error('Error al crear el servicio:', error);
-                    }
-                    
-                  }
-                );
-              }
+    const cartItem = new CartItem(this.servicio.id, this.cantidad || 1, this.servicio.unitValue);
+  
+    if (!this.userProfile?.id) {
+      console.error("El usuario no tiene un perfil válido.");
+      return;
+    }
+  
+    this.cartService.getCartByUser(this.userProfile.id).subscribe(
+      response => {
+        // Carrito encontrado, agregar el item
+        if (response?.id) {
+          this.cartService.addCartItem(response.id, cartItem).subscribe(
+            () => {
+              this.popupMessage = "Se ha agregado el servicio al carrito";
+              this.comprado = true;
+              this.openPopup();
             },
-            error => {
-              if (error.status === 500) {
-                console.log("No existe el carrito, asi que se creara uno");
-                
-                //No existe, asi que se creara el carrito
-                if(this.userProfile?.id && 
-                  this.userProfile.attributes?.userType && 
-                  this.userProfile.username && 
-                  this.userProfile.firstName && 
-                  this.userProfile.lastName && 
-                  this.userProfile.email) {
-
-                  let newCart = new CartRequest(new Customer(
-                    this.userProfile?.id,
-                    this.userProfile?.attributes?.userType[0],
-                    this.userProfile?.username,
-                    this.userProfile?.firstName,
-                    this.userProfile?.lastName,
-                    this.userProfile?.email),
-                    [cartIt])
-                  console.log(JSON.stringify(newCart));
-                  this.cartService.createCart(newCart).subscribe(
-                    response => {
-                      console.log('Servicio creado con éxito:', response);
-                    },
-                    error => {
-                      if (this.userProfile?.id) {
-                        this.cartService.getCartByUser(this.userProfile.id).subscribe(
-                          response => {
-                            this.popupMessage = "Se ha agregado el servicio al carrito"
-                            this.openPopup()
-  
-                            console.log("Se obtiene el carrito");
-                            this.router.navigate(['/ver-carrito']);
-                          },
-                          error => {
-                            this.popupMessage = "No se pudo agregar al carrito"
-                            this.openPopup()
-                            console.log("No se creo el carrito");
-                          })
-                      }
-                      
-                    }
-                  );
-                }
-                
-              } else {
-                console.error('Error al crear el servicio:', error);
-              }
-            }
+            error => this.handleAddCartItemError(error)
           );
         }
+      },
+      error => {
+        // Si no se encuentra el carrito (404), crear uno nuevo
+        if (error.status === 404) {
+          this.createNewCart(cartItem);
+        } else {
+          console.error("Error al buscar el carrito:", error);
+        }
       }
+    );
+  }
+  
+  private createNewCart(cartItem: CartItem): void {
+    if (!this.userProfile || !this.userProfile.attributes?.userType || !this.userProfile.username) {
+      console.error("Información incompleta del usuario para crear un carrito.");
+      return;
+    }
+  
+    const newCart = new CartRequest(
+      new Customer(
+        this.userProfile.id!,
+        this.userProfile.attributes.userType[0],
+        this.userProfile.username,
+        this.userProfile.firstName!,
+        this.userProfile.lastName!,
+        this.userProfile.email!
+      ),
+      [cartItem]
+    );
+  
+    this.cartService.createCart(newCart).subscribe(
+      () => {
+        this.popupMessage = "Se ha creado un nuevo carrito y se agregó el servicio.";
+        this.openPopup();
+      },
+      error => {
+        console.error("Error al crear el carrito:", error);
+        this.popupMessage = "No se pudo crear el carrito.";
+        this.openPopup();
+      }
+    );
+  }
+  
+  private handleAddCartItemError(error: any): void {
+    if (error?.error?.message === undefined) {
+      this.popupMessage = "Se ha agregado el servicio al carrito";
+      this.openPopup();
+    } else {
+      this.popupMessage = error.error.message;
+      this.openPopup();
     }
   }
+  
 
   enviarPregunta() {
     if (this.pregunta == "") {
@@ -324,12 +307,12 @@ export class VerServicioComponent implements OnInit {
 
   getQualificationNumberByText(qualificationText: string): number {
     switch (qualificationText.toUpperCase()) {
-        case 'DEFICIENTE': return 1;
-        case 'REGULAR': return 2;
-        case 'SATISFACTORIO': return 3;
-        case 'BUENO': return 4;
-        case 'SOBRESALIENTE': return 5;
-        default: return 0; // Devuelve 0 si no coincide con ninguna calificación
+        case 'DEFICIENTE': return 0;
+        case 'REGULAR': return 1;
+        case 'SATISFACTORIO': return 2;
+        case 'BUENO': return 3;
+        case 'SOBRESALIENTE': return 4;
+        default: return 10; // Devuelve 0 si no coincide con ninguna calificación
     }
 }
 }
